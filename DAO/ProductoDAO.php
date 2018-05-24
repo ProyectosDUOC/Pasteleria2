@@ -14,7 +14,7 @@ require_once($rootDir . "/BD/BD.php");
 
 require_once("../Entities/Producto.php");
 
-require_once("conexion.php");
+require_once("../bd/conexion.php");
 
 class ProductoDAO {
 
@@ -40,7 +40,7 @@ class ProductoDAO {
         }
     }
        
-    public function listarClientes(){
+    public function listarProductos(){
         $row = null;
         $modelo = new ConexionC();
         $conexion = $modelo->conexionbd();
@@ -65,24 +65,38 @@ class ProductoDAO {
         return BD::getInstance()->sqlEjecutar($stSql);
     }
 
-    public static function sqlDelete($detalleBoleta) {
-        $stSql = "delete from  detalle_boleta ";
-        $stSql .= " Where  id_detalle_boleta={$detalleBoleta->getIdBoleta()}";
-        return BD::getInstance()->sqlEjecutar($stSql);
+    public function eliminarProducto($idProducto){
+        $modelo = new ConexionC();
+        $conexion = $modelo->conexionbd();
+        $sql = "delete from Producto where id_producto = :idProducto";
+        $statement = $conexion->prepare($sql);
+        $statement->bindParam(':idProducto', $idProducto);
+        if(!$statement){
+            return "Error al eliminar";
+        }else {
+            $statement->execute();
+            return "Eliminado correctamente";
+        }
     }
+
 
     /* METODO BUSCAR */
 
     // Método que ejecuta una sentencia,
     // Sin embargo no retorna ningún registro
-    public static function sqlSelect($detalleBoleta) {
-        $stSql = "select *  from  detalle_boleta ";
-        $stSql .= " Where  id_detalle_boleta={$detalleBoleta->geIdBoleta()}"
-        ;
-        $resultado = BD::getInstance()->sqlSelect($stSql);
-        if (!$resultado)
-            return false;
-        return true;
+    public function buscarProducto($idProducto){
+        $row = null;
+        $modelo = new ConexionC();
+        $conexion = $modelo->conexionbd();
+        $r = "%".$idProducto."%";
+        $sql = "select * from producto where id_producto like :idProducto";
+        $statement = $conexion->prepare($sql);
+        $statement->bindParam(':idProducto', $r);
+        $statement->execute();
+        while($resultado=$statement->fetch()){
+            $row[] = $resultado;
+        }
+        return $row;
     }
 
     // Método que busca el siguiente registro disponible

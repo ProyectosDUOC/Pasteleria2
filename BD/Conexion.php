@@ -1,22 +1,24 @@
 <?php
-    class BD{
-        private $enlace;
-        private $stHost='localhost';
-        private $stUsuario='root'; 
-        private $stClave='';
-        private $stBd='pasteleria';
 
-        public function BD()
-        {
-            $this->enlace = new PDO("mysql:host=" . $this->stHost . ";dbname=" .$this->stBd ,$this->stUsuario ,$this->stClave);
+    class ConexionC{
+        public function conexionbd(){
+            $user = "root";
+            $pass = "";
+            $host = "localhost";
+            $db = "pasteleria"; 
+            $conexion = new PDO("mysql:host=$host; dbname=$db;", $user, $pass);
+            return $conexion;
         }
 
-        public static function getInstance(){
-            if (self::$miConexion == null){
-                self::$miConexion = new BD();
-            }
-            return self::$miConexion;
+        public function sqlInsertar($insSql){
+            $sentencia = $this->enlace->prepare($insSql);
+            $resultado = $sentencia->execute();
+            if (!$resultado) 
+                print_r($sentencia->errorInfo());
+            return $this->enlace->lastInsertId();
         }
+
         
     }
-?> 
+
+?>

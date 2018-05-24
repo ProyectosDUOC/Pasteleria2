@@ -8,16 +8,16 @@ $mensaje = null;
 
     $opcion = $_POST['btn'];
 
+    $idProducto = $_POST['idProducto'];
+    $codProducto = $_POST['codProducto'];
+    $nombre = $_POST['nombreProducto'];
+    $imagen = $_POST['nombreProducto'];
+    $tamano = $_POST['tamaño'];  
+    $activo = 1;
+    $categoria = $_POST['categoria'];
 
     switch ($opcion) {
         case "Agregar":
-            $idProducto = $_POST['idProducto'];
-            $codProducto = $_POST['codProducto'];
-            $nombre = $_POST['nombreProducto'];
-            $imagen = $_POST['nombreProducto'];
-            $tamano = $_POST['tamaño'];  
-            $activo = 1;
-            $categoria = $_POST['categoria'];
 
            
             
@@ -27,12 +27,19 @@ $mensaje = null;
                 ProductoDAO::sqlInsert($idProducto,$codProducto,$nombre,$imagen,$tamano,$activo,$categoria);
                
                 echo "Agregado correctamente";
+                echo "<br>";
                 echo $idProducto;
+                echo "<br>";
                 echo $codProducto;
+                echo "<br>";
                 echo $nombre;
+                echo "<br>";
                 echo $imagen;
+                echo "<br>";
                 echo $tamano;
+                echo "<br>";
                 echo $activo;
+                echo "<br>";
                 echo $categoria;
                 echo "<br>";
                 echo "<a href='../administrador/Producto.html'>Volver a la página anterior</a>";
@@ -41,7 +48,7 @@ $mensaje = null;
             break;
         case "Listar":
             $consultas = new ProductoDAO();
-            $filas = $consultas->listarClientes();
+            $filas = $consultas->listarProductos();
             echo "<h3>Lista de Productos</h3>";
             echo "<table>
                     <tr>
@@ -67,44 +74,45 @@ $mensaje = null;
             echo "</table>";  
             echo "<a href='../administrador/Producto.html'>Volver a la página anterior</a>";     
             break;
-        case "Eliminar":
-            $consultas = new ClienteDAO();
-            $mensaje = $consultas->eliminarCliente($rut);
+
+            case "Eliminar":
+            $consultas = new ProductoDAO();
+            $mensaje = $consultas->eliminarProducto($idProducto);
             echo $mensaje;
-            echo "<a href='Cliente.html'>Volver a la página anterior</a>"; 
+            echo "<a href='../administrador/Producto.html'>Volver a la página anterior</a>"; 
             break;
+
         case "Buscar":
-            $consultas = new ClienteDAO();
-            $filas = $consultas->buscarCliente($rut);
+            $consultas = new ProductoDAO();
+            $filas = $consultas->buscarProducto($idProducto);
             echo "<table>
                     <tr>
-                        <td>Id</td>
-                        <td>Nombres</td>
-                        <td>Apellidos</td>
-                        <td>Fecha nacimiento</td>
-                        <td>Telefono</td>
-                        <td>Correo</td>
-                        <td>Comuna</td>
-                        <td>Activo</td>
+                    <td>Id</td>
+                    <td>Codigo</td>
+                    <td>Nombre</td>
+                    <td>Imagen</td>
+                    <td>Tamaño</td>
+                    <td>Activo</td>
+                    <td>Categoria</td>
                     </tr>";
                 if(isset($filas)){
                     foreach($filas as $fila){
                         echo "<tr>";
-                        echo "<td>".$fila['idCliente']."</td>";
-                        echo "<td>".$fila['rut']."</td>";
-                        echo "<td>".$fila['nombres']."</td>";
-                        echo "<td>".$fila['fechaNacimiento']."</td>";
-                        echo "<td>".$fila['telefono']."</td>";
-                        echo "<td>".$fila['correo']."</td>";
-                        echo "<td>".$fila['comuna']."</td>";
+                        echo "<td>".$fila['id_producto']."</td>";
+                        echo "<td>".$fila['cod_producto']."</td>";
+                        echo "<td>".$fila['nombre_producto']."</td>";
+                        echo "<td>".$fila['imagen']."</td>";
+                        echo "<td>".$fila['tamano']."</td>";
                         echo "<td>".$fila['activo']."</td>";
+                        echo "<td>".$fila['id_cate']."</td>";
                         echo "</tr>";
                     }
                 }
             echo "</table>";  
             echo "<br>";
-            echo "<a href='Cliente.html'>Volver a la página anterior</a>"; 
+            echo "<a href='../administrador/producto.html'>Volver a la página anterior</a>"; 
             break;
+
         case "Modificar":
             if(isset($_POST['rut'])){
                 $consultas = new ClienteDAO();
