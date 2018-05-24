@@ -177,8 +177,9 @@ CREATE TABLE producto (
     cod_producto      INTEGER NOT NULL,
     nombre_producto   VARCHAR(50) NOT NULL,
     imagen            VARCHAR(60),
+    tamano            VARCHAR(60),
     activo            INTEGER NOT NULL,
-    id_cate           INTEGER NOT NULL
+    id_cate           VARCHAR (60) NOT NULL
 );
 
 -- ALTER TABLE producto ADD CONSTRAINT producto_pk PRIMARY KEY ( id_producto );

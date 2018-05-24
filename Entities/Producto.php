@@ -5,6 +5,7 @@ class Producto {
     cod_producto      INTEGER NOT NULL,
     nombre_producto   VARCHAR(50) NOT NULL,
     imagen            VARCHAR(60),
+    tamano            VARCHAR(60),
     activo            INTEGER NOT NULL,
     id_cate           INTEGER NOT NULL
     );*/
@@ -13,14 +14,16 @@ class Producto {
     private $codProducto;
     private $nombreProducto;
     private $imagen;
+    private $tamaño;
     private $activo;
     private $idCate;
     
-    public function __construct($idProducto, $codProducto, $nombreProducto, $imagen, $activo, $idCate) {
+    public function __construct($idProducto, $codProducto, $nombreProducto, $imagen,$tamaño, $activo, $idCate) {
         $this->idProducto = $idProducto;
         $this->codProducto = $codProducto;
         $this->nombreProducto = $nombreProducto;
         $this->imagen = $imagen;
+        $this->tamaño = $tamaño;
         $this->activo = $activo;
         $this->idCate = $idCate;
     }
@@ -39,6 +42,9 @@ class Producto {
 
     public function getImagen() {
         return $this->imagen;
+    }
+    public function getTamaño() {
+        return $this->tamaño;
     }
 
     public function getActivo() {
@@ -63,6 +69,9 @@ class Producto {
 
     public function setImagen($imagen) {
         $this->imagen = $imagen;
+    }
+    public function setTamaño($tamaño) {
+        $this->tamaño = $tamaño;
     }
 
     public function setActivo($activo) {
