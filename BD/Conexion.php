@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
     class ConexionC{
+=======
+    class Conexion{
+>>>>>>> feed23fbda0c5d1461be9a21198dee53d52d2917
         public function conexionbd(){
             $user = "root";
             $pass = "";
@@ -17,8 +21,14 @@
                 print_r($sentencia->errorInfo());
             return $this->enlace->lastInsertId();
         }
+<<<<<<< HEAD
 
         
     }
 
 ?>
+=======
+    }
+
+?>
+>>>>>>> feed23fbda0c5d1461be9a21198dee53d52d2917
