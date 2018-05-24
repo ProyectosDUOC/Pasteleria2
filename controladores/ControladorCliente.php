@@ -1,6 +1,6 @@
 <?php
 
-    require_once("ClienteDAO.php");
+    require_once("../DAO/ClienteDAO.php");
 
     $mensaje = null;
     $rut = $_POST['rut'];
@@ -19,11 +19,11 @@
                 $mensaje = $consultas->agregarCliente($rut,$nombres,$apellidos,$fechaNac,$telefono,$correo,$comuna);
                 echo "Agregado correctamente";
                 echo "<br>";
-                echo "<a href='Cliente.html'>Volver a la página anterior</a>";
+                echo "<a href='../administrador/cliente.html'>Volver a la página anterior</a>";
             }else{
                 echo "Completar todos los campos";
                 echo "<br>";
-                echo "<a href='Cliente.html'>Volver a la página anterior</a>";
+                echo "<a href='../administrador/cliente.html'>Volver a la página anterior</a>";
             }
             return $mensaje;
             break;
@@ -55,13 +55,13 @@
                     echo "</tr>";
                 }
             echo "</table>";  
-            echo "<a href='Cliente.html'>Volver a la página anterior</a>";     
+            echo "<a href='../administrador/cliente.html'>Volver a la página anterior</a>";     
             break;
         case "Eliminar":
             $consultas = new ClienteDAO();
             $mensaje = $consultas->eliminarCliente($rut);
             echo $mensaje;
-            echo "<a href='Cliente.html'>Volver a la página anterior</a>"; 
+            echo "<a href='../administrador/cliente.html'>Volver a la página anterior</a>"; 
             break;
         case "Buscar":
             $consultas = new ClienteDAO();
@@ -93,7 +93,7 @@
                 }
             echo "</table>";  
             echo "<br>";
-            echo "<a href='Cliente.html'>Volver a la página anterior</a>"; 
+            echo "<a href='../administrador/cliente.html'>Volver a la página anterior</a>"; 
             break;
         case "Modificar":
             if(isset($_POST['rut'])){
