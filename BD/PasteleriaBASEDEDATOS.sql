@@ -7,7 +7,7 @@ use pasteleria;
 
 
 CREATE TABLE boleta (
-    id_boleta         INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_boleta         INTEGER NOT NULL PRIMARY KEY,
     total             INTEGER,
     id_empleado       INTEGER NOT NULL,
     id_forma_pago     INTEGER NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE categoria (
 ALTER TABLE categoria ADD CONSTRAINT categoria_pk PRIMARY KEY ( id_cate );
 
 CREATE TABLE cliente (
-    id_cliente         INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_cliente         INTEGER NOT NULL PRIMARY KEY,
     rut_cliente        VARCHAR(30) NOT NULL,
     nombres            VARCHAR(60) NOT NULL,
     apellidos          VARCHAR(30) NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE cliente (
 -- ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( id_cliente );
 
 CREATE TABLE compra_online (
-    id_compra_online   INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_compra_online   INTEGER NOT NULL PRIMARY KEY,
     id_cliente         INTEGER NOT NULL,
     descuento          INTEGER,
     total              INTEGER,
@@ -60,7 +60,7 @@ CREATE TABLE comuna (
 ALTER TABLE comuna ADD CONSTRAINT comuna_pk PRIMARY KEY ( id_comuna );
 
 CREATE TABLE control_cliente (
-    id_control_c   INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_control_c   INTEGER NOT NULL PRIMARY KEY,
     id_cliente     INTEGER NOT NULL,
     usuario        VARCHAR(30) NOT NULL,
     clave          VARCHAR(30) NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE control_cliente (
 -- ALTER TABLE control_cliente ADD CONSTRAINT control_cliente_pk PRIMARY KEY ( id_control_c );
 
 CREATE TABLE control_empleado (
-    id_control_e   INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_control_e   INTEGER NOT NULL PRIMARY KEY,
     usuario        VARCHAR(30) NOT NULL,
     clave          VARCHAR(30) NOT NULL,
     id_tipo        INTEGER NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE control_empleado (
 -- ALTER TABLE control_empleado ADD CONSTRAINT control_empleado_pk PRIMARY KEY ( id_control_e );
 
 CREATE TABLE detalle_boleta (
-    id_detalle      INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_detalle      INTEGER NOT NULL PRIMARY KEY,
     id_producto_p   INTEGER NOT NULL,
     id_boleta       INTEGER NOT NULL,
     precio          INTEGER,
@@ -92,7 +92,7 @@ CREATE TABLE detalle_boleta (
 -- ALTER TABLE detalle_boleta ADD CONSTRAINT detalle_boleta_pk PRIMARY KEY ( id_detalle );
 
 CREATE TABLE detalle_compra_online (
-    id_detalle_online   INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_detalle_online   INTEGER NOT NULL PRIMARY KEY,
     id_compra_online    INTEGER NOT NULL,
     id_producto_p       INTEGER NOT NULL,
     precio              INTEGER,
@@ -103,7 +103,7 @@ CREATE TABLE detalle_compra_online (
 -- ALTER TABLE detalle_compra_online ADD CONSTRAINT detalle_compra_online_pk PRIMARY KEY ( id_detalle_online );
 
 CREATE TABLE detalle_pedido_local (
-    id_detalle_local   INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    id_detalle_local   INTEGER NOT NULL PRIMARY KEY, 
     id_pedido_local    INTEGER NOT NULL,
     id_producto_p      INTEGER NOT NULL,
     precio             INTEGER,
@@ -114,7 +114,7 @@ CREATE TABLE detalle_pedido_local (
 -- ALTER TABLE detalle_pedido_local ADD CONSTRAINT detalle_pedido_local_pk PRIMARY KEY ( id_detalle_local );
 
 CREATE TABLE direccion_cliente (
-    id_direccion   INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_direccion   INTEGER NOT NULL PRIMARY KEY,
     id_cliente     INTEGER NOT NULL,
     nombres        VARCHAR(30),
     apellidos      VARCHAR(30),
@@ -130,7 +130,7 @@ CREATE TABLE direccion_cliente (
 
 
 CREATE TABLE empleado (
-    id_empleado         INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_empleado         INTEGER NOT NULL PRIMARY KEY,
     rut_empleado        VARCHAR(30) NOT NULL,
     nombres             VARCHAR(60) NOT NULL,
     apellidos           VARCHAR(30) NOT NULL,
@@ -159,7 +159,7 @@ CREATE TABLE forma_pago (
 ALTER TABLE forma_pago ADD CONSTRAINT forma_pago_pk PRIMARY KEY ( id_forma_pago );
 
 CREATE TABLE pedido_local (
-    id_pedido_local   INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_pedido_local   INTEGER NOT NULL PRIMARY KEY,
     id_cliente        INTEGER NOT NULL,
     glosa             VARCHAR(300),
     descuento         INTEGER,
@@ -173,7 +173,7 @@ CREATE TABLE pedido_local (
 -- ALTER TABLE pedido_local ADD CONSTRAINT pedido_local_pk PRIMARY KEY ( id_pedido_local );
 
 CREATE TABLE producto (
-    id_producto       INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_producto       INTEGER NOT NULL PRIMARY KEY,
     cod_producto      INTEGER NOT NULL,
     nombre_producto   VARCHAR(50) NOT NULL,
     imagen            VARCHAR(60),
@@ -185,7 +185,7 @@ CREATE TABLE producto (
 -- ALTER TABLE producto ADD CONSTRAINT producto_pk PRIMARY KEY ( id_producto );
 
 CREATE TABLE producto_precio (
-    id_producto_p   INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_producto_p   INTEGER NOT NULL PRIMARY KEY,
     id_producto     INTEGER NOT NULL,
     descripcion     VARCHAR(40) NOT NULL,
     precioproducto_precio          INTEGER NOT NULL
