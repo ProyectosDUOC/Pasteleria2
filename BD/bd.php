@@ -1,16 +1,25 @@
 <?php
 
 class BD{
-    private $enlace;
-    private $stHost='localhost';
-    private $stUsuario='root'; 
-    private $stClave='';
-    private $stBd='pasteleria';
+    public static $db;
+    private static $stHost='localhost';
+    private static $stUsuario='root'; 
+    private static $stClave='';
+    private static $stBd='pasteleria';
+    private static $instancia;
 
-    public function BD(){
-        $this->enlace = new PDO("mysql:host=" . $this->stHost . ";dbname=" .$this->stBd,$this->stUsuario,$this->stClave);
+    public function __construct(){
+        $this->db = new PDO("mysql:host=" . $this->stHost . ";dbname=" .$this->stBd,$this->stUsuario,$this->stClave);
     }
 
+    public static function getInstancia(){
+        if (self::$instancia === null){
+            self::$instancia = new BD();
+        }
+        return self::$instancia;
+    }
+
+    /* codigo antiguo
     public function sqlEjecutar($stSql){
         $sentencia = $this->enlace->prepare($stSql);
         $resultado = $sentencia->execute();
@@ -31,16 +40,7 @@ class BD{
         $sentencia = $this->enlace->prepare($stSql);
         $sentencia->execute();
         return $sentencia->fetch();
-    }
-
-    private static $miConexion;
-
-    public static function getInstance(){
-        if (self::$miConexion == null){
-            self::$miConexion = new BD();
-        }
-        return self::$miConexion;
-    }
+    }*/
 }
 
 ?>
