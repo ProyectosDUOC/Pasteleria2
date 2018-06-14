@@ -373,11 +373,11 @@ INSERT INTO Comuna VALUES (50,'Isla de Maipo');
 INSERT INTO Comuna VALUES (51,'El Monte');
 INSERT INTO Comuna VALUES (52,'Padre Hurtado');
 
-INSERT INTO empleado(rut_empleado,nombres,apellidos,fecha_nacimiento,telefono,id_comuna,correo,activo) VALUES('11','Benjamin','Mora','2018-06-30',9999,1,'benja@gmail.com',1);
-INSERT INTO control_empleado(usuario,clave,id_tipo,id_empleado,activo) VALUES('benjamin','benjamin',1,1,1);
+INSERT INTO empleado VALUES(1,'11','Benjamin','Mora','2018-06-30',9999,1,'benja@gmail.com',1);
+INSERT INTO control_empleado VALUES(1,'benjamin','benjamin',1,1,1);
 
-INSERT INTO empleado(rut_empleado,nombres,apellidos,fecha_nacimiento,telefono,id_comuna,correo,activo) VALUES('12','Sebastian','orrego','2018-06-30',9999,3,'Seba@gmail.com',1);
-INSERT INTO control_empleado(usuario,clave,id_tipo,id_empleado,activo) VALUES('sebastian','sebastian',3,2,1);
+INSERT INTO empleado VALUES(2,'12','Sebastian','orrego','2018-06-30',9999,3,'Seba@gmail.com',1);
+INSERT INTO control_empleado VALUES(2,'sebastian','sebastian',3,2,1);
 
-INSERT INTO empleado(rut_empleado,nombres,apellidos,fecha_nacimiento,telefono,id_comuna,correo,activo) VALUES('13','Patricia','Campos','2018-06-30',9999,3,'pati@gmail.com',1);
-INSERT INTO control_empleado(usuario,clave,id_tipo,id_empleado,activo) VALUES('patricia','patricia',3,3,1);
+INSERT INTO empleado VALUES(3,'13','Patricia','Campos','2018-06-30',9999,3,'pati@gmail.com',1);
+INSERT INTO control_empleado VALUES(3,'patricia','patricia',3,3,1);
