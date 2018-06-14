@@ -14,33 +14,39 @@ class CategoriaDAO
     // Métodos de nuestra Dao
     // Insert,Update, Delete, Select, Select All
 
+    public static function sqlSelect($id_categoria){
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM categoria WHERE id_categoria=:id_categoria";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute(array('id_categoria' => $id_categoria));
+        $ca = $rs->fetch();
+        $nuevaCategoria = new Categoria($ca['id_categoria'],$ca['nombre_cate'],$ca['activo']);
+        return $nuevaCategoria;
+    }
+
     public static function sqlInsert($categoria)
     {
         $cc=BD::getInstancia();
-
         $stSql = "INSERT INTO categoria VALUES (:id_cate, :nombre_cate, :activo)";
         $rs = $cc->db->prepare($stSql);
         $params = getParams($categoria);
-        return BD::getInstance()->sqlEjecutar($stSql);
+        return $rs->sqlEjecutar($stSql);
     }
     
     public static function sqlUpdate($categoria)
     {
-        $stSql = "update categoria SET ";
-        $stSql .= " id_cate='{$categoria->getIdCategoria()}'"
-            . ",nombre_cate='{$categoria->getNombreCategoria()}'"
-            . ",activo='{$categoria->getActivo()}'"
-        ;
-        $stSql .= " Where  id_cate='{$categoria->getIdCategoria()}'"
-        ;
+        $cc=BD::getInstancia();
+        $stSql = "UPDATE categoria SET nombre_cate=:nombre_cate, activo=:activo WHERE id_cate";
+        $rs = $cc->db->prepare($stSql);
+        $params = self::getParams($categoria);
         return BD::getInstance()->sqlEjecutar($stSql);
     }
     
     public static function sqlDelete($categoria)
     {
-        $stSql = "delete from  categoria ";
-        $stSql .= " Where  id_cate='{$categoria->getIdCategoria()}'"
-        ;
-        return BD::getInstance()->sqlEjecutar($stSql);
+        $cc=BD::getInstancia();
+        $stSql = "DELETE FROM categoria WHERE id_cate=:id_cate";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute(array("id_cate"=>$categoria->getIdcategoria()));
     }
 }

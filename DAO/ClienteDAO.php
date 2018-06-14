@@ -1,100 +1,89 @@
-<?php 
+<?php
+require_once "../Entities/.php";
+require_once "../BD/conexion.php";
 
-    require_once("../BD/conexion.php");
+class ClienteDAO
+{
+    public static function sqlInsert($cliente)
+    {
+        $cc = BD::getInstancia();
+        $stSql = "INSERT INTO cliente VALUES ";
+        $stSql .= "(:id_cliente, :rut, :nombres, :apellidos, :fechaNac, :id_comuna, :telefono, :correo, :activo)";
+        $rs = $cc->db->prepare($stSql);
 
-    class ClienteDAO{
-        public function agregarCliente($rut,$nombres,$apellidos,$fechaNacimiento,$telefono,$correo,$comuna){
-            $modelo = new Conexion();
-            $conexion = $modelo->conexionbd();
-            $sql = "insert into cliente(rut,nombres,apellidos,fechaNacimiento,telefono,correo,comuna,activo) values(:rut,:nombres,:apellidos,:fechaNacimiento,:telefono,:correo,:comuna,1)";
-            $statement = $conexion->prepare($sql);
-            $statement->bindParam(':rut', $rut);
-            $statement->bindParam(':nombres', $nombres);
-            $statement->bindParam(':apellidos', $apellidos);
-            $statement->bindParam(':fechaNacimiento', $fechaNacimiento);
-            $statement->bindParam(':telefono', $telefono);
-            $statement->bindParam(':correo', $correo);
-            $statement->bindParam(':comuna', $comuna);
+        $params = self::getParams($cliente);
 
-            if(!$statement){
-                return "Error";
-            }else {
-                $statement->execute();
-                return "Agregado correctamente";
-            }
-        }
-
-        public function listarClientes(){
-            $row = null;
-            $modelo = new Conexion();
-            $conexion = $modelo->conexionbd();
-            $sql = "select * from cliente";
-            $statement = $conexion->prepare($sql);
-            $statement->execute();
-
-            while($resultado=$statement->fetch()){
-                $row[] = $resultado;
-            }
-            return $row;
-        }
-
-        public function eliminarCliente($rut){
-            $modelo = new Conexion();
-            $conexion = $modelo->conexionbd();
-            $sql = "delete from cliente where rut = :rut";
-            $statement = $conexion->prepare($sql);
-            $statement->bindParam(':rut', $rut);
-            if(!$statement){
-                return "Error al eliminar";
-            }else {
-                $statement->execute();
-                return "Eliminado correctamente";
-            }
-        }
-
-        public function buscarCliente($rut){
-            $row = null;
-            $modelo = new Conexion();
-            $conexion = $modelo->conexionbd();
-            $r = "%".$rut."%";
-            $sql = "select * from cliente where rut like :rut";
-            $statement = $conexion->prepare($sql);
-            $statement->bindParam(':rut', $r);
-            $statement->execute();
-            while($resultado=$statement->fetch()){
-                $row[] = $resultado;
-            }
-            return $row;
-        }
-
-        public function modificarCliente($rut){
-            $row = null;
-            $modelo = new Conexion();
-            $conexion = $modelo->conexionbd();
-            $sql = "select * from cliente where rut like :rut";
-            $statement = $conexion->prepare($sql);
-            $statement->bindParam(':rut',$rut);
-            $statement->execute();
-
-            while($resultado=$statement->fetch()){
-                $row[] = $resultado;
-            }
-            return $row;
-        }
-
-        public function modificarCliente2($tel){
-            $modelo = new Conexion();
-            $conexion = $modelo->conexionbd();
-            $sql = "update cliente set $tel = :valor where rut = :rut";
-            $statement = $conexion->prepare($sql);
-            if(!$statement){
-                return "Error al modificar";
-            }else {
-                $statement->execute();
-                return "Modificado correctamente";
-            }
-        }
-
+        return $rs->execute($params);
     }
 
-?>
+    public static function sqlSelect($id_cliente)
+    {
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM cliente WHERE id_cliente=:id_cliente";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute(array('id_cliente' => $id_cliente));
+        $ca = $rs->fetch(); // ca: cliente array
+
+        $nuevocliente = new Cliente();
+        $nuevocliente->setIdCliente($ca['id_cliente']);
+        $nuevocliente->setRut($ca['rut_cliente']);
+        $nuevocliente->setNombres($ca['nombres']);
+        $nuevocliente->setApellidos($ca['apellidos']);
+        $nuevocliente->setFechaNacimiento($ca['fecha_nacimiento']);
+        $nuevocliente->setIdComuna($ca['id_comuna']);
+        $nuevocliente->setCorreo($ca['correo']);
+        $nuevocliente->setActivo($ca['activo']);
+
+        return $nuevocliente;
+    }
+
+    public static function sqlSelectAll()
+    {
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM cliente";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $clientesArray = $rs->fetchAll();
+        return $clientesArray;
+    }
+
+    public static function sqlUpdate($cliente)
+    {
+        $cc = BD::getInstancia();
+
+        $stSql = "UPDATE cliente SET rut_cliente=:rut_cliente"
+            . ",nombres=:nombres"
+            . ",apellidos=:apellidos"
+            . ",fecha_nacimiento=fecha_nacimiento"
+            . ",id_comuna=:id_comuna"
+            . ",correo=:correo"
+            . ",activo=:activo"
+            . " WHERE id_cliente=:id_cliente";
+        $rs = $cc->db->prepare($stSql);
+        $params = self::getParams($cliente);
+        return $rs->execute($params);
+    }
+
+    public static function sqlDelete($cliente)
+    {
+        $cc = BD::getInstancia();
+        $stSql = "DELETE FROM cliente WHERE id_cliente=:id_cliente";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute(array("id_cliente" => $cliente->getIdcliente() ));
+    }
+
+    public static function getParams($cliente)
+    {
+        $params = array();
+        $params['id_cliente'] = $cliente->getIdCliente();
+        $params['rut'] = $cliente->getRut();
+        $params['nombres'] = $cliente->getNombres();
+        $params['apellidos'] = $cliente->getApellidos();
+        $params['fechaNac'] = $cliente->getFechaNacimiento();
+        $params['id_comuna'] = $cliente->getIdComuna();
+        $params['telefono'] = $cliente->getTelefono();
+        $params['correo'] = $cliente->getCorreo();
+        $params['activo'] = $cliente->getActivo();
+    }
+
+}

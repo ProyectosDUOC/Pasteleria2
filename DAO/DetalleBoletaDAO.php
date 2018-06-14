@@ -13,16 +13,11 @@ class DetalleBoletaDAO {
 
     //insert
     public static function sqlInsert($detalleBoleta) {
-        $stSql = "insert into detalle_boleta (";
-        $stSql .= " id_detalle,id_producto_p,id_boleta,precio,cant,total";
-        $stSql .= " )values (";
-        $stSql .= " {$detalleBoleta->getIdProductoP()}"
-                . ",{$detalleBoleta->getIdBoleta()}"
-                . ",{$detalleBoleta->getPrecio()}"
-                . ",{$detalleBoleta->getCant()}"
-                . ",{$detalleBoleta->getTotal()}"
-                . ")";
-        return BD::getInstance()->sqlInsertar($stSql);
+        $stSql = "insert into detalle_boleta VALUES";
+        $stSql .= " (:id_detalle,:id_producto_p,:id_boleta,:precio,:cant,:total)";
+        $rs = $cc->db->prepare($stSql);
+        $params = self::getParams($cliente);
+        return $rs->execute($params);
     }
 
     public static function sqlUpdate($detalleBoleta) {
