@@ -1,7 +1,7 @@
 <?php
 
 class BD{
-    public static $db;
+    public $db;
     private static $stHost='localhost';
     private static $stUsuario='root'; 
     private static $stClave='';
@@ -9,12 +9,12 @@ class BD{
     private static $instancia;
 
     public function __construct(){
-        $this->db = new PDO("mysql:host=" . $this->stHost . ";dbname=" .$this->stBd,$this->stUsuario,$this->stClave);
+        $this->db = new PDO("mysql:host=" . self::$stHost . ";dbname=" .self::$stBd,self::$stUsuario,self::$stClave);
     }
 
     public static function getInstancia(){
-        if (self::$instancia === null){
-            self::$instancia = new BD();
+        if (BD::$instancia === null){
+            BD::$instancia = new BD();
         }
         return self::$instancia;
     }

@@ -1,11 +1,7 @@
 <?php
 
-// Declaramos una variable $rootDir si es que no existe
-// isset==> si existe o no una variable
-if (!isset($rootDir))
-    $rootDir = $_SERVER['DOCUMENT_ROOT'];
-//Agregamos desde BD.PHPy la Entitie Boleta
-// desde el Path raiz ==> $rootDir
+if (!isset($rootDir)) $rootDir = $_SERVER['DOCUMENT_ROOT'];
+
 require_once($rootDir . "/BD/bd.php");
 require_once($rootDir . "/Entities/Boleta.php");
 
@@ -15,9 +11,9 @@ class BoletaDAO {
         $cc = BD::getInstancia();
         $stSql = "SELECT * FROM boleta WHERE id_boleta=:id_boleta";
         $rs = $cc->db->prepare($stSql);
-        $rs->execute(array('id_boleta',$id_boleta));
+        $rs->execute(array('id_boleta' => $id_boleta));
         $ba = $rs->fetch(PDO::FETCH_ASSOC);
-        $nuevaBoleta = new Boleta($ba['id_boleta'], $ba['total'], $ba['id_empleado'], $ba['id_forma_pago'], $ba['id_suscursal'], $ba['id_pedido_local']);
+        $nuevaBoleta = new Boleta($ba['id_boleta'], $ba['total'], $ba['id_empleado'], $ba['id_forma_pago'], $ba['id_sucursal'], $ba['id_pedido_local']);
         return $nuevaBoleta;
     }
 
@@ -29,7 +25,7 @@ class BoletaDAO {
         $stSql .= "(:id_boleta,:total,:id_empleado,:id_forma_pago,:id_sucursal,:id_pedido_local)";
         $rs = $cc->db->prepare($stSql);
 
-        $params = getParams($boleta);
+        $params = self::getParams($boleta);
         
         return $rs->execute($params);
     }
