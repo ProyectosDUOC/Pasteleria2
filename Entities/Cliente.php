@@ -114,8 +114,4 @@
             echo $this->__toString();
         }
     }
-
-    $clien= new Cliente();
-    var_dump($clien);
-
 ?>

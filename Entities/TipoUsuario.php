@@ -4,24 +4,24 @@ class TipoUsuario {
    private $idTipo;
    private $nombreTipo;
    
-   function __construct($idTipo, $nombreTipo) {
+   public function __construct($idTipo, $nombreTipo) {
        $this->idTipo = $idTipo;
        $this->nombreTipo = $nombreTipo;
    }
    
-   function getIdTipo() {
+   public function getIdTipo() {
        return $this->idTipo;
    }
 
-   function getNombreTipo() {
+   public function getNombreTipo() {
        return $this->nombreTipo;
    }
 
-   function setIdTipo($idTipo) {
+   public function setIdTipo($idTipo) {
        $this->idTipo = $idTipo;
    }
 
-   function setNombreTipo($nombreTipo) {
+   public function setNombreTipo($nombreTipo) {
        $this->nombreTipo = $nombreTipo;
    }
 }

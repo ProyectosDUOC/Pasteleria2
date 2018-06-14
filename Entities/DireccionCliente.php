@@ -12,7 +12,7 @@ class DireccionCliente {
     private $telefono;       
     private $celular;
     
-    function __construct($idDireccion, $idCliente, $nombres, $apellidos, $informacion, $zip, $idComuna, $direccion, $telefono, $celular) {
+    public function __construct($idDireccion, $idCliente, $nombres, $apellidos, $informacion, $zip, $idComuna, $direccion, $telefono, $celular) {
         $this->idDireccion = $idDireccion;
         $this->idCliente = $idCliente;
         $this->nombres = $nombres;
@@ -24,83 +24,83 @@ class DireccionCliente {
         $this->telefono = $telefono;
         $this->celular = $celular;
     }
-    function getIdDireccion() {
+    public function getIdDireccion() {
         return $this->idDireccion;
     }
 
-    function getIdCliente() {
+    public function getIdCliente() {
         return $this->idCliente;
     }
 
-    function getNombres() {
+    public function getNombres() {
         return $this->nombres;
     }
 
-    function getApellidos() {
+    public function getApellidos() {
         return $this->apellidos;
     }
 
-    function getInformacion() {
+    public function getInformacion() {
         return $this->informacion;
     }
 
-    function getZip() {
+    public function getZip() {
         return $this->zip;
     }
 
-    function getIdComuna() {
+    public function getIdComuna() {
         return $this->idComuna;
     }
 
-    function getDireccion() {
+    public function getDireccion() {
         return $this->direccion;
     }
 
-    function getTelefono() {
+    public function getTelefono() {
         return $this->telefono;
     }
 
-    function getCelular() {
+    public function getCelular() {
         return $this->celular;
     }
 
-    function setIdDireccion($idDireccion) {
+    public function setIdDireccion($idDireccion) {
         $this->idDireccion = $idDireccion;
     }
 
-    function setIdCliente($idCliente) {
+    public function setIdCliente($idCliente) {
         $this->idCliente = $idCliente;
     }
 
-    function setNombres($nombres) {
+    public function setNombres($nombres) {
         $this->nombres = $nombres;
     }
 
-    function setApellidos($apellidos) {
+    public function setApellidos($apellidos) {
         $this->apellidos = $apellidos;
     }
 
-    function setInformacion($informacion) {
+    public function setInformacion($informacion) {
         $this->informacion = $informacion;
     }
 
-    function setZip($zip) {
+    public function setZip($zip) {
         $this->zip = $zip;
     }
 
-    function setIdComuna($idComuna) {
+    public function setIdComuna($idComuna) {
         $this->idComuna = $idComuna;
     }
 
-    function setDireccion($direccion) {
+    public function setDireccion($direccion) {
         $this->direccion = $direccion;
     }
 
-    function setTelefono($telefono) {
+    public function setTelefono($telefono) {
         $this->telefono = $telefono;
     }
 
-    function setCelular($celular) {
+    public function setCelular($celular) {
         $this->celular = $celular;
     }
 

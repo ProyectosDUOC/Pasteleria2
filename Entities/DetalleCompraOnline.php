@@ -8,7 +8,7 @@ class DetalleCompraOnline {
     private $cant;                
     private $total;   
     
-    function __construct($idDetalleOnline, $idCompraOnline, $idProductoP, $precio, $cant, $total) {
+    public function __construct($idDetalleOnline, $idCompraOnline, $idProductoP, $precio, $cant, $total) {
         $this->idDetalleOnline = $idDetalleOnline;
         $this->idCompraOnline = $idCompraOnline;
         $this->idProductoP = $idProductoP;
@@ -16,51 +16,51 @@ class DetalleCompraOnline {
         $this->cant = $cant;
         $this->total = $total;
     }
-    function getIdDetalleOnline() {
+    public function getIdDetalleOnline() {
         return $this->idDetalleOnline;
     }
 
-    function getIdCompraOnline() {
+    public function getIdCompraOnline() {
         return $this->idCompraOnline;
     }
 
-    function getIdProductoP() {
+    public function getIdProductoP() {
         return $this->idProductoP;
     }
 
-    function getPrecio() {
+    public function getPrecio() {
         return $this->precio;
     }
 
-    function getCant() {
+    public function getCant() {
         return $this->cant;
     }
 
-    function getTotal() {
+    public function getTotal() {
         return $this->total;
     }
 
-    function setIdDetalleOnline($idDetalleOnline) {
+    public function setIdDetalleOnline($idDetalleOnline) {
         $this->idDetalleOnline = $idDetalleOnline;
     }
 
-    function setIdCompraOnline($idCompraOnline) {
+    public function setIdCompraOnline($idCompraOnline) {
         $this->idCompraOnline = $idCompraOnline;
     }
 
-    function setIdProductoP($idProductoP) {
+    public function setIdProductoP($idProductoP) {
         $this->idProductoP = $idProductoP;
     }
 
-    function setPrecio($precio) {
+    public function setPrecio($precio) {
         $this->precio = $precio;
     }
 
-    function setCant($cant) {
+    public function setCant($cant) {
         $this->cant = $cant;
     }
 
-    function setTotal($total) {
+    public function setTotal($total) {
         $this->total = $total;
     }
 

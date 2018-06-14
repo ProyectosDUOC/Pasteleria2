@@ -7,50 +7,50 @@ class ControlCliente {
     private $clave;          
     private $activo; 
     
-    function __construct($idControlC, $idCliente, $usuario, $clave, $activo) {
+    public function __construct($idControlC, $idCliente, $usuario, $clave, $activo) {
         $this->idControlC = $idControlC;
         $this->idCliente = $idCliente;
         $this->usuario = $usuario;
         $this->clave = $clave;
         $this->activo = $activo;
     }
-    function getIdControlC() {
+    public function getIdControlC() {
         return $this->idControlC;
     }
 
-    function getIdCliente() {
+    public function getIdCliente() {
         return $this->idCliente;
     }
 
-    function getUsuario() {
+    public function getUsuario() {
         return $this->usuario;
     }
 
-    function getClave() {
+    public function getClave() {
         return $this->clave;
     }
 
-    function getActivo() {
+    public function getActivo() {
         return $this->activo;
     }
 
-    function setIdControlC($idControlC) {
+    public function setIdControlC($idControlC) {
         $this->idControlC = $idControlC;
     }
 
-    function setIdCliente($idCliente) {
+    public function setIdCliente($idCliente) {
         $this->idCliente = $idCliente;
     }
 
-    function setUsuario($usuario) {
+    public function setUsuario($usuario) {
         $this->usuario = $usuario;
     }
 
-    function setClave($clave) {
+    public function setClave($clave) {
         $this->clave = $clave;
     }
 
-    function setActivo($activo) {
+    public function setActivo($activo) {
         $this->activo = $activo;
     }
 

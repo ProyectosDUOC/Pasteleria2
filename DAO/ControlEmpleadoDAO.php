@@ -1,53 +1,70 @@
 <?php
 
-requiere("/BD/Conectar.php");
+if (!isset($rootDir))
+    $rootDir = $_SERVER['DOCUMENT_ROOT'];
+    
+
+require_once($rootDir . "/Entities/ControlEmpleado.php");
+require("/BD/bd.php");
 
 class ControlEmpleadoDAO {
 
-    public function __construct(){
+    public static function sqlSelect($id_control_e){
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM control_empleado WHERE id_control_e=:id_contorl_e";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute(array('id_control_e',$id_control_e));
+        $ba = $rs->fetch(PDO::FETCH_ASSOC);
+        $nuevoControl = new ControlEmpleado($ba['id_control_e'],
+                                           $ba['usuairo'],
+                                           $ba['clave'],
+                                           $ba['id_tipo'],
+                                           $ba['id_empleado'],
+                                           $ba['activo']);
+        return $nuevoControl;
+    }
 
+    //insert
+    public static function sqlInsert($ControlEmpleado) {
+
+        $cc=BD::getInstancia();
+        $stSql = "INSERT INTO contorl_empleado VALUES ";
+        $stSql .= "(null,:usuario,:clave,:id_tipo,:id_empleado,:activo)";
+        $rs = $cc->db->prepare($stSql);
+
+        $params = getParams($ControlEmpleado);
+        
+        return $rs->execute($params);
     }
-    public  function insertar($control) {
-        $usuario=$control->getUsuario();
-        $clave=$control->getClave();
-        $idTipo=$control->getIdTipo();
-        $idEmeplado=$control->getIdEmpleado();
-       
-        $sql = "insert into control_empleado(usuario,clave,id_tipo,id_empleado,activo)";
-        $sql .= "values('$usuario','$clave',$idTipo,$idEmeplado,1)";
-     
-        return ejecutarConsulta($sql);
+
+    public static function sqlUpdate($ControlEmpleado) {
+        $cc=BD::getInstancia();
+
+        $stSql = "UPDATE control_empleado SET clave=:clave"
+                . " WHERE id_control_e=:id_control_e";
+        $rs = $cc->db->prepare($stSql);
+        $params = getParams($ControlEmpleado);
+        return $rs->execute($params);
     }
-    public  function actualizar($control) {
-        $usuario=$control->getUsuario();
-        $clave=$control->getClave();
-        $idTipo=$control->getIdTipo();
-        $idEmeplado=$control->getIdEmpleado();
-        $activo=$control->getActivo();
-        $sql = "update control_empleado set clave='$clave' where id_empleado_e=$id";
-        return ejecutarConsulta($sql);
+
+    public static function sqlDelete($ControlEmpleado) {
+        $cc=BD::getInstancia();
+        $stSql = "DELETE FROM  WHERE id_control_e=:id_control_e";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute(array("id_control_e"=>$ControlEmpleado->getIdControlE()));
     }
-    public function desactivar($id){
-        $sql = "UPDATE control_empleado set activo=0 where id_control_e=$id";
-        return ejecutarConsulta($sql);
+
+    public static function getParams($Control){
+        $params = array();
+       // $params['id_control_e'] = $Control->getIdControlE();
+        $params['usuario'] =  $Control->getUsuario();
+        $params['clave'] = $Control->getClave();
+        $params['id_tipo'] = $Control->getIdTipo();
+        $params['id_empleado'] = $Control->getIdEmpleado();
+        $params['activo'] = $Control->getActivo();
+        return $params;
     }
-    public function activar($id){
-        $sql = "UPDATE control_empleado set activo=1 where id_control_e=$id";
-        return ejecutarConsulta($sql);
-    }
-    public function buscar($id){
-        $sql = "SELECT * FROM control_empleado WHERE id_control_e=$id";
-        return ejecutarConsultaSimpleFila($sql);
-    }
-    public  function eliminar($control) {
-        $id=$control->getIdControlE();
-        $sql = "delete from control_empleado where id_control_e=$id";
-        return ejecutarConsulta($sql);
-    }
-    public function listar(){
-        $sql = "SELECT * FROM control_empleado";
-        return ejecutarConsulta($sql);
-    }
+
 }
 
 ?>

@@ -4,7 +4,7 @@ if(isset($_SESSION['empleado'])){
    // header('Location: contendio.php');
     echo "cotectado";
 }else{
-    header('Location: ../ingresa.php');
+    header('Location: ../ingresar.php');
 }
 ?>
 

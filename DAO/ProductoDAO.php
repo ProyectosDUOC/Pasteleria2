@@ -4,22 +4,16 @@
 // isset==> si existe o no una variable
 if (!isset($rootDir))
     $rootDir = $_SERVER['DOCUMENT_ROOT'];
-//Agregamos desde BD.PHPy la Entitie Boleta
-// desde el Path raiz ==> $rootDir
 
-if (!isset($rootDir))
-    $rootDir = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($rootDir . "/BD/BD.php");
 
 require_once("../Entities/Producto.php");
 
-require_once("../bd/conexion.php");
+require_once("../BD/Conexion.php");
 
 class ProductoDAO {
 
     public static function sqlInsert($idProducto,$codProducto,$nombre,$imagen,$tamano,$activo,$categoria) {
-        $modelo = new ConexionC();
+        $modelo = new BD();
         $conexion = $modelo->conexionbd();
         $stSql = "insert into producto (id_producto,cod_producto,nombre_producto,imagen,tamano,activo,id_cate)
          values (:idProducto,:codProducto,:nombreProducto,:imagen,:tamano,:activo,:categoria)";

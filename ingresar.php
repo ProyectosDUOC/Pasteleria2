@@ -15,7 +15,7 @@
 <body>
   <section class="container">
     <div class="col-12">
-        <form class="form-signin" method="post" action="">
+        <form class="form-signin" method="post" action="" name="login">
           <img class="" src="logo.png" alt="" width="260" height="230">
           <h3 class="text-muted py-2">Acceso Empleado</h3>
 
@@ -28,16 +28,8 @@
           <label for="txtTipo" class="sr-only">Tipo Usuario</label>
           <input type="number" id="txtTipo" name="txtTipo" class="form-control" placeholder="tipo usuario" required autofocus>
         
-          <input type="submit"  class="btn btn-fill btn-block btn-danger" name="btnInsertar" value="Agregar" >
-          
-          <input type="submit"  class="btn btn-fill btn-block btn-danger" name="btnEliminar" value="Eliminar" >
-             
-          <input type="submit"  class="btn btn-fill btn-block btn-danger" name="btnModificar" value="Modificar" >
-        
-          <input type="submit"  class="btn btn-fill btn-block btn-danger" name="btnBuscar" value="Buscar" >
-          
-          <input type="submit"  class="btn btn-fill btn-block btn-danger" name="btnListar" value="Listar" >
-        
+          <input type="submit"  class="btn btn-fill btn-block btn-danger" name="btnInsertar" value="Ingresar" >
+         
         </form>
     </div>      
   </section>    
@@ -55,21 +47,6 @@ function cargar(){
   return $control;
 }
 
-if (isset($_REQUEST["btnInsertar"])){
-  $dao->insertar(cargar());
-}
-
-if (isset($_REQUEST["btnEliminar"])){
-  $dao->eliminar(cargar());
-}
-
-if (isset($_REQUEST["btnBuscar"])){
-  $dao->buscar(cargar());
-}
-
-if (isset($_REQUEST["btnModificar"])){
-  $dao->modificar(cargar());
-}
 
 
 ?>

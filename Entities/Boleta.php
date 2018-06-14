@@ -25,7 +25,7 @@ class Boleta {
         $this->idSucursal = $idSucursal;
         $this->idPedidoLocal = $idPedidoLocal;
     }
-    function getIdBoleta() {
+    public function getIdBoleta() {
         return $this->idBoleta;
     }
     public function getTotal() {

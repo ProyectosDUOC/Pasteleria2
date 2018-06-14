@@ -15,27 +15,27 @@ class Categoria {
         $this->nombreCate = $nombreCate;
         $this->activo = $activo;
     }
-    function getIdCate() {
+    public function getIdCate() {
         return $this->idCate;
     }
 
-    function getNombreCate() {
+    public function getNombreCate() {
         return $this->nombreCate;
     }
 
-    function getActivo() {
+    public function getActivo() {
         return $this->activo;
     }
 
-    function setIdCate($idCate) {
+    public function setIdCate($idCate) {
         $this->idCate = $idCate;
     }
 
-    function setNombreCate($nombreCate) {
+    public function setNombreCate($nombreCate) {
         $this->nombreCate = $nombreCate;
     }
 
-    function setActivo($activo) {
+    public function setActivo($activo) {
         $this->activo = $activo;
     }
 
