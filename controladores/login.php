@@ -1,20 +1,42 @@
 <?php
+
+    session_destroy();
     session_start();
-    ?>
-<?php
-    $usuario = $_POST['usuario'];
-    $pass = $_POST['pass'];
+   
+    $_SESSION['login']= 'no';
 
+    require_once('../DAO/ControlEmpleadoDAO.php');
+    $usuario = $_POST['txtUsuario'];
+    $pass = $_POST['txtPass'];
+    $tipoUsuario = $_POST['txtTipoUsuario'];
 
-    if($usuario=="vendedor"){
-        header('Location: ../local/index.html');
+    $controles = ControlEmpleadoDAO::readAll();
+    foreach($controles as $control){
+        if($control['usuario']==$usuario && $control['clave']==$pass){
+            if($control['id_tipo']==$tipoUsuario){
+                switch ($tipoUsuario) {
+                    case 1:
+                        echo "Vendedor";
+                        $_SESSION['login']= $control;
+                        header('Location: ../local/index.php');                        
+                        break;
+                    case 2:
+                        echo "Cajero";
+                        break;
+                    case 3:
+                        echo "administrador";
+                        break;
+                }
+            }else{
+                echo "error Tipo de datos";
+            }
+
+            
+        }else{
+            
+        }
 
     }
-    if($usuario=="2"){
-        echo "Hola Vendedor";
-    }
-    if($usuario=="cajero"){
-        header('Location: ../admin/index.html');
-    }
+    
 
 ?>

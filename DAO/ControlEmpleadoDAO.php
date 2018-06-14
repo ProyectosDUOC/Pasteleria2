@@ -4,8 +4,9 @@ if (!isset($rootDir))
     $rootDir = $_SERVER['DOCUMENT_ROOT'];
     
 
+require_once($rootDir . "/BD/bd.php");
 require_once($rootDir . "/Entities/ControlEmpleado.php");
-require("/BD/bd.php");
+
 
 class ControlEmpleadoDAO {
 
@@ -63,6 +64,16 @@ class ControlEmpleadoDAO {
         $params['id_empleado'] = $Control->getIdEmpleado();
         $params['activo'] = $Control->getActivo();
         return $params;
+    }
+
+
+    public static function readAll() { 
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM control_empleado";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $ba = $rs->fetchAll();
+        return $ba;
     }
 
 }

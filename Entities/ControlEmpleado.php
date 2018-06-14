@@ -21,7 +21,7 @@ class ControlEmpleado {
 
     
 
-    public function __construct($idControlE, $idEmpleado, $usuario, $clave, $idTipo, $activo) {
+    public function __construct($idControlE=0, $idEmpleado=0, $usuario=null, $clave=null, $idTipo=0, $activo=0) {
         $this->idControlE = $idControlE;
         $this->idEmpleado = $idEmpleado;
         $this->usuario = $usuario;

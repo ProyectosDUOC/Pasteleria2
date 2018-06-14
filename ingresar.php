@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<?php 
-  require("DAO/ControlEmpleadoDAO.php");
+<?php
+  require_once('DAO/TipoUsuarioDAO.php');
 ?>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -14,9 +14,10 @@
 </head>
 <body>
   <section class="container">
-    <div class="col-12">
-        <form class="form-signin" method="post" action="" name="login">
-          <img class="" src="logo.png" alt="" width="260" height="230">
+  <center>
+  <div class="col-4 col-md-4">
+        <form class="form-signin" method="post" action="../controladores/login.php" name="login">
+          <img class="" src="logo.png" alt="" width="100%">
           <h3 class="text-muted py-2">Acceso Empleado</h3>
 
           <label for="txtUsuario" class="sr-only">Usuario</label>
@@ -25,28 +26,25 @@
           <label for="txtPass" class="sr-only">Constraseña</label>
           <input type="password" id="txtPass" name="txtPass" class="form-control" placeholder="Contraseña" required>
           
-          <label for="txtTipo" class="sr-only">Tipo Usuario</label>
-          <input type="number" id="txtTipo" name="txtTipo" class="form-control" placeholder="tipo usuario" required autofocus>
-        
+         
+          <div>
+            <select class="custom-select d-block w-100" id="tipoUsuario" name="txtTipoUsuario" required>
+              <option value="">Tipo Usuario...</option>
+              <?php 
+                $tipos = TipoUsuarioDAO::readAll();
+                foreach($tipos as $tipo){
+                  echo "<option value=" . $tipo['id_tipo']  .  " >" . $tipo['nombre_tipo'] . "</option>";
+                }
+              ?>
+             
+            </select>
+          </div>
+         <br><br>
           <input type="submit"  class="btn btn-fill btn-block btn-danger" name="btnInsertar" value="Ingresar" >
          
         </form>
-    </div>      
+    </div>    
+  </center>      
   </section>    
   </body>
 </html>
-
-<?php
-
-$dao = new ControlEmpleadoDAO();
-function cargar(){
-  $control = new ControlEmpleado();
-  $control->setUsuario($_REQUEST["txtUsuario"]);
-  $control->setClave($_REQUEST["txtPass"]);
-  $control->setTipoUsuario($_REQUEST["txtTipo"]);
-  return $control;
-}
-
-
-
-?>

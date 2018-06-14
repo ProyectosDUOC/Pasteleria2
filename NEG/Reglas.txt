@@ -40,5 +40,10 @@ Genera boucher - del codigo de compra
 -avisa los pedidos para preparar en DESPACHO
 
 
+## ADMINISTRADOR ## 
 
+CRUD -
+
+    - crear empleado (cajero, despacho, vendedor)
+    - crear nuevo producto ()
 

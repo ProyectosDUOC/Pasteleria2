@@ -1,8 +1,14 @@
-<?php  session_start();
+<?php  
+session_start();
 
-if(isset($_SESSION['empleado'])){
-   // header('Location: contendio.php');
-    echo "cotectado";
+
+require_once('../Entities/ControlEmpleado.php');
+print_r($_SESSION['login']);
+
+if(isset($_SESSION['login'])){
+    $idControl = $_SESSION['login'];
+    
+    
 }else{
     header('Location: ../ingresar.php');
 }
@@ -38,7 +44,7 @@ if(isset($_SESSION['empleado'])){
                 </div>
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="venta.html">
+                        <a class="nav-link" href="venta.php">
                             <i class="nc-icon nc-tap-01" aria-hidden="true"></i>
                             <p>Nueva Venta</p>
                         </a>
