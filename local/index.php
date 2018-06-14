@@ -1,3 +1,14 @@
+<?php  session_start();
+
+if(isset($_SESSION['empleado'])){
+   // header('Location: contendio.php');
+    echo "cotectado";
+}else{
+    header('Location: ../ingresa.php');
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,6 +24,7 @@
     <link href="../FrWork/bootstrap/css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
     <link href="../FrWork/bootstrap/css/demo.css" rel="stylesheet" />
     <link href="../FrWork/bootstrap/css/style.css" rel="stylesheet" />
+
 </head>
 
 <body>

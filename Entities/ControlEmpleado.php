@@ -12,14 +12,16 @@
  * @author benja
  */
 class ControlEmpleado {
-    private $idControlE;  
-    private $idEmpleado;    
-    private $usuario;        
-    private $clave; 
+    private $idControlE;
+    private $idEmpleado;
+    private $usuario;
+    private $clave;
     private $idTipo;
-    private $activo; 
+    private $activo;
+
     
-    function __construct($idControlE, $idEmpleado, $usuario, $clave, $idTipo, $activo) {
+
+    public function __construct($idControlE, $idEmpleado, $usuario, $clave, $idTipo, $activo) {
         $this->idControlE = $idControlE;
         $this->idEmpleado = $idEmpleado;
         $this->usuario = $usuario;
@@ -27,51 +29,51 @@ class ControlEmpleado {
         $this->idTipo = $idTipo;
         $this->activo = $activo;
     }
-    function getIdControlE() {
+    public function getIdControlE() {
         return $this->idControlE;
     }
 
-    function getIdEmpleado() {
+    public function getIdEmpleado() {
         return $this->idEmpleado;
     }
 
-    function getUsuario() {
+    public function getUsuario() {
         return $this->usuario;
     }
 
-    function getClave() {
+    public function getClave() {
         return $this->clave;
     }
 
-    function getIdTipo() {
+    public function getIdTipo() {
         return $this->idTipo;
     }
 
-    function getActivo() {
+    public function getActivo() {
         return $this->activo;
     }
 
-    function setIdControlE($idControlE) {
+    public function setIdControlE($idControlE) {
         $this->idControlE = $idControlE;
     }
 
-    function setIdEmpleado($idEmpleado) {
+    public function setIdEmpleado($idEmpleado) {
         $this->idEmpleado = $idEmpleado;
     }
 
-    function setUsuario($usuario) {
+    public function setUsuario($usuario) {
         $this->usuario = $usuario;
     }
 
-    function setClave($clave) {
+    public function setClave($clave) {
         $this->clave = $clave;
     }
 
-    function setIdTipo($idTipo) {
+    public function setIdTipo($idTipo) {
         $this->idTipo = $idTipo;
     }
 
-    function setActivo($activo) {
+    public function setActivo($activo) {
         $this->activo = $activo;
     }
 
