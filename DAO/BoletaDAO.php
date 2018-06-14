@@ -11,6 +11,16 @@ require_once($rootDir . "/Entities/Boleta.php");
 
 class BoletaDAO {
 
+    public static function sqlSelect($id_boleta){
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM boleta WHERE id_boleta=:id_boleta";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute(array('id_boleta',$id_boleta));
+        $ba = $rs->fetch(PDO::FETCH_ASSOC);
+        $nuevaBoleta = new Boleta($ba['id_boleta'], $ba['total'], $ba['id_empleado'], $ba['id_forma_pago'], $ba['id_suscursal'], $ba['id_pedido_local']);
+        return $nuevaBoleta;
+    }
+
     //insert
     public static function sqlInsert($boleta) {
 

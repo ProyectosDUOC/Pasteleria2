@@ -16,13 +16,11 @@ class CategoriaDAO
 
     public static function sqlInsert($categoria)
     {
-        $stSql = "insert into categoria (";
-        $stSql .= " id_cate ,nombre_cate,activo";
-        $stSql .= " )values (";
-        $stSql .= " '{$categoria->getIdCategoria()}'"
-            . ",'{$categoria->getNombreCategoria()}'"
-            . ",'{$categoria->getActivo()}'"
-            . ")";
+        $cc=BD::getInstancia();
+
+        $stSql = "INSERT INTO categoria VALUES (:id_cate, :nombre_cate, :activo)";
+        $rs = $cc->db->prepare($stSql);
+        $params = getParams($categoria);
         return BD::getInstance()->sqlEjecutar($stSql);
     }
     

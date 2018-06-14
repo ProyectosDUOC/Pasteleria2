@@ -17,7 +17,7 @@ class Boleta {
     private $idSucursal;
     private $idPedidoLocal;
     
-    public function __construct($idBoleta, $total, $idEmpleado, $idFormaPago, $idSucursal, $idPedidoLocal) {
+    public function __construct($idBoleta, $total=0, $idEmpleado=0, $idFormaPago=0, $idSucursal=0, $idPedidoLocal=0) {
         $this->idBoleta = $idBoleta;
         $this->total = $total;
         $this->idEmpleado = $idEmpleado;
