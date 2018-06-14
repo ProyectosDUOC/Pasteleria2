@@ -1,0 +1,44 @@
+###    EMPLEADO     ##
+
+- entrada al login
+
+- incio sesion empleado
+ 
+- Hace una nueva venta
+    - Todos los productos
+        -tipos de productos
+        -precios de los productos
+
+- Crea un pedido
+    - Datos del usuario
+    -Todos los productos
+        -Tipos de productos
+        -precios de los productos
+        -mensaje del pedido en caso de torta
+    
+Genera boucher - del codigo de compra
+
+###    CAJA     ##
+
+- entrada al login
+
+- Inicio de sesion cajera
+
+- pide el numero de boleto o de pedido
+
+- busca el pedido
+    - detalles del pedido
+    - forma de pago
+    - forma de envio (en caso si paga en el local)
+
+    Genera boleta
+
+
+
+###    DESPACHO     ##
+
+-avisa los pedidos para preparar en DESPACHO
+
+
+
+
