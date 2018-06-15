@@ -49,4 +49,13 @@ class CategoriaDAO
         $rs = $cc->db->prepare($stSql);
         $rs->execute(array("id_cate"=>$categoria->getIdcategoria()));
     }
+
+    public static function getParams($categoria)
+    {
+        $params = array();
+        $params['id_cate'] = $categoria->getIdCate();
+        $params['nombre_cate'] = $categoria->getNombreCate();
+        $params['activo'] = $categoria->getActivo();
+        return $params;
+    }
 }

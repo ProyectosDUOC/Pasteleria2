@@ -12,7 +12,7 @@ class DireccionCliente {
     private $telefono;       
     private $celular;
     
-    public function __construct($idDireccion, $idCliente, $nombres, $apellidos, $informacion, $zip, $idComuna, $direccion, $telefono, $celular) {
+    public function __construct($idDireccion=0, $idCliente=0, $nombres=0, $apellidos=0, $informacion=0, $zip=0, $idComuna=0, $direccion=0, $telefono=0, $celular=0) {
         $this->idDireccion = $idDireccion;
         $this->idCliente = $idCliente;
         $this->nombres = $nombres;

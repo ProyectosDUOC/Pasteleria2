@@ -1,47 +1,80 @@
 <?php
 
-// Declaramos una variable $rootDir si es que no existe
-// isset==> si existe o no una variable
-if (!isset($rootDir))
-    $rootDir = $_SERVER['DOCUMENT_ROOT'];
-//Agregamos desde BD.PHPy la Entitie Boleta
-// desde el Path raiz ==> $rootDir
+if (!isset($rootDir))    $rootDir = $_SERVER['DOCUMENT_ROOT'];
+
 require_once($rootDir . "/BD/bd.php");
 require_once($rootDir . "/Entities/ProductoPrecio.php");
 
 class ProductoPrecioDAO {
 
-    /* METODO BUSCAR */
+    public static function sqlInsert($productoPrecio)
+    {
+        $cc = BD::getInstancia();
+        $stSql = "INSERT INTO producto_precio VALUES ";
+        $stSql .= "(:id_producto_p, :id_producto, :descripcion, :precio)";
+        $rs = $cc->db->prepare($stSql);
 
-    // Método que ejecuta una sentencia,
-    // Sin embargo no retorna ningún registro
-    public static function getProductoID($productoPrecio) {
-        $stSql = "select id_producto  from  producto_precio ";
-        $stSql .= " where id_producto_p={$productoPrecio->getIdProductoP()}";
+        $params = self::getParams($productoPrecio);
 
-        $resultado = BD::getInstance()->sqlSelect($stSql);
-        if (!$resultado)
-            return false;
-        return $resultado;
+        return $rs->execute($params);
     }
 
-    public static function sqlSelectOneProductoP($productoPrecio) {
-        // Crea el Sql utilizando el boletaId de la clase
-        $stSql = "select * from producto_precio ";
-        $stSql .= " where id_producto_p={$productoPrecio->getIdProductoP()}";
+    public static function sqlSelect($id_producto_p)
+    {
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM producto_precio WHERE id_producto_p=:id_producto_p";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute(array('id_producto_p' => $id_producto_p));
+        $ppa = $rs->fetch(); // ppa: producto precio array
 
-        $fila = BD::getInstance()->sqlFetch($stSql);
-        if (!$fila)
-            return null;
-        // llena los campos que faltan de la instancia 
-        $productoPrecio->setIdProducto($fila["id_producto"]);
-        $productoPrecio->setDescripcion($fila["descripcion"]);
-        $productoPrecio->setPrecio($fila["precio"]);
-        // retorna true, ya que resulto la operación
-        return true;
+        $nuevoProductoP = new ProductoPrecio();
+        $nuevoProductoP->setIdProductoP($ppa['id_producto_p']);
+        $nuevoProductoP->setIdProducto($ppa['id_producto']);
+        $nuevoProductoP->setDescripcion($ppa['descripcion']);
+        $nuevoProductoP->setPrecio($ppa['precio']);
+
+        return $nuevoProductoP;
     }
 
-    
+    public static function sqlSelectAll()
+    {
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM producto_precio";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $ProductoPArray = $rs->fetchAll();
+        return $ProductoPArray;
+    }
 
+    public static function sqlUpdate($productoPrecio)
+    {
+        $cc = BD::getInstancia();
+
+        $stSql = "UPDATE producto_precio SET id_producto=:id_producto"
+            . ",descripcion=:descripcion"
+            . ",precio=:precio"
+            . " WHERE id_producto_p=:id_producto_p";
+        $rs = $cc->db->prepare($stSql);
+        $params = self::getParams($productoPrecio);
+        return $rs->execute($params);
+    }
+
+    public static function sqlDelete($productoPrecio)
+    {
+        $cc = BD::getInstancia();
+        $stSql = "DELETE FROM producto_precio WHERE id_producto_p=:id_producto_p";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute(array("id_producto_p" => $productoPrecio->getIdProductoP() ));
+    }
+
+    public static function getParams($productoPrecio)
+    {
+        $params = array();
+        $params['id_producto_p'] = $productoPrecio->setIdProductoP();
+        $params['id_producto'] = $productoPrecio->setIdProducto();
+        $params['descripcion'] = $productoPrecio->setDescripcion();
+        $params['precio'] = $productoPrecio->setPrecio();
+        return $params;
+    }
 }
 ?>
