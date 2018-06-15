@@ -43,14 +43,25 @@ class ProductoDAO {
         return $nuevoProducto;
     }
 
-    public static function sqlSelectAll()
+    public static function readAll()
     {
         $cc = BD::getInstancia();
         $stSql = "SELECT * FROM producto";
         $rs = $cc->db->prepare($stSql);
         $rs->execute();
-        $clientesArray = $rs->fetchAll();
-        return $clientesArray;
+        $productos = $rs->fetchAll();
+        $pila = array();
+        foreach ($productos as $c) {
+            $actorAux = new Producto($c['id_producto'],
+                                            $c['cod_producto'],
+                                            $c['nombre_producto'],
+                                            $c['imagen'],
+                                            $c['tamano'],
+                                            $c['activo'],
+                                            $c['id_cate']);
+            array_push($pila, $actorAux);
+        }
+        return $pila;
     }
 
     public static function sqlUpdate($producto)

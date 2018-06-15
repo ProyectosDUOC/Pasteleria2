@@ -46,6 +46,24 @@ class ProductoPrecioDAO {
         return $ProductoPArray;
     }
 
+    public static function idRealAll($id)
+    {
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM producto_precio where id_producto=".$id;
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $ProductoPArray = $rs->fetchAll();
+        $pila = array();
+        foreach ($ProductoPArray as $c) {
+            $actorAux = new ProductoPrecio($c['id_producto_p'],
+                                            $c['id_producto'],
+                                            $c['descripcion'],
+                                            $c['precioproducto_precio']);
+            array_push($pila, $actorAux);
+        }
+        return $pila;
+    }
+   
     public static function sqlUpdate($productoPrecio)
     {
         $cc = BD::getInstancia();

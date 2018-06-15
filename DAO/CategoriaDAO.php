@@ -7,8 +7,8 @@ if (!isset($rootDir)) {
 
 //Agregamos desde BD.PHPy la Entitie Actor
 // desde el Path raiz ==> $rootDir
-require_once $rootDir . "/BDD/bd.php";
-require_once $rootDir . "/modelo/Categoria.php";
+require_once ($rootDir . "/BD/bd.php");
+require_once ($rootDir . "/Entities/Categoria.php");
 class CategoriaDAO
 {
     // Métodos de nuestra Dao
@@ -16,11 +16,11 @@ class CategoriaDAO
 
     public static function sqlSelect($id_categoria){
         $cc = BD::getInstancia();
-        $stSql = "SELECT * FROM categoria WHERE id_categoria=:id_categoria";
+        $stSql = "SELECT * FROM categoria WHERE id_cate=:id_cate";
         $rs = $cc->db->prepare($stSql);
-        $rs->execute(array('id_categoria' => $id_categoria));
+        $rs->execute(array('id_cate' => $id_categoria));
         $ca = $rs->fetch();
-        $nuevaCategoria = new Categoria($ca['id_categoria'],$ca['nombre_cate'],$ca['activo']);
+        $nuevaCategoria = new Categoria($ca['id_cate'],$ca['nombre_cate'],$ca['activo']);
         return $nuevaCategoria;
     }
 
@@ -58,4 +58,22 @@ class CategoriaDAO
         $params['activo'] = $categoria->getActivo();
         return $params;
     }
+
+    public static function sqlSelectAll()
+    {
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM categoria";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $productos = $rs->fetchAll();
+        $pila = array();
+        foreach ($productos as $c) {
+            $actorAux = new Producto($c['id_categoria'],
+                                            $c['nombre_cate'],
+                                            $c['activo']);
+            array_push($pila, $actorAux);
+        }
+        return $pila;
+    }
+
 }

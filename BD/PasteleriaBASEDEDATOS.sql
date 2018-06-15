@@ -395,7 +395,7 @@ INSERT INTO producto VALUES(2,'101','Kuchen de mermelada de frutilla','Tortas/to
 INSERT INTO producto VALUES(3,'102','Torta de Chocolate','Tortas/tor_mazapan_chocolate.jpg','',1,1);
 INSERT INTO producto VALUES(4,'103','Torta Mil Hoja','Tortas/tor_mil_hojas.jpg','',1,1);
 INSERT INTO producto VALUES(5,'104','Torta de panqueque Frambuesa','Tortas/tor_panqueque.jpg','',1,1);
-INSERT INTO producto VALUES(5,'105','Torta tres leche','Tortas/tor_tres_leches.jpg','',1,1);
+INSERT INTO producto VALUES(6,'105','Torta tres leche','Tortas/tor_tres_leches.jpg','',1,1);
 
 INSERT INTO producto_precio VALUES (1,1,'20 PP / $25.000',25000);
 INSERT INTO producto_precio VALUES (2,2,'20 PP / $15.000',15000);
@@ -408,9 +408,11 @@ INSERT INTO producto_precio VALUES (8,4,'50 PP / $37.000',37000);
 INSERT INTO producto_precio VALUES (9,5,'20 PP / $25.000',25000);
 INSERT INTO producto_precio VALUES (10,5,'30 PP / $29.000',29000);
 INSERT INTO producto_precio VALUES (11,5,'50 PP / $37.000',37000);
-INSERT INTO producto_precio VALUES (9,5,'20 PP / $15.000',15000);
-INSERT INTO producto_precio VALUES (10,5,'30 PP / $25.000',25000);
-INSERT INTO producto_precio VALUES (11,5,'50 PP / $35.000',35000);
+INSERT INTO producto_precio VALUES (12,6,'20 PP / $15.000',15000);
+INSERT INTO producto_precio VALUES (13,6,'30 PP / $25.000',25000);
+INSERT INTO producto_precio VALUES (14,6,'50 PP / $35.000',35000);
+
+
 
 
 CREATE TABLE producto_precio (

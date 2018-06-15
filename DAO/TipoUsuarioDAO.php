@@ -22,8 +22,6 @@ class TipoUsuarioDAO {
             array_push($pila, $actorAux);
         }
         return $pila;
-
-        return $ba;
     }
 }
 
