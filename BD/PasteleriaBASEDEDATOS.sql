@@ -387,8 +387,9 @@ INSERT INTO control_empleado VALUES(3,'patricia','patricia',3,3,1);
 INSERT INTO categoria VALUES(1,'Tortas',1);
 INSERT INTO categoria VALUES(2,'Masas',1);
 INSERT INTO categoria VALUES(3,'Galletas',1);
-INSERT INTO categoria VALUES(4,'Dulceria',1);
-INSERT INTO categoria VALUES(5,'Bebestible',1);
+INSERT INTO categoria VALUES(4,'Cocteleria',1);
+INSERT INTO categoria VALUES(5,'Dulceria',1);
+INSERT INTO categoria VALUES(6,'Bebestible',1);
 
 INSERT INTO producto VALUES(1,'100','Torta de castaña','Tortas/tor_castano.jpg','',1,1);
 INSERT INTO producto VALUES(2,'101','Kuchen de mermelada de frutilla','Tortas/tor_kuchen_quesillo.jpg','',1,1);
@@ -412,25 +413,93 @@ INSERT INTO producto_precio VALUES (12,6,'20 PP / $15.000',15000);
 INSERT INTO producto_precio VALUES (13,6,'30 PP / $25.000',25000);
 INSERT INTO producto_precio VALUES (14,6,'50 PP / $35.000',35000);
 
+INSERT INTO producto VALUES(7,'200','Chaparrita','Masas/chaparrita.jpg','',1,2);
+INSERT INTO producto VALUES(8,'201','Pascualina','Masas/pascualina.jpg','',1,2);
+INSERT INTO producto VALUES(9,'203','Empanada de mill hoja','Masas/hoja.jpg','',1,2);
+INSERT INTO producto VALUES(10,'204','Empanada de pollo','Masas/pollo_empanada.jpg','',1,2);
+INSERT INTO producto VALUES(11,'205','Empanada de pino','Masas/pino.jpg','',1,2);
+INSERT INTO producto VALUES(12,'206','Pizza','Masas/pizza.jpg','',1,2);
+
+INSERT INTO producto_precio VALUES (15,7,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (16,8,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (17,9,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (18,10,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (19,11,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (20,12,'1 unidad / $1.000',1000);
+
+INSERT INTO producto VALUES(13,'300','Galletas de castaño','Galletas/castano_250.jpg','',1,3);
+INSERT INTO producto VALUES(14,'301','Cocadas','Galletas/cocadas.jpg','',1,3);
+INSERT INTO producto VALUES(15,'303','Galletas danesas','Galletas/danesa.jpg','',1,3);
+INSERT INTO producto VALUES(16,'304','Lenguas Finas','Galletas/galletas_finas.jpg','',1,3);
+INSERT INTO producto VALUES(17,'305','Mini brownie','Galletas/mini_brownie.jpg','',1,3);
+INSERT INTO producto VALUES(18,'306','Mini Muffin','Galletas/mini_muffin.jpg','',1,3);
+
+INSERT INTO producto_precio VALUES (21,13,'1 unidad / $500',500);
+INSERT INTO producto_precio VALUES (22,14,'1 unidad / $300',300);
+INSERT INTO producto_precio VALUES (23,15,'1 unidad / $600',600);
+INSERT INTO producto_precio VALUES (24,16,'1 unidad / $140',140);
+INSERT INTO producto_precio VALUES (25,17,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (26,18,'1 unidad / $700',700);
+
+INSERT INTO producto VALUES(19,'400','Canape especial','Cocteleria/canape_especial_36_unidades.jpg','',1,4);
+INSERT INTO producto VALUES(20,'401','Canape Fino','Cocteleria/canape_fino_34_unidades.jpg','',1,4);
+INSERT INTO producto VALUES(21,'403','Empanaditas','Cocteleria/empanaditas_12_unidades.jpg','',1,4);
+INSERT INTO producto VALUES(22,'404','Mini miga','Cocteleria/mini_miga_32_unidades.jpg','',1,4);
+INSERT INTO producto VALUES(23,'405','Pizzas para coctel','Cocteleria/pizza_coctel_15_unidades.jpg','',1,4);
+INSERT INTO producto VALUES(24,'406','Tapaditos','Cocteleria/tapadito_copihue_16_unidades.jpg','',1,4);
+
+INSERT INTO producto_precio VALUES (27,19,'26 unidades / $8.000',8000);
+INSERT INTO producto_precio VALUES (28,20,'34 unidades / $10.000',10000);
+INSERT INTO producto_precio VALUES (29,21,'12 unidades / $7.000',7000);
+INSERT INTO producto_precio VALUES (30,22,'32 unidad / $9.000',9000);
+INSERT INTO producto_precio VALUES (31,23,'15 unidades / $6.000',6000);
+INSERT INTO producto_precio VALUES (32,24,'16 unidades / $12.000',12000);
+
+INSERT INTO producto VALUES(25,'500','Queque Marihuana','Dulceria/aranda_.jpg','',1,5);
+INSERT INTO producto VALUES(26,'501','Berlin','Dulceria/berlin.jpg','',1,5);
+INSERT INTO producto VALUES(27,'503','Brownie','Dulceria/brownie.jpg','',1,5);
+INSERT INTO producto VALUES(28,'504','Rosquilla de Canela','Dulceria/canela_rosquilla_caja_.jpg','',1,5);
+INSERT INTO producto VALUES(29,'505','Cubierto de manjar','Dulceria/canolo.jpg','',1,5);
+INSERT INTO producto VALUES(30,'506','Chilenito','Dulceria/cocado.jpg','',1,5);
+INSERT INTO producto VALUES(31,'507','Delicias','Dulceria/delicia.jpg','',1,5);
+INSERT INTO producto VALUES(32,'508','Donuts','Dulceria/donuts.jpg','',1,5);
+INSERT INTO producto VALUES(33,'509','Media luna','Dulceria/media.jpg','',1,5);
+INSERT INTO producto VALUES(34,'510','Medocino','Dulceria/mendocino.jpg','',1,5);
+INSERT INTO producto VALUES(35,'511','Negrito','Dulceria/negrito.jpg','',1,5);
+INSERT INTO producto VALUES(36,'512','Pan de Miel','Dulceria/pan_de_miel.jpg','',1,5);
+INSERT INTO producto VALUES(37,'513','Dulce de Rollo','Dulceria/rollo.jpg','',1,5);
+
+
+INSERT INTO producto_precio VALUES (33,25,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (34,26,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (35,27,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (36,28,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (37,29,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (38,30,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (39,31,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (40,32,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (41,33,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (42,34,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (43,35,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (44,36,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (45,37,'1 unidad / $1.000',1000);
 
 
 
-CREATE TABLE producto_precio (
-    id_producto_p   INTEGER NOT NULL PRIMARY KEY,
-    id_producto     INTEGER NOT NULL,
-    descripcion     VARCHAR(40) NOT NULL,
-    precioproducto_precio          INTEGER NOT NULL
-);
+INSERT INTO producto VALUES(38,'600','Coca-Cola Lata','Bebestibles/coca.png','',1,6);
+INSERT INTO producto VALUES(39,'601','Fanta Lata','Bebestibles/fanta.jpg','',1,6);
+INSERT INTO producto VALUES(40,'603','Pepsi Lata','Bebestibles/pepsi.jpg','',1,6);
+INSERT INTO producto VALUES(41,'604','Sprite','Bebestibles/sprite.jpg','',1,6);
+INSERT INTO producto VALUES(42,'605','RedBull','Bebestibles/redbull.jpg','',1,6);
+INSERT INTO producto VALUES(43,'606','Monster','Bebestibles/m1.jpg','',1,6);
+INSERT INTO producto VALUES(44,'607','Monster Normal','Dulceria/delicia.jpg','',1,6);
 
-CREATE TABLE producto (
-    id_producto       INTEGER NOT NULL PRIMARY KEY,
-    cod_producto      INTEGER NOT NULL,
-    nombre_producto   VARCHAR(50) NOT NULL,
-    imagen            VARCHAR(60),
-    tamano            VARCHAR(60),
-    activo            INTEGER NOT NULL,
-    id_cate           VARCHAR (60) NOT NULL
-);
-
+INSERT INTO producto_precio VALUES (46,38,'1 unidad / $1.500',1500);
+INSERT INTO producto_precio VALUES (47,39,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (48,40,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (49,41,'1 unidad / $1.000',1000);
+INSERT INTO producto_precio VALUES (50,42,'1 unidad / $2.000',2000);
+INSERT INTO producto_precio VALUES (51,43,'1 unidad / $3.000',3000);
+INSERT INTO producto_precio VALUES (52,44,'1 unidad / $1.000',1000);
 
 
