@@ -63,6 +63,10 @@ class Boleta {
         $this->idPedidoLocal = $idPedidoLocal;
     }
     
+    public function __toString(){
+        return print_r($this,true);
+    }
+
 }
 
 ?>

@@ -12,7 +12,7 @@ class BoletaDAO {
         $stSql = "SELECT * FROM boleta WHERE id_boleta=:id_boleta";
         $rs = $cc->db->prepare($stSql);
         $rs->execute(array('id_boleta' => $id_boleta));
-        $ba = $rs->fetch(PDO::FETCH_ASSOC);
+        $ba = $rs->fetch();
         $nuevaBoleta = new Boleta($ba['id_boleta'], $ba['total'], $ba['id_empleado'], $ba['id_forma_pago'], $ba['id_sucursal'], $ba['id_pedido_local']);
         return $nuevaBoleta;
     }
@@ -41,7 +41,7 @@ class BoletaDAO {
                 . " WHERE id_boleta=:id_boleta";
         $rs = $cc->db->prepare($stSql);
 
-        $params = getParams($boleta);
+        $params = self::getParams($boleta);
 
         return $rs->execute($params);
     }
