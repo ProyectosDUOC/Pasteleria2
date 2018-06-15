@@ -4,8 +4,8 @@ if (!isset($rootDir))
     $rootDir = $_SERVER['DOCUMENT_ROOT'];
     
 
-require_once($rootDir . "/BD/bd.php");
-require_once($rootDir . "/Entities/ControlEmpleado.php");
+require_once($rootDir . "../BD/bd.php");
+require_once($rootDir . "../Entities/ControlEmpleado.php");
 
 
 class ControlEmpleadoDAO {
@@ -73,7 +73,18 @@ class ControlEmpleadoDAO {
         $rs = $cc->db->prepare($stSql);
         $rs->execute();
         $ba = $rs->fetchAll();
-        return $ba;
+        
+        $pila = array();
+        foreach ($ba as $c) {
+            $actorAux = new ControlEmpleado($c['id_control_e'],
+                                            $c['id_empleado'],
+                                            $c['usuario'],
+                                            $c['clave'],
+                                            $c['id_tipo'],
+                                            $c['activo']);
+            array_push($pila, $actorAux);
+        }
+        return $pila;
     }
 
 }

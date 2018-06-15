@@ -2,13 +2,21 @@
 session_start();
 
 
+require_once('../DAO/ControlEmpleadoDAO.php'); 
 require_once('../Entities/ControlEmpleado.php');
-print_r($_SESSION['login']);
+
+
+$nombres = "";
+
+
 
 if(isset($_SESSION['login'])){
-    $idControl = $_SESSION['login'];
+    $c = $_SESSION['login'];
+    $c = unserialize($c);
+    echo $c->getUsuario();
     
-    
+
+
 }else{
     header('Location: ../ingresar.php');
 }
