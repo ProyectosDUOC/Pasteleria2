@@ -13,6 +13,16 @@ class TipoUsuarioDAO {
         $rs = $cc->db->prepare($stSql);
         $rs->execute();
         $ba = $rs->fetchAll();
+
+            
+        $pila = array();
+        foreach ($ba as $c) {
+            $actorAux = new TipoUsuario($c['id_tipo'],
+                                        $c['nombre_tipo']);
+            array_push($pila, $actorAux);
+        }
+        return $pila;
+
         return $ba;
     }
 }

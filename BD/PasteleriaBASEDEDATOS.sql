@@ -381,3 +381,54 @@ INSERT INTO control_empleado VALUES(2,'sebastian','sebastian',3,2,1);
 
 INSERT INTO empleado VALUES(3,'13','Patricia','Campos','2018-06-30',9999,3,'pati@gmail.com',1);
 INSERT INTO control_empleado VALUES(3,'patricia','patricia',3,3,1);
+
+
+
+INSERT INTO categoria VALUES(1,'Tortas',1);
+INSERT INTO categoria VALUES(2,'Masas',1);
+INSERT INTO categoria VALUES(3,'Galletas',1);
+INSERT INTO categoria VALUES(4,'Dulceria',1);
+INSERT INTO categoria VALUES(5,'Bebestible',1);
+
+INSERT INTO producto VALUES(1,'100','Torta de castaña','Tortas/tor_castano.jpg','',1,1);
+INSERT INTO producto VALUES(2,'101','Kuchen de mermelada de frutilla','Tortas/tor_kuchen_quesillo.jpg','',1,1);
+INSERT INTO producto VALUES(3,'102','Torta de Chocolate','Tortas/tor_mazapan_chocolate.jpg','',1,1);
+INSERT INTO producto VALUES(4,'103','Torta Mil Hoja','Tortas/tor_mil_hojas.jpg','',1,1);
+INSERT INTO producto VALUES(5,'104','Torta de panqueque Frambuesa','Tortas/tor_panqueque.jpg','',1,1);
+INSERT INTO producto VALUES(5,'105','Torta tres leche','Tortas/tor_tres_leches.jpg','',1,1);
+
+INSERT INTO producto_precio VALUES (1,1,'20 PP / $25.000',25000);
+INSERT INTO producto_precio VALUES (2,2,'20 PP / $15.000',15000);
+INSERT INTO producto_precio VALUES (3,3,'20 PP / $20.000',20000);
+INSERT INTO producto_precio VALUES (4,3,'30 PP / $25.000',25000);
+INSERT INTO producto_precio VALUES (5,3,'50 PP / $35.000',35000);
+INSERT INTO producto_precio VALUES (6,4,'20 PP / $25.000',25000);
+INSERT INTO producto_precio VALUES (7,4,'30 PP / $29.000',29000);
+INSERT INTO producto_precio VALUES (8,4,'50 PP / $37.000',37000);
+INSERT INTO producto_precio VALUES (9,5,'20 PP / $25.000',25000);
+INSERT INTO producto_precio VALUES (10,5,'30 PP / $29.000',29000);
+INSERT INTO producto_precio VALUES (11,5,'50 PP / $37.000',37000);
+INSERT INTO producto_precio VALUES (9,5,'20 PP / $15.000',15000);
+INSERT INTO producto_precio VALUES (10,5,'30 PP / $25.000',25000);
+INSERT INTO producto_precio VALUES (11,5,'50 PP / $35.000',35000);
+
+
+CREATE TABLE producto_precio (
+    id_producto_p   INTEGER NOT NULL PRIMARY KEY,
+    id_producto     INTEGER NOT NULL,
+    descripcion     VARCHAR(40) NOT NULL,
+    precioproducto_precio          INTEGER NOT NULL
+);
+
+CREATE TABLE producto (
+    id_producto       INTEGER NOT NULL PRIMARY KEY,
+    cod_producto      INTEGER NOT NULL,
+    nombre_producto   VARCHAR(50) NOT NULL,
+    imagen            VARCHAR(60),
+    tamano            VARCHAR(60),
+    activo            INTEGER NOT NULL,
+    id_cate           VARCHAR (60) NOT NULL
+);
+
+
+

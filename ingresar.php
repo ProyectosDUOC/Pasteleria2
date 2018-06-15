@@ -29,11 +29,11 @@
          
           <div>
             <select class="custom-select d-block w-100" id="tipoUsuario" name="txtTipoUsuario" required>
-              <option value="">Tipo Usuario...</option>
+              <option  disabled selected>Tipo Usuario...</option>
               <?php 
                 $tipos = TipoUsuarioDAO::readAll();
                 foreach($tipos as $tipo){
-                  echo "<option value=" . $tipo['id_tipo']  .  " >" . $tipo['nombre_tipo'] . "</option>";
+                  echo "<option value=" . $tipo->getIdTipo() . " >" . $tipo->getNombreTipo() . "</option>";
                 }
               ?>
              

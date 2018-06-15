@@ -5,6 +5,8 @@ session_start();
 require_once('../DAO/ControlEmpleadoDAO.php'); 
 require_once('../Entities/ControlEmpleado.php');
 
+require_once('../DAO/EmpleadoDAO.php'); 
+require_once('../Entities/Empleado.php');
 
 $nombres = "";
 
@@ -13,10 +15,14 @@ $nombres = "";
 if(isset($_SESSION['login'])){
     $c = $_SESSION['login'];
     $c = unserialize($c);
-    echo $c->getUsuario();
-    
 
+    if($c->getIdTipo()==1){
+        $empleado = EmpleadoDAO::sqlSelect($c->getIdEmpleado());
+        $nombres = $empleado->getNombres() . " " . $empleado->getApellidos();
 
+    }else{
+        header('Location: ../ingresar.php');
+    }
 }else{
     header('Location: ../ingresar.php');
 }
@@ -142,7 +148,7 @@ if(isset($_SESSION['login'])){
                                     <div class="author">
                                         <a href="#">
                                             <img class="avatar border-gray" src="../img/local/faces/face-3.jpg" alt="...">
-                                            <h5 class="title">Benjamin Mora Torres</h5>
+                                            <h5 class="title"><?php echo $nombres ?></h5>
                                         </a>
                                         <p class="description">
                                             Vendedor
