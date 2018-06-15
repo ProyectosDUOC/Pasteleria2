@@ -1,6 +1,6 @@
 <?php
 require_once "../Entities/.php";
-require_once "../BD/conexion.php";
+require_once "../BD/bd.php";
 
 class ClienteDAO
 {
@@ -84,6 +84,7 @@ class ClienteDAO
         $params['telefono'] = $cliente->getTelefono();
         $params['correo'] = $cliente->getCorreo();
         $params['activo'] = $cliente->getActivo();
+        return $params;
     }
 
 }

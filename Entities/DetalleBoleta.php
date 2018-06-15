@@ -25,7 +25,7 @@ class DetalleBoleta {
         $this->cant = $cant;
         $this->total = $total;
     }
-    public function getIdDetalle() {
+    function getIdDetalle() {
         return $this->idDetalle;
     }
     public function getIdProductoP() {
