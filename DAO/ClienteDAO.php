@@ -1,5 +1,5 @@
 <?php
-require_once "../Entities/.php";
+require_once "../Entities/Cliente.php";
 require_once "../BD/bd.php";
 
 class ClienteDAO
@@ -54,7 +54,7 @@ class ClienteDAO
         $stSql = "UPDATE cliente SET rut_cliente=:rut_cliente"
             . ",nombres=:nombres"
             . ",apellidos=:apellidos"
-            . ",fecha_nacimiento=fecha_nacimiento"
+            . ",fecha_nacimiento=:fecha_nacimiento"
             . ",id_comuna=:id_comuna"
             . ",correo=:correo"
             . ",activo=:activo"

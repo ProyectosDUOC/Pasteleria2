@@ -1,4 +1,13 @@
 <?php
+/*
+CREATE TABLE control_cliente (
+    id_control_c   INTEGER NOT NULL PRIMARY KEY,
+    id_cliente     INTEGER NOT NULL,
+    usuario        VARCHAR(30) NOT NULL,
+    clave          VARCHAR(30) NOT NULL,
+    activo         INTEGER NOT NULL
+);
+*/
 
 class ControlCliente {
     private $idControlC;  
