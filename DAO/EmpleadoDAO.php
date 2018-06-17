@@ -66,10 +66,9 @@ class EmpleadoDAO {
                 . ",activo=:activo"
                 . " WHERE id_empleado=:id_empleado";
         $rs = $cc->db->prepare($stSql);
-
         $params = self::getParams($empleado);
 
-        return $rs->execute($params);
+        return $rs->execute();
     }
 
     public static function sqlDelete($empleado) {
@@ -102,7 +101,7 @@ class EmpleadoDAO {
         
         $pila = array();
         foreach ($ba as $c) {
-            $actorAux = new ControlEmpleado($c['id_empleado'],
+            $actorAux = new Empleado($c['id_empleado'],
                                             $c['rut_empleado'],
                                             $c['nombres'],
                                             $c['apellidos'],

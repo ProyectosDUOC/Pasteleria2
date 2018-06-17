@@ -1,17 +1,25 @@
 <?php  
 session_start();
-
-
 require_once('../../DAO/ControlEmpleadoDAO.php'); 
+require_once('../../DAO/TipoUsuarioDAO.php'); 
 require_once('../../Entities/ControlEmpleado.php');
-
 require_once('../../DAO/EmpleadoDAO.php'); 
+require_once('../../DAO/ComunaDAO.php'); 
 require_once('../../Entities/Empleado.php');
 
 $nombres = "";
-
-
-
+$rut = "";
+$apellidos = "";
+$fechaNac = "";
+$tel = "";
+$idComuna = "";
+$correo = "";
+$activo=1;
+$encontrado = "0"; // 0 inicio , 1 encontrado, 2 no encontrado
+$persona = new Empleado(0,$rut,$nombres,$apellidos,$fechaNac,$tel,$idComuna,$correo,$activo); 
+$controles = ControlEmpleadoDAO::readAll();
+$controlE = null;
+$mensaje ="";
 if(isset($_SESSION['login'])){
     $c = $_SESSION['login'];
     $c = unserialize($c);
@@ -19,6 +27,64 @@ if(isset($_SESSION['login'])){
     if($c->getIdTipo()==3){
         $empleado = EmpleadoDAO::sqlSelect($c->getIdEmpleado());
         $nombres = $empleado->getNombres() . " " . $empleado->getApellidos();
+
+        if(isset($_SESSION['estado'])){
+            $mensaje = $_SESSION['estado'];
+            if($mensaje=="Eliminado"){
+                $encontrado=0;
+                $persona=null;  
+                $controlE = null;   
+                            
+                $nombres = "";
+                $rut = "";
+                $apellidos = "";
+                $fechaNac = "";
+                $tel = "";
+                $idComuna = "";
+                $correo = "";
+                $activo=1;               
+            } if($mensaje=="No Encontrado"){
+                $persona=null;  
+                $controlE = null;   
+                            
+                $nombres = "";
+                $rut = "";
+                $apellidos = "";
+                $fechaNac = "";
+                $tel = "";
+                $idComuna = "";
+                $correo = "";
+                $activo=1;        
+                $encontrado = 2;       
+            }
+        }
+
+        if(isset($_SESSION['persona'])){
+            $persona = $_SESSION['persona'];
+            $persona = unserialize($persona);        
+
+            if ($persona!=null){
+                
+                foreach($controles as $control){
+                    if($control->getIdEmpleado() == $persona->getIdEmpleado()){
+                        $controlE = $control;
+                        break;
+                    }
+                }
+                $nombres= $persona->getNombres();
+                $apellidos=$persona->getApellidos();
+                $fechaNac=$persona->getFechaNacimiento();
+                $idComuna=$persona->getIdComuna();
+                $telefono=$persona->getTelefono();
+                $correo=$persona->getCorreo();
+                $rut =$persona->getRutEmpleado();
+                $encontrado=1;
+            }
+        }else{
+            $encontrado=0;
+        }
+      
+
 
     }else{
         header('Location: ../../ingresar.php');
@@ -86,7 +152,7 @@ if(isset($_SESSION['login'])){
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"> Bienvenido Administrador
+                    <a class="navbar-brand" href="#"> Administrar empleados
                     </a>
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -129,45 +195,86 @@ if(isset($_SESSION['login'])){
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <form>
+                            <form method="post" action="../../controladores/ControladorEmpleado.php">
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="txtRut">Rut</label>
-                                        <input type="text" class="form-control" id="txtRut" placeholder="Rut">
+                                        <input type="text" class="form-control" name="txtRut" id="txtRut" value="<?php echo $rut ?>" placeholder="Rut">
                                     </div>
                                     <div class="form-group col-md-6 py-4">
-                                        <button type="submit" class="btn btn-fill btn-danger">Buscar</button>
-                                    </div>
+                                        <button type="submit" class="btn btn-fill btn-danger" name="opcion" value="buscar">Buscar</button>
+                                    </div><p class="text-danger"><strong><?php echo $mensaje ?></strong></p>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputAddress">Address</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputAddress2">Address 2</label>
-                                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputCity">City</label>
-                                        <input type="text" class="form-control" id="inputCity">
+                                <?php  if($encontrado==1 || $encontrado==2 ){ ?>                                
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="name">Nombres</label>
+                                            <input type="text" class="form-control" id="name" name="txtNombres" value="<?php echo $nombres ?>" placeholder="Nombres" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="app">Apellidos</label>
+                                            <input type="text" class="form-control" id="app" name="txtApellidos" value="<?php echo $apellidos ?>" placeholder="Apellidos" >
+                                        </div>
+                                        <div class="form-group px-2">
+                                            <label for="app">Tipo de Empleado</label>
+                                            <select class="custom-select d-block w-100" id="tipoUsuario" name="txtTipoUsuario" required>
+                                                <option  disabled selected>Tipo Usuario...</option>
+                                                <?php 
+                                                    $tipos = TipoUsuarioDAO::readAll();
+                                                    foreach($tipos as $tipo){
+                                                        if($tipo->getIdTipo()==$controlE->getIdTipo()){
+                                                            echo "<option selected value=" . $tipo->getIdTipo() . " >" . $tipo->getNombreTipo() . "</option>";
+                                                   
+                                                        }else{
+                                                            echo "<option value=" . $tipo->getIdTipo() . " >" . $tipo->getNombreTipo() . "</option>";
+                                                   
+                                                        }
+                                                   }
+                                                ?>                                            
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="inputState">State</label>
-                                        <select id="inputState" class="form-control">
-                                            <option selected>Choose...</option>
-                                            <option>...</option>
-                                        </select>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="fecha">Fecha Nacimiento</label>
+                                            <input type="date" name="txtFechaNac" value="<?php echo $fechaNac ?>" class="form-control" id="fecha">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="inputState">Comuna</label>
+                                            <select id="inputState" class="form-control" name="txtComuna">
+                                                <option  disabled selected>Seleccione una comuna...</option>
+                                                   <?php $comunas = ComunaDAO::readAll();
+                                                        foreach($comunas as $c){ 
+                                                            if($c->getIdComuna()==$idComuna){
+                                                              echo "<option selected value=". $c->getIdComuna() ."> " . $c->getNombreComuna() . " </option>";
+                                                            }else{
+                                                                echo "<option value=". $c->getIdComuna() ."> " . $c->getNombreComuna() . " </option>";
+                                                         
+                                                            }
+                                                        }
+                                                   
+                                                   ?>
+                                               
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="tel">Telefono</label>
+                                            <input type="number" name="txtTelefono" value="<?php echo $telefono ?>" class="form-control" id="tel">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="tel">Correo</label>
+                                            <input type="email" name="txtCorreo" value="<?php echo $correo ?>" class="form-control" id="tel">
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputZip">Zip</label>
-                                        <input type="text" class="form-control" id="inputZip">
-                                    </div>
-                                </div>
-                                <a href="" class="btn btn-lg  btn-fill btn-success">Crear</a>
-                                <a href="" class="btn btn-lg  btn-fill btn-danger">Eliminar</a>
-                                <a href="" class="btn btn-lg  btn-fill btn-warning">Modificar</a>
-
+                                    <?php if($encontrado==1){ ?>
+                                        <button class="btn btn-lg  btn-fill btn-danger" name="opcion" value="eliminar">Eliminar</button>
+                                        <button class="btn btn-lg  btn-fill btn-warning" name="opcion" value="modificar">Modificar</button>
+                                    <?php } 
+                                       if($encontrado==2){?>
+                                             <button class="btn btn-lg  btn-fill btn-success" name="opcion" value="agregar">Agregar</button>
+                                  
+                                           <?php   }
+                               } ?> 
                             </form>
                         </div>
                     </div>

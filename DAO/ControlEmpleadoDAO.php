@@ -50,7 +50,7 @@ class ControlEmpleadoDAO {
 
     public static function sqlDelete($ControlEmpleado) {
         $cc=BD::getInstancia();
-        $stSql = "DELETE FROM  WHERE id_control_e=:id_control_e";
+        $stSql = "DELETE FROM control_empleado  WHERE id_control_e=:id_control_e";
         $rs = $cc->db->prepare($stSql);
         $rs->execute(array("id_control_e"=>$ControlEmpleado->getIdControlE()));
     }
