@@ -1,56 +1,80 @@
+<?php  
+session_start();
+
+
+require_once('../../DAO/ControlEmpleadoDAO.php'); 
+require_once('../../Entities/ControlEmpleado.php');
+
+require_once('../../DAO/EmpleadoDAO.php'); 
+require_once('../../Entities/Empleado.php');
+
+$nombres = "";
+
+
+
+if(isset($_SESSION['login'])){
+    $c = $_SESSION['login'];
+    $c = unserialize($c);
+
+    if($c->getIdTipo()==3){
+        $empleado = EmpleadoDAO::sqlSelect($c->getIdEmpleado());
+        $nombres = $empleado->getNombres() . " " . $empleado->getApellidos();
+
+    }else{
+        header('Location: ../../ingresar.php');
+    }
+}else{
+    header('Location: ../../ingresar.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="../favicon.ico">
+    <link rel="icon" type="image/png" href="../../favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Pasteria Doña Rosa</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'
     />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <script src="https://use.fontawesome.com/b48aa89852.js"></script>
-    <link href="../FrWork/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../FrWork/bootstrap/css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
-    <link href="../FrWork/bootstrap/css/demo.css" rel="stylesheet" />
-    <link href="../FrWork/bootstrap/css/style.css" rel="stylesheet" />
+    <link href="../../FrWork/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../FrWork/bootstrap/css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
+    <link href="../../FrWork/bootstrap/css/demo.css" rel="stylesheet" />
+    <link href="../../FrWork/bootstrap/css/style.css" rel="stylesheet" />
 </head>
 
 <body>
     <div class="wrapper">
-        <div class="sidebar" data-image="../img/logo.png" data-color="blue">
+        <div class="sidebar" data-image="../../img/logo.png" data-color="blue">
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="#" class="simple-text">
-                        <img src="../img/logo.png" width="120px" height="100px" alt=""> Pasteleria Doña Rosa
+                        <img src="../../img/logo.png" width="120px" height="100px" alt=""> Pasteleria Doña Rosa
                     </a>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="venta.html">
+                    <li>
+                        <a class="nav-link" href="../venta.php">
                             <i class="nc-icon nc-tap-01" aria-hidden="true"></i>
                             <p>Nueva Venta</p>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="admin.html">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="../administrar.php">
                             <i class="nc-icon nc-circle-09"></i>
                             <p>Administrar</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="pedidos.html">
+                        <a class="nav-link" href="../pedidos.php">
                             <i class="nc-icon nc-notes"></i>
                             <p>Ver Pedidos</p>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="reservas.html">
-                            <i class="nc-icon nc-paper-2"></i>
-                            <p>Ver Despachos</p>
-                        </a>
-                    </li>
                     <li class="nav-item active active-pro">
-                        <a class="nav-link active" href="../index.html" target="_blank">
+                        <a class="nav-link active" href="../../index.php" target="_blank">
                             <i class="nc-icon nc-satisfied"></i>
                             <p>Ir a la tienda</p>
                         </a>
@@ -90,7 +114,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../index.html">
+                                <a class="nav-link" href="../index.php">
                                     <span class="no-icon text-danger bg-">
                                         <strong>
                                             <i class="nc-icon nc-simple-remove" aria-hidden="true"></i>Salir</strong>
@@ -104,36 +128,47 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-8">
-                            <img src="../img/productos/Dulceria/cocado.jpg" alt="" height="100%">
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-user">
-                                <div class="card-image">
-                                    <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="...">
-                                </div>
-                                <div class="card-body">
-                                    <div class="author">
-                                        <a href="#">
-                                            <img class="avatar border-gray" src="../img/local/faces/face-0.jpg" alt="...">
-                                            <h5 class="title">Sebastian Orrego</h5>
-                                        </a>
-                                        <p class="description">
-                                           Administrador
-                                        </p>
+                        <div class="col-md-12">
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="txtRut">Rut</label>
+                                        <input type="text" class="form-control" id="txtRut" placeholder="Rut">
                                     </div>
-                                    <p class="description text-center">
-                                        "Sonrie Siempre!"
-                                    </p>
+                                    <div class="form-group col-md-6 py-4">
+                                        <button type="submit" class="btn btn-fill btn-danger">Buscar</button>
+                                    </div>
                                 </div>
-                                <hr>
-                                <div class="button-container mr-auto ml-auto">
-                                    <button type="submit" class="btn btn-info btn-fill pull-right btn-danger">
-                                        <i class="fa fa-download" aria-hidden="true"></i>
-                                        Cerrar Sesión
-                                    </button>
+                                <div class="form-group">
+                                    <label for="inputAddress">Address</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <label for="inputAddress2">Address 2</label>
+                                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputCity">City</label>
+                                        <input type="text" class="form-control" id="inputCity">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">State</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputZip">Zip</label>
+                                        <input type="text" class="form-control" id="inputZip">
+                                    </div>
+                                </div>
+                                <a href="" class="btn btn-lg  btn-fill btn-success">Crear</a>
+                                <a href="" class="btn btn-lg  btn-fill btn-danger">Eliminar</a>
+                                <a href="" class="btn btn-lg  btn-fill btn-warning">Modificar</a>
+
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -215,39 +250,40 @@
 
                 <li class="active">
                     <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Cocteleria/empanaditas_12_unidades.jpg" alt="" />
+                        <img src="../../img/productos/Cocteleria/empanaditas_12_unidades.jpg" alt="" />
                     </a>
                 </li>
                 <li>
                     <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Dulceria/donuts.jpg" alt="" />
+                        <img src="../../img/productos/Dulceria/donuts.jpg" alt="" />
                     </a>
                 </li>
                 <li>
                     <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Galletas/galletas_finas.jpg" alt="" />
+                        <img src="../../img/productos/Galletas/galletas_finas.jpg" alt="" />
                     </a>
                 </li>
                 <li>
                     <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Tortas/tor_mazapan_chocolate.jpg" alt="" />
+                        <img src="../../img/productos/Tortas/tor_mazapan_chocolate.jpg" alt="" />
                     </a>
                 </li>
                 <li>
                     <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/logo.png" alt="" />
+                        <img src="../../img/logo.png" alt="" />
                     </a>
                 </li>
             </ul>
         </div>
     </div>
 </body>
-<script src="../FrWork/bootstrap/js/jquery.3.2.1.min.js" type="text/javascript"></script>
-<script src="../FrWork/bootstrap/js/popper.min.js" type="text/javascript"></script>
-<script src="../FrWork/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="../FrWork/bootstrap/js/plugins/bootstrap-switch.js"></script>
-<script src="../FrWork/bootstrap/js/plugins/chartist.min.js"></script>
-<script src="../FrWork/bootstrap/js/plugins/bootstrap-notify.js"></script>
-<script src="../FrWork/bootstrap/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
-<script src="../FrWork/bootstrap/js/demo.js"></script>
+<script src="../../FrWork/bootstrap/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="../../FrWork/bootstrap/js/popper.min.js" type="text/javascript"></script>
+<script src="../../FrWork/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../FrWork/bootstrap/js/plugins/bootstrap-switch.js"></script>
+<script src="../../FrWork/bootstrap/js/plugins/chartist.min.js"></script>
+<script src="../../FrWork/bootstrap/js/plugins/bootstrap-notify.js"></script>
+<script src="../../FrWork/bootstrap/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
+<script src="../../FrWork/bootstrap/js/demo.js"></script>
+
 </html>

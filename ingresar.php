@@ -1,5 +1,13 @@
 <?php
+  
+  session_start();
+
   require_once('DAO/TipoUsuarioDAO.php');
+  $mensaje = "";
+
+if(isset($_SESSION['mensaje'])){
+  $mensaje = $_SESSION['mensaje'];
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,9 +47,11 @@
              
             </select>
           </div>
-         <br><br>
+         <br>
+         <p class="text-danger"><strong><?php echo $mensaje ?></strong></p>
+         <br>
           <input type="submit"  class="btn btn-fill btn-block btn-danger" name="btnInsertar" value="Ingresar" >
-         
+          
         </form>
     </div>    
   </center>      

@@ -16,7 +16,7 @@ if(isset($_SESSION['login'])){
     $c = $_SESSION['login'];
     $c = unserialize($c);
 
-    if($c->getIdTipo()==1){
+    if($c->getIdTipo()==3){
         $empleado = EmpleadoDAO::sqlSelect($c->getIdEmpleado());
         $nombres = $empleado->getNombres() . " " . $empleado->getApellidos();
 
@@ -28,7 +28,7 @@ if(isset($_SESSION['login'])){
 }
 ?>
 <!DOCTYPE html>
-<html lang="es-cl">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="../favicon.ico">
@@ -42,12 +42,11 @@ if(isset($_SESSION['login'])){
     <link href="../FrWork/bootstrap/css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
     <link href="../FrWork/bootstrap/css/demo.css" rel="stylesheet" />
     <link href="../FrWork/bootstrap/css/style.css" rel="stylesheet" />
-
 </head>
 
 <body>
     <div class="wrapper">
-        <div class="sidebar" data-image="../img/logo.png" data-color="local">
+        <div class="sidebar" data-image="../img/logo.png" data-color="blue">
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="#" class="simple-text">
@@ -56,15 +55,21 @@ if(isset($_SESSION['login'])){
                 </div>
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="ventas.php">
+                        <a class="nav-link" href="venta.php">
                             <i class="nc-icon nc-tap-01" aria-hidden="true"></i>
                             <p>Nueva Venta</p>
                         </a>
                     </li>
                     <li>
+                        <a class="nav-link" href="administrar.php">
+                            <i class="nc-icon nc-circle-09"></i>
+                            <p>Administrar</p>
+                        </a>
+                    </li>
+                    <li>
                         <a class="nav-link" href="pedidos.php">
                             <i class="nc-icon nc-notes"></i>
-                            <p>Crear Pedido</p>
+                            <p>Ver Pedidos</p>
                         </a>
                     </li>
                     <li class="nav-item active active-pro">
@@ -80,7 +85,7 @@ if(isset($_SESSION['login'])){
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"> Bienvenido Vendedor
+                    <a class="navbar-brand" href="#"> Bienvenido Administrador
                     </a>
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -133,11 +138,11 @@ if(isset($_SESSION['login'])){
                                 <div class="card-body">
                                     <div class="author">
                                         <a href="#">
-                                            <img class="avatar border-gray" src="../img/local/faces/face-3.jpg" alt="...">
-                                            <h5 class="title"><?php echo $nombres ?></h5>
+                                            <img class="avatar border-gray" src="../img/local/faces/face-0.jpg" alt="...">
+                                            <h5 class="title">Sebastian Orrego</h5>
                                         </a>
                                         <p class="description">
-                                            Vendedor
+                                           Administrador
                                         </p>
                                     </div>
                                     <p class="description text-center">

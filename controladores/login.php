@@ -1,4 +1,5 @@
 <?php
+    session_destroy();
     session_start();
    
 
@@ -9,26 +10,35 @@
     $usuario = $_POST['txtUsuario'];
     $pass = $_POST['txtPass'];
     $tipoUsuario = $_POST['txtTipoUsuario'];
+    $isLogin = "0";
 
     $controles = ControlEmpleadoDAO::readAll();
     foreach($controles as $control){
         if($control->getUsuario()==$usuario && $control->getClave()==$pass && $control->getIdTipo()==$tipoUsuario){           
+            $isLogin = "1";
             switch ($tipoUsuario) {
                 case 1:
-                    echo "Vendedor";
+                   // echo "Vendedor";
                     $_SESSION['login']= serialize($control);
                     header('Location: ../local/index.php');                        
                     break;
                 case 2:
-                    echo "Cajero";
+                   // echo "Cajero";
+                    $_SESSION['login']= serialize($control);
+                    header('Location: ../cajero/index.php');   
                     break;
                 case 3:
-                    echo "administrador";
+                   // echo "administrador";
+                    $_SESSION['login']= serialize($control);
+                    header('Location: ../administrador/index.php');   
                     break;
-            }
-
-            
+            }            
         }
+    }
+
+    if($isLogin=="0"){        
+        $_SESSION['mensaje']= "Usuario Incorrecto";
+        header('Location: ../ingresar.php');   
     }
     
 
