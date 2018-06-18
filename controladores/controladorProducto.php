@@ -19,12 +19,9 @@
 
     $op = substr($opcion,0,1); 
     //Categoria Ingresar
-    if($op=="C"){
-        $id = substr($opcion,1);
-        
-        $_SESSION['idCate']=$id;           
-        $_SESSION['mensaje']=null;    
-        header('Location: ../administrador/admin/producto.php');    
+    if($opcion=="Agregar"){
+        $_SESSION['estado']=1;         
+        header('Location: ../administrador/admin/editarProducto.php');    
     }
     if($op=="L"){
         $id = substr($opcion,1);
@@ -51,13 +48,20 @@
     }
     if($op=="M"){
         $id = substr($opcion,1);
-        
-        $_SESSION['listar']=$id;      
-        $_SESSION['mensaje']="Modificar";      
-        header('Location: ../administrador/admin/listarProducto.php');    
+        $nombre = $_POST['txtNombreProducto'];
+        $producto = ProductoDAO::sqlSelect($id);
+        $producto->setNombreProducto($nombre);
+        $x = ProductoDAO::sqlUpdate($producto);
+        $_SESSION['mensaje']="Modificado  numero " . $nombre .   " - " . $x;      
+        header('Location: ../administrador/admin/producto.php');    
     }
-    if($opcion=="Agregar"){
-        $_SESSION['agregar']="1";
+    if($op=="Z"){
+        $id = substr($opcion,1);
 
+        $producto = ProductoDAO::sqlSelect($id);
+        $producto->setNombreProducto($nombre);
+        $x = ProductoDAO::sqlUpdate($producto);
+        $_SESSION['mensaje']="Modificado  numero " . $nombre .   " - " . $x;      
+        header('Location: ../administrador/admin/producto.php');    
     }
 ?>

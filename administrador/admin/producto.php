@@ -19,6 +19,8 @@ $Categorias=null;
 $idC="-1";
 $productos;
 $listar=0;
+$nombreProducto="";
+$idProducto="";
 
 if(isset($_SESSION['login'])){
     $c = $_SESSION['login'];
@@ -151,6 +153,9 @@ if(isset($_SESSION['login'])){
                     <div class="col-md-2">
                     <button class="btn btn-fill btn-danger" name="opcion" value="Nueva">Nueva Categoria</button>
                     </div>
+                    <div>
+                        <button class="btn btn-fill btn-success" name="opcion" value="Agregar">Agregar Nuevo Producto</button>
+                    </div> 
                     
                         
                 </div>
@@ -166,7 +171,6 @@ if(isset($_SESSION['login'])){
                                     <th scope="col">#</th>
                                     <th >Categoria</th>
                                     <th ></th>
-                                    <th ></th>
                                 </tr>
                             </thead>
                             <tbody class="text-center text-dark">
@@ -174,15 +178,12 @@ if(isset($_SESSION['login'])){
                             foreach($Categorias as $c){?>
                                 <tr>
                                     <td><?php echo $c->getIdCate() ?><td>
-                                    <td><?php echo $c->getNombreCate() ?><td>
-                                    <td>
-                                        <button class="btn btn-fill btn-success" name="opcion" value="C<?php echo $c->getIdCate() ?>">Agregar Nuevo Producto</button>
-                                    </td>  
+                                    <td><?php echo $c->getNombreCate() ?><td>                                    
                                     <td>
                                         <button class="btn btn-fill btn-warning" name="opcion" value="L<?php echo $c->getIdCate() ?>">Listar</button>
                                     </td>
                                 </tr>
-                           <?php } ?>
+                            <?php } ?>
                               
                             </tbody>       
                         </table>
@@ -225,42 +226,26 @@ if(isset($_SESSION['login'])){
                                                         <div class='form-group'>
                                                             <select class='form-control pull-right' id='torta'>
                                                             <?php $precios = ProductoPrecioDAO::idRealAll($tipo->getIdProducto());
-                                                                    foreach($precios as $p){ ?>
+                                                                    if($precios!=null){
+                                                                        foreach($precios as $p){ ?>
                                                                         <option value="<?php echo $p->getIdProductoP(); ?>"> <?php echo $p->getDescripcion()?> </option>              
-                                                                        <?php } ?>
+                                                                      
+                                                                 <?php   }
+                                                                     } ?>
                                                             </select>
                                                         </div>
                                                     </td>
                                                     <td>
                                                     <div class='form-group py-1'>
-                                                        <button  type="button"  class="btn btn-fill pull-right btn-warning form-control" data-toggle="modal" data-target="#ModalE<?php echo $p->getIdProducto() ?>">Editar</button>
+                                                        <button  type="button"  class="btn btn-fill pull-right btn-warning form-control" name="opcion" value="Z<?php echo $tipo->getIdProducto(); ?>">Editar</button>
 
-                                                        <div class="modal fade" id="ModalE<?php echo $p->getIdProducto() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Desea Eliminar</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        Eliminar Producto <strong class="text-danger"> <?php echo $tipo->getNombreProducto() ?></strong>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                        <button name="opcion" value="M<?php echo $p->getIdProducto() ?>"  class="btn btn-fill btn-danger">Eliminar</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div> 
                                                     </div>
                                                     </td>
                                                     <td>
                                                     <div class='form-group py-1'>
-                                                            <button  type="button"  class="btn btn-fill pull-right btn-danger form-control" data-toggle="modal" data-target="#Modal<?php echo $p->getIdProducto() ?>">Eliminar</button>
+                                                            <button  type="button"  class="btn btn-fill pull-right btn-danger form-control" data-toggle="modal" data-target="#Modal<?php echo $tipo->getIdProducto() ?>">Eliminar</button>
 
-                                                            <div class="modal fade" id="Modal<?php echo $p->getIdProducto() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal fade" id="Modal<?php echo $tipo->getIdProducto() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
@@ -274,7 +259,7 @@ if(isset($_SESSION['login'])){
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            <button name="opcion" value="E<?php echo $p->getIdProducto() ?>"  class="btn btn-fill btn-danger">Eliminar</button>
+                                                                            <button name="opcion" value="E<?php echo $tipo->getIdProducto() ?>"  class="btn btn-fill btn-danger">Eliminar</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>

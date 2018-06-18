@@ -24,6 +24,22 @@ class ProductoDAO {
         return $rs->execute($params);
     }
 
+    public static function lastValue(){
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM producto order by id_producto desc  limit 1";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $ba = $rs->fetch();
+        $nuevaEmpleado = new Producto($ba['id_producto'],
+                                      $ba['cod_producto'],
+                                      $ba['nombre_producto'],
+                                      $ba['imagen'], 
+                                      $ba['tamano'], 
+                                      $ba['activo'],
+                                      $ba['id_cate'] );
+        return $nuevaEmpleado;        
+    }
+
     public static function sqlSelect($id_producto)
     {
         $cc = BD::getInstancia();
