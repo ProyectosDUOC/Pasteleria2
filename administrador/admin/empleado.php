@@ -188,6 +188,8 @@ if(isset($_SESSION['login'])){
                 </div>
             </nav>
             <div class="content">
+            <li class="btn btn-fill bg-light"><a href="../../administrador/administrar.php">&larr; Anterior</a></li>
+             
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">

@@ -24,6 +24,8 @@ if(isset($_SESSION['login'])){
         $_SESSION['persona']=null;
         $_SESSION['estado']=null;
         $_SESSION['rut']=null;    
+        
+        $_SESSION['listar']=null;
 
     }else{
         header('Location: ../ingresar.php');
