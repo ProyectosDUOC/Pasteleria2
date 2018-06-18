@@ -64,4 +64,27 @@
         $_SESSION['mensaje']="Modificado  numero " . $nombre .   " - " . $x;      
         header('Location: ../administrador/admin/producto.php');    
     }
+    if($opcion=="AgregarCategoria"){
+        $nombre = $_POST['txtNombreCategoria'];
+        $econtrado = 0;
+        $categoria = CategoriaDAO::readAll();
+
+        foreach($categoria as $c){
+            if($c->getNombreCate()==$nombre){                
+                $_SESSION['mensaje']="Nombre ya en uso"; 
+                $econtrado = 1;  
+                break;
+            }
+        }
+        if($econtrado==0){            
+            $_SESSION['mensaje']="Categoria Agregada";
+
+            $categoria= CategoriaDAO::lastValue();
+            $idNueva = $categoria->getIdCate() + 1;
+            $categoria= new Categoria($idNueva, $nombre, 1);
+            $x = CategoriaDAO::sqlInsert($categoria);
+        }
+        header('Location: ../administrador/admin/producto.php');   
+
+    }
 ?>

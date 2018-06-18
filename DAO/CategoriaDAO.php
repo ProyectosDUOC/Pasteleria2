@@ -32,6 +32,18 @@ class CategoriaDAO
         $params = getParams($categoria);
         return $rs->sqlEjecutar($stSql);
     }
+
+    public static function lastValue(){
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM categoria order by id_cate desc  limit 1";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $ba = $rs->fetch();
+        $cate = new Categoria($ba['id_cate'],
+                                      $ba['nombre_cate'],
+                                      $ba['activo'] );
+        return $cate;        
+    }
     
     public static function sqlUpdate($categoria)
     {

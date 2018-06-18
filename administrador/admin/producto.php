@@ -141,7 +141,7 @@ if(isset($_SESSION['login'])){
             <form method="post" action="../../controladores/ControladorProducto.php">
                        
             <div class="content">
-                 <li class="btn btn-fill bg-light"><a href="../../administrador/administrar.php">&larr; Anterior</a></li>
+                 <a class="btn btn-fill  bg-dark" href="../../administrador/administrar.php">&larr; Anterior</a>
                        
                 
                 <div class="container-fluid">
@@ -151,7 +151,31 @@ if(isset($_SESSION['login'])){
                     </div>
                    
                     <div class="col-md-2">
-                    <button class="btn btn-fill btn-danger" name="opcion" value="Nueva">Nueva Categoria</button>
+                    </div>
+                    <div class='col-md-2'>
+                        <button  type="button"  class="btn btn-fill pull-right btn-danger form-control" data-toggle="modal" data-target="#ModalC">Nueva Categoria</button>
+                        <div class="modal fade" id="ModalC" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel"><strong class="text-success">Agregar Nueva Categoria</strong></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="name">Nombre Categoria</label>
+                                            <input type="text" class="form-control" id="name" name="txtNombreP" value='' placeholder="Nombre Categoria" >
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button name="opcion" value="AgregarCategoria"  class="btn btn-fill btn-success">Agregar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
                     </div>
                     <div>
                         <button class="btn btn-fill btn-success" name="opcion" value="Agregar">Agregar Nuevo Producto</button>

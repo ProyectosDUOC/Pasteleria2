@@ -158,8 +158,8 @@ if(isset($_SESSION['login'])){
                 </div>
             </nav>                       
             <div class="content">
-                <li class="btn btn-fill bg-light"><a href="../../administrador/admin/producto.php">&larr; Anterior</a></li>
-                       
+                <a class="btn btn-fill  bg-dark" href="../../administrador/admin/producto.php">&larr; Anterior</a>
+                 
                                
                <center> <h3 class="text-danger"><strong><?php echo $mensaje ?></strong></h3></center>
                <div class="container-fluid">
