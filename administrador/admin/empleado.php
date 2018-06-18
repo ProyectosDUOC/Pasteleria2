@@ -269,23 +269,23 @@ if(isset($_SESSION['login'])){
                                         <button  type="button"  class="btn btn-lg  btn-fill btn-danger" data-toggle="modal" data-target="#exampleModal">Eliminar</button>
                                         <button class="btn btn-lg  btn-fill btn-warning" name="opcion" value="modificar">Modificar</button>
                                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Desea Eliminar</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                                </button>
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Desea Eliminar</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Eliminar Empleado <?php echo $nombres . " " . $apellidos ?>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button name="opcion" value="eliminar" class="btn btn-primary">Eliminar</button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="modal-body">
-                                                Eliminar Empleado <?php echo $nombres . " " . $apellidos ?>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button name="opcion" value="eliminar" class="btn btn-primary">Eliminar</button>
-                                            </div>
-                                            </div>
-                                        </div>
                                         </div>
                                     <?php } 
                                        if($encontrado==2){?>

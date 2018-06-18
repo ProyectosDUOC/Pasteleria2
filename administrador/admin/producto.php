@@ -223,7 +223,7 @@ if(isset($_SESSION['login'])){
                                                     <td> <?php echo $tipo->getNombreProducto(); ?> </td>
                                                     <td>
                                                         <div class='form-group'>
-                                                            <select class='form-control' id='torta'>
+                                                            <select class='form-control pull-right' id='torta'>
                                                             <?php $precios = ProductoPrecioDAO::idRealAll($tipo->getIdProducto());
                                                                     foreach($precios as $p){ ?>
                                                                         <option value="<?php echo $p->getIdProductoP(); ?>"> <?php echo $p->getDescripcion()?> </option>              
@@ -233,37 +233,52 @@ if(isset($_SESSION['login'])){
                                                     </td>
                                                     <td>
                                                     <div class='form-group py-1'>
-                                                    <button type='submit' name="opcion" value="M<?php echo $p->getIdProducto() ?>" class='btn btn-info btn-fill pull-right btn-warning form-control'>
-                                                        Editar
-                                                        </button>
+                                                        <button  type="button"  class="btn btn-fill pull-right btn-warning form-control" data-toggle="modal" data-target="#ModalE<?php echo $p->getIdProducto() ?>">Editar</button>
+
+                                                        <div class="modal fade" id="ModalE<?php echo $p->getIdProducto() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Desea Eliminar</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Eliminar Producto <strong class="text-danger"> <?php echo $tipo->getNombreProducto() ?></strong>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        <button name="opcion" value="M<?php echo $p->getIdProducto() ?>"  class="btn btn-fill btn-danger">Eliminar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div> 
                                                     </div>
                                                     </td>
                                                     <td>
                                                     <div class='form-group py-1'>
-                                                    <button type='submit' name="opcion" value="E<?php echo $p->getIdProducto() ?>" class='btn btn-info btn-fill pull-right btn-danger form-control'>
-                                                        Eliminar
-                                                    </button>
-                                                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Desea Eliminar</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Eliminar Producto <?php echo $nombres . " " . $apellidos ?>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                            <button name="opcion" value="eliminar" class="btn btn-primary">Eliminar</button>
-                                                        </div>
-                                                        </div>
-                                                    </div>
-                                                    </div>
+                                                            <button  type="button"  class="btn btn-fill pull-right btn-danger form-control" data-toggle="modal" data-target="#Modal<?php echo $p->getIdProducto() ?>">Eliminar</button>
 
-
+                                                            <div class="modal fade" id="Modal<?php echo $p->getIdProducto() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Desea Eliminar</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Eliminar Producto <strong class="text-danger"> <?php echo $tipo->getNombreProducto() ?></strong>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                            <button name="opcion" value="E<?php echo $p->getIdProducto() ?>"  class="btn btn-fill btn-danger">Eliminar</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>    
                                                     </div>
                                                     </td>
                                                 </tr>
@@ -387,8 +402,5 @@ if(isset($_SESSION['login'])){
 <script src="../../FrWork/bootstrap/js/plugins/bootstrap-notify.js"></script>
 <script src="../../FrWork/bootstrap/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
 <script src="../../FrWork/bootstrap/js/demo.js"></script>
-<script> 
-$('#myModal').modal(options)
-</script>
 
 </html>

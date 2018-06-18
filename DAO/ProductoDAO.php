@@ -32,7 +32,7 @@ class ProductoDAO {
         $rs->execute(array('id_producto' => $id_producto));
         $pa = $rs->fetch(); // pa: producto array
 
-        $nuevoProducto = new Producto();
+        $nuevoProducto = new Producto(0,"","","","",1,0);
         $nuevoProducto->setIdProducto($pa['id_producto']);
         $nuevoProducto->setCodProducto($pa['cod_producto']);
         $nuevoProducto->setNombreProducto($pa['nombre_producto']);

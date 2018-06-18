@@ -35,10 +35,19 @@
     }
     if($op=="E"){
         $id = substr($opcion,1);
+         
+        $_SESSION['mensaje']="Eliminado";  
+        $producto = ProductoDAO::sqlSelect($id);
+        $precioPro = ProductoPrecioDAO::readAll();
+        foreach($precioPro as $c){
+            if($c->getIdProducto() == $id ){
+                $x = ProductoPrecioDAO::sqlDelete($c);
+            }
+        }
+        $x = ProductoDAO::sqlDelete($producto);
         
-        $_SESSION['listar']=$id;      
-        $_SESSION['mensaje']="Eliminado";      
-        header('Location: ../administrador/admin/listarProducto.php');    
+        $_SESSION['mensaje']="Eliminado";   
+        header('Location: ../administrador/admin/producto.php');    
     }
     if($op=="M"){
         $id = substr($opcion,1);
