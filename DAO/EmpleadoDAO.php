@@ -58,8 +58,10 @@ class EmpleadoDAO {
     public static function sqlUpdate($empleado) {
         $cc=BD::getInstancia();
 
-        $stSql = "UPDATE empleado SET nombres=:nombres"
+        $stSql = "UPDATE empleado SET rut_empleado=:rut_empleado"
+                . ",nombres=:nombres"
                 . ",apellidos=:apellidos"
+                . ",fecha_nacimiento=:fecha_nacimiento"
                 . ",telefono=:telefono"
                 . ",id_comuna=:id_comuna"
                 . ",correo=:correo"
@@ -81,7 +83,7 @@ class EmpleadoDAO {
 
     public static function getParams($empleado){
         $params = array();
-        $params["id_empleado"] = $empleado->getIdEmpleado();
+        $params['id_empleado'] = $empleado->getIdEmpleado();
         $params['rut_empleado'] =  $empleado->getRutEmpleado();
         $params['nombres'] = $empleado->getNombres();
         $params['apellidos'] = $empleado->getApellidos();
