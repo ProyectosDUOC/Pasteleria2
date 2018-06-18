@@ -57,10 +57,10 @@ class ControlEmpleadoDAO {
     public static function sqlUpdate($ControlEmpleado) {
         $cc=BD::getInstancia();
 
-        $stSql = "UPDATE control_empleado SET clave=:clave"
+        $stSql = "UPDATE control_empleado SET activo=:activo, id_empleado=:id_empleado,usuario=:usuario, clave=:clave, id_tipo=:id_tipo"
                 . " WHERE id_control_e=:id_control_e";
         $rs = $cc->db->prepare($stSql);
-        $params = getParams($ControlEmpleado);
+        $params = self::getParams($ControlEmpleado);
         return $rs->execute($params);
     }
 

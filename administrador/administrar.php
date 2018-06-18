@@ -20,6 +20,11 @@ if(isset($_SESSION['login'])){
         $empleado = EmpleadoDAO::sqlSelect($c->getIdEmpleado());
         $nombres = $empleado->getNombres() . " " . $empleado->getApellidos();
 
+        
+        $_SESSION['persona']=null;
+        $_SESSION['estado']=null;
+        $_SESSION['rut']=null;    
+
     }else{
         header('Location: ../ingresar.php');
     }

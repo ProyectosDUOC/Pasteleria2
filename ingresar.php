@@ -8,6 +8,7 @@
 if(isset($_SESSION['mensaje'])){
   $mensaje = $_SESSION['mensaje'];
 }
+  $_SESSION['login']=null; 
 ?>
 <!DOCTYPE html>
 <html>

@@ -44,7 +44,15 @@
             if($e->getRutEmpleado()==$rut){               
                 
                 $persona = new Empleado($e->getIdEmpleado(),$rut,$nombres,$apellidos,$fechaNac,$idComuna,$telefono,$correo,$activo); 
-                $x = EmpleadoDAO::sqlUpdate($persona);                
+                $x = EmpleadoDAO::sqlUpdate($persona);  
+                $controles = ControlEmpleadoDAO::readAll();
+                foreach($controles as $c){
+                    if($c->getIdEmpleado()==$persona->getIdEmpleado()){
+                        $c->setIdTipo($idTipoU);
+                        $x = ControlEmpleadoDAO::sqlUpdate($c);                        
+                        break;
+                    }   
+                }              
                 $_SESSION['persona']= serialize($persona);
                 $_SESSION['estado']= "Modificado";               
                 header('Location: ../administrador/admin/empleado.php');                        
