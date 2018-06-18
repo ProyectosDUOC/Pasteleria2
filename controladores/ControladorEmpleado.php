@@ -43,15 +43,11 @@
         foreach($empleados as $e){
             if($e->getRutEmpleado()==$rut){               
                 
-                $persona = new Empleado($e->getIdEmpleado(),$rut,$nombres,$apellidos,$fechaNac,$telefono,$idComuna,$correo,$activo); 
-                $x = EmpleadoDAO::sqlUpdate($persona);
-
-                echo $x;
-               // $nuevoEmpleado = new Empleado($e->getIdEmpleado(), $nombres,$apellidos,)
-               // $isEncontrado = 1;
-               // $_SESSION['persona']= serialize($e);
-               
-               //header('Location: ../administrador/admin/empleado.php');                        
+                $persona = new Empleado($e->getIdEmpleado(),$rut,$nombres,$apellidos,$fechaNac,$idComuna,$telefono,$correo,$activo); 
+                $x = EmpleadoDAO::sqlUpdate($persona);                
+                $_SESSION['persona']= serialize($persona);
+                $_SESSION['estado']= "Modificado";               
+                header('Location: ../administrador/admin/empleado.php');                        
                 break;   
             }
         }
@@ -102,7 +98,7 @@
             //no se encontro
             $pAnterior = EmpleadoDAO::lastValue();
             $idNueva= $pAnterior->getIdEmpleado() + 1;
-            $persona = new Empleado($idNueva,$rut,$nombres,$apellidos,$fechaNac,$telefono,$idComuna,$correo,$activo); 
+            $persona = new Empleado($idNueva,$rut,$nombres,$apellidos,$fechaNac,$idComuna,$telefono,$correo,$activo); 
           
             echo $idNueva;
             $x = EmpleadoDAO::sqlInsert($persona);
@@ -113,11 +109,11 @@
             $controlE = new ControlEmpleado($idNuevaC,$idNueva,$rut,$rut,$idTipoU,1 );
             $x = ControlEmpleadoDAO::sqlInsert($controlE);
             
-           // $nuevoEmpleado = new Empleado($e->getIdEmpleado(), $nombres,$apellidos,)
-           // $isEncontrado = 1;
-           // $_SESSION['persona']= serialize($e);
-           
-           //header('Location: ../administrador/admin/empleado.php');   
+          
+            $isEncontrado = 1;
+            $_SESSION['persona']= serialize($persona);
+            $_SESSION['estado']="Creado";
+            header('Location: ../administrador/admin/empleado.php');   
         }
     }
 

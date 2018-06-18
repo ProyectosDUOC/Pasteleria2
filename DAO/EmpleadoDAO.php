@@ -44,14 +44,11 @@ class EmpleadoDAO {
     }
     //insert
     public static function sqlInsert($empleado) {
-
         $cc=BD::getInstancia();
         $stSql = "INSERT INTO empleado VALUES ";
-        $stSql .= "(:id_empleado,:rut_empleado,:nombres,:apellidos,:fecha_nacimiento,:telefono,:id_comuna,:correo,:activo)";
+        $stSql .= "(:id_empleado,:rut_empleado,:nombres,:apellidos,:fecha_nacimiento,:id_comuna,:telefono,:correo,:activo)";
         $rs = $cc->db->prepare($stSql);
-
         $params = self::getParams($empleado);
-        
         return $rs->execute($params);
     }
 
@@ -69,8 +66,8 @@ class EmpleadoDAO {
                 . " WHERE id_empleado=:id_empleado";
         $rs = $cc->db->prepare($stSql);
         $params = self::getParams($empleado);
-
-        return $rs->execute();
+      
+        return $rs->execute($params);
     }
 
     public static function sqlDelete($empleado) {
