@@ -2,12 +2,13 @@
 
 // Declaramos una variable $rootDir si es que no existe
 // isset==> si existe o no una variable
-if (!isset($rootDir))
-    $rootDir = $_SERVER['DOCUMENT_ROOT'];
 
 
-require_once("../Entities/Producto.php");
-require_once("../BD/bd.php");
+    if (!isset($rootDir)) $rootDir = $_SERVER['DOCUMENT_ROOT'];
+
+    require_once($rootDir . "/BD/bd.php");
+    require_once($rootDir . "/Entities/Producto.php");
+    
 
 class ProductoDAO {
 

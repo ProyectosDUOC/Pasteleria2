@@ -6,15 +6,13 @@ require_once('../../DAO/EmpleadoDAO.php');
 require_once('../../Entities/Empleado.php');
 require_once('../../Entities/Categoria.php');
 require_once('../../DAO/CategoriaDAO.php'); 
-
-require_once('../../DAO/ProductoDAO.php');  
 $encontrado = "0"; // 0 inicio , 1 encontrado, 2 no encontrado
 $persona = null;
 $mensaje ="";
 $Categorias=null;
 $idC="-1";
-$productos;
-
+$crearProdu="0";
+$productos=array();
 if(isset($_SESSION['login'])){
     $c = $_SESSION['login'];
     $c = unserialize($c);
@@ -24,10 +22,7 @@ if(isset($_SESSION['login'])){
         $nombres = $empleado->getNombres() . " " . $empleado->getApellidos();       
         
         $Categorias = CategoriaDAO::sqlSelectAll();        
-        if(isset($_SESSION['listar'])){
-            $idC=$_SESSION['listar'];
-            $productos = ProductoDAO::readAll();
-        }
+
     }else{
         header('Location: ../../ingresar.php');
     }
@@ -158,7 +153,6 @@ if(isset($_SESSION['login'])){
                                     <th scope="col">#</th>
                                     <th scope="col">Categoria</th>
                                     <th scope="col"></th>
-                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody class="text-center text-dark">
@@ -169,9 +163,6 @@ if(isset($_SESSION['login'])){
                                     <td><?php echo $c->getNombreCate() ?><td>
                                     <td>
                                         <button class="btn btn-fill btn-success" name="opcion" value="C<?php echo $c->getIdCate() ?>">Agregar Nuevo Producto</button>
-                                    </td>  
-                                    <td>
-                                        <button class="btn btn-fill btn-warning" name="opcion" value="L<?php echo $c->getIdCate() ?>">Listar</button>
                                     </td>
                                 </tr>
                            <?php } ?>

@@ -1,6 +1,10 @@
 <?php
-require_once "../Entities/ControlCliente.php";
-require_once "../BD/bd.php";
+
+
+if (!isset($rootDir)) $rootDir = $_SERVER['DOCUMENT_ROOT'];
+
+require_once($rootDir . "/BD/bd.php");
+require_once($rootDir . "/Entities/ControlCliente.php");
 
 class ControlClienteDAO
 {

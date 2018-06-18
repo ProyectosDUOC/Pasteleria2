@@ -4,8 +4,8 @@ if (!isset($rootDir))
     $rootDir = $_SERVER['DOCUMENT_ROOT'];
     
 
-require_once($rootDir . "../BD/bd.php");
-require_once($rootDir . "../Entities/ControlEmpleado.php");
+require_once($rootDir . "/BD/bd.php");
+require_once($rootDir . "/Entities/ControlEmpleado.php");
 
 
 class ControlEmpleadoDAO {

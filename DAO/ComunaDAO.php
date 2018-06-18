@@ -2,8 +2,8 @@
 
 if (!isset($rootDir)) $rootDir = $_SERVER['DOCUMENT_ROOT'];
 
-require_once($rootDir . "../BD/bd.php");
-require_once($rootDir . "../Entities/Comuna.php");
+require_once($rootDir . "/BD/bd.php");
+require_once($rootDir . "/Entities/Comuna.php");
 
 class ComunaDAO {
     

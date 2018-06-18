@@ -68,10 +68,10 @@ class CategoriaDAO
         $productos = $rs->fetchAll();
         $pila = array();
         foreach ($productos as $c) {
-            $actorAux = new Producto($c['id_categoria'],
+            $actorAux = new Categoria($c['id_cate'],
                                             $c['nombre_cate'],
                                             $c['activo']);
-            array_push($pila, $actorAux);
+            array_push($pila, $actorAux); 
         }
         return $pila;
     }
