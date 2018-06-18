@@ -224,10 +224,11 @@ if(isset($_SESSION['login'])){
                                                     <td> <?php echo $tipo->getNombreProducto(); ?> </td>
                                                     <td>
                                                         <div class='form-group'>
-                                                            <select class='form-control pull-right' id='torta'>
                                                             <?php $precios = ProductoPrecioDAO::idRealAll($tipo->getIdProducto());
-                                                                    if($precios!=null){
-                                                                        foreach($precios as $p){ ?>
+                                                                    if($precios!=null){ ?>
+
+                                                            <select class='form-control pull-right' id='torta'>
+                                                             <?php        foreach($precios as $p){ ?>
                                                                         <option value="<?php echo $p->getIdProductoP(); ?>"> <?php echo $p->getDescripcion()?> </option>              
                                                                       
                                                                  <?php   }
