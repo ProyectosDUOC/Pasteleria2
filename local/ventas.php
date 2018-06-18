@@ -1,11 +1,28 @@
 <?php
+    session_start();
+
+    require_once('../DAO/ProductoDAO.php');  
+    require_once('../DAO/ProductoPrecioDAO.php');
+    require_once('../DAO/CategoriaDAO.php');
+
+    require_once('../DAO/BoletaDAO.php');
+    require_once('../DAO/DetalleBoletaDAO.php');
+
+    $carrito = array();
     
-  require_once('../DAO/ProductoDAO.php');  
-  require_once('../DAO/ProductoPrecioDAO.php');
-  require_once('../DAO/CategoriaDAO.php');
+    if(isset($_SESSION['carrito'])){
+
+        $carrito = $_SESSION['carrito'];
+        $carrito = unserialize($carrito);
+
+        $detalleProducto = new DetalleBoleta($id_detalle,$id_producto_p,$id_boleta,$precio,$cant,$total);
+        array_push($carrito,$detalleProducto);
+    }
+  
+
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-cl">
 
 <head>
     <meta charset="utf-8" />
@@ -30,39 +47,21 @@
         <div class="sidebar" data-image="../img/logo.png" data-color="local">
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="index.html" class="simple-text">
+                    <a href="index.php" class="simple-text">
                         <img src="../img/logo.png" width="120px" height="100px" alt=""> Pasteleria Doña Rosa
                     </a>
                 </div>
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="venta.html">
+                        <a class="nav-link" href="ventas.php">
                             <i class="nc-icon nc-tap-01" aria-hidden="true"></i>
                             <p>Nueva venta</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="agregarUsuario.html">
-                            <i class="nc-icon nc-circle-09"></i>
-                            <p>Usuario</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="pedidos.html">
+                        <a class="nav-link" href="pedidos.php">
                             <i class="nc-icon nc-notes"></i>
-                            <p>Pedidos</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="reservas.html">
-                            <i class="nc-icon nc-paper-2"></i>
-                            <p>Reservas</p>
-                        </a>
-                    </li>
-                    <li class="nav-item active active-pro">
-                        <a class="nav-link active" href="../index.html" target="_blank">
-                            <i class="nc-icon nc-satisfied"></i>
-                            <p>Ir a la tienda</p>
+                            <p>Crear Pedido</p>
                         </a>
                     </li>
                 </ul>
@@ -99,7 +98,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../index.html">
+                                <a class="nav-link" href="../index.php">
                                     <span class="no-icon text-danger bg-">
                                         <strong>
                                             <i class="nc-icon nc-simple-remove" aria-hidden="true"></i>Salir</strong>
@@ -129,7 +128,7 @@
                                                     <th scope="col">Categoria</th>
                                                     <th scope="col"></th>
                                                     <th scope="col">Nombre</th>
-                                                    <th scope="col">Cantidad Personas / Precio $</th>
+                                                    <th scope="col">Cantidad PP / Precio $</th>
                                                     <th scope="col">Cantidad a llevar</th>
                                                     <th scope="col">Agregar</th>
                                                 </tr>
@@ -151,7 +150,7 @@
                                                                 echo "<select class='form-control' id='torta'>";
                                                                     $precios = ProductoPrecioDAO::idRealAll($tipo->getIdProducto());
                                                                     foreach($precios as $p){
-                                                                        echo "<option value=" . $p->getPrecio() . " >" . $p->getDescripcion() . "</option>";              
+                                                                        echo "<option value=" . $p->getIdProductoP() . " >" . $p->getDescripcion() . "</option>";              
                                                                     }
                                                                 echo "</select>";
                                                             echo "</div>";

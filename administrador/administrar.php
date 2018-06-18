@@ -1,3 +1,32 @@
+<?php  
+session_start();
+
+
+require_once('../DAO/ControlEmpleadoDAO.php'); 
+require_once('../Entities/ControlEmpleado.php');
+
+require_once('../DAO/EmpleadoDAO.php'); 
+require_once('../Entities/Empleado.php');
+
+$nombres = "";
+
+
+
+if(isset($_SESSION['login'])){
+    $c = $_SESSION['login'];
+    $c = unserialize($c);
+
+    if($c->getIdTipo()==3){
+        $empleado = EmpleadoDAO::sqlSelect($c->getIdEmpleado());
+        $nombres = $empleado->getNombres() . " " . $empleado->getApellidos();
+
+    }else{
+        header('Location: ../ingresar.php');
+    }
+}else{
+    header('Location: ../ingresar.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,32 +54,26 @@
                     </a>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="venta.html">
+                    <li>
+                        <a class="nav-link" href="venta.php">
                             <i class="nc-icon nc-tap-01" aria-hidden="true"></i>
                             <p>Nueva Venta</p>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="admin.html">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="administrar.php">
                             <i class="nc-icon nc-circle-09"></i>
                             <p>Administrar</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="pedidos.html">
+                        <a class="nav-link" href="pedidos.php">
                             <i class="nc-icon nc-notes"></i>
                             <p>Ver Pedidos</p>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="reservas.html">
-                            <i class="nc-icon nc-paper-2"></i>
-                            <p>Ver Despachos</p>
-                        </a>
-                    </li>
                     <li class="nav-item active active-pro">
-                        <a class="nav-link active" href="../index.html" target="_blank">
+                        <a class="nav-link active" href="../index.php" target="_blank">
                             <i class="nc-icon nc-satisfied"></i>
                             <p>Ir a la tienda</p>
                         </a>
@@ -90,7 +113,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../index.html">
+                                <a class="nav-link" href="../index.php">
                                     <span class="no-icon text-danger bg-">
                                         <strong>
                                             <i class="nc-icon nc-simple-remove" aria-hidden="true"></i>Salir</strong>
@@ -105,7 +128,9 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-8">
-                            <img src="../img/productos/Dulceria/cocado.jpg" alt="" height="100%">
+                            <a href="admin/empleado.php" class="btn btn-lg btn-block btn-fill btn-warning">Crear empleado</a>
+                            
+                            <a href="admin/producto.php" class="btn btn-lg btn-block btn-fill btn-warning">Producto</a>
                         </div>
                         <div class="col-md-4">
                             <div class="card card-user">
@@ -116,7 +141,7 @@
                                     <div class="author">
                                         <a href="#">
                                             <img class="avatar border-gray" src="../img/local/faces/face-0.jpg" alt="...">
-                                            <h5 class="title">Sebastian Orrego</h5>
+                                            <h5 class="title"><?php echo $nombres ?></h5>
                                         </a>
                                         <p class="description">
                                            Administrador

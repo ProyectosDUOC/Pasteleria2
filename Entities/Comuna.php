@@ -3,6 +3,14 @@
         private $idComuna;
         private $nombreComuna;
 
+
+            
+    public function __construct($idComuna, $nombreComuna) {
+        $this->idComuna = $idComuna;
+        $this->nombreComuna = $nombreComuna;
+        
+    }
+
         public function getIdComuna(){
 			return $this->idComuna;
 		}
