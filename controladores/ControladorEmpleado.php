@@ -108,10 +108,11 @@
             $x = EmpleadoDAO::sqlInsert($persona);
             $cAnterior = ControlEmpleadoDAO::lastValue();
             $idNuevaC= $cAnterior->getIdControlE() + 1;
-            $controlE = new ControlEmpleado($idNuevaC,$rut,$rut,$idTipoU,$idNueva,1 );
+            
+            echo "  -  " . $idNuevaC;
+            $controlE = new ControlEmpleado($idNuevaC,$idNueva,$rut,$rut,$idTipoU,1 );
             $x = ControlEmpleadoDAO::sqlInsert($controlE);
             
-            echo $idNueva;
            // $nuevoEmpleado = new Empleado($e->getIdEmpleado(), $nombres,$apellidos,)
            // $isEncontrado = 1;
            // $_SESSION['persona']= serialize($e);

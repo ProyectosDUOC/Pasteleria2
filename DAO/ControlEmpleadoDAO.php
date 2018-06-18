@@ -49,7 +49,7 @@ class ControlEmpleadoDAO {
         $stSql .= "(:id_control_e,:usuario,:clave,:id_tipo,:id_empleado,:activo)";
         $rs = $cc->db->prepare($stSql);
 
-        $params = getParams($ControlEmpleado);
+        $params = self::getParams($ControlEmpleado);
         
         return $rs->execute($params);
     }
