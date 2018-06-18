@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    session_start();   
 
     require_once('../DAO/ProductoDAO.php');  
     require_once('../DAO/ProductoPrecioDAO.php');
@@ -13,12 +13,9 @@
     if(isset($_SESSION['carrito'])){
 
         $carrito = $_SESSION['carrito'];
-        $carrito = unserialize($carrito);
 
-        $detalleProducto = new DetalleBoleta($id_detalle,$id_producto_p,$id_boleta,$precio,$cant,$total);
-        array_push($carrito,$detalleProducto);
-    }
-  
+        $carrito[] = array("idprodp" => $_POST['variedad'], "cant" => $_POST['cantidad']);
+    }  
 
 ?>
 <!DOCTYPE html>
@@ -30,15 +27,13 @@
     <link rel="icon" type="image/png" href="../favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Pasteria Doña Rosa</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'
-    />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <script src="https://use.fontawesome.com/b48aa89852.js"></script>
     <link href="../FrWork/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../FrWork/bootstrap/css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
     <link href="../FrWork/bootstrap/css/demo.css" rel="stylesheet" />
     <link href="../FrWork/bootstrap/css/style.css" rel="stylesheet" />
-    
     <link href="../FrWork/datatables/jquery.dataTables.min.css" rel="stylesheet" />
 </head>
 
@@ -128,8 +123,6 @@
                                                     <th scope="col">Categoria</th>
                                                     <th scope="col"></th>
                                                     <th scope="col">Nombre</th>
-                                                    <th scope="col">Cantidad PP / Precio $</th>
-                                                    <th scope="col">Cantidad a llevar</th>
                                                     <th scope="col">Agregar</th>
                                                 </tr>
                                             </thead>
@@ -142,28 +135,13 @@
                                                         
                                                         $nom = CategoriaDAO::sqlSelect($tipo->getIdCate())->getNombreCate();
 
-                                                        echo "<td>" . $nom  . "</td>";
+                                                        echo "<td>" . $nom . "</td>";
                                                         echo "<td> <img src='../img/productos/" . $tipo->getImagen() . "' alt='' height='70' /></td>";
                                                         echo "<td>" . $tipo->getNombreProducto() . "</td>";
                                                         echo "<td>";
-                                                            echo "<div class='form-group'>";
-                                                                echo "<select class='form-control' id='torta'>";
-                                                                    $precios = ProductoPrecioDAO::idRealAll($tipo->getIdProducto());
-                                                                    foreach($precios as $p){
-                                                                        echo "<option value=" . $p->getIdProductoP() . " >" . $p->getDescripcion() . "</option>";              
-                                                                    }
-                                                                echo "</select>";
-                                                            echo "</div>";
-                                                        echo "</td>";
-                                                        echo "<td>";
-                                                        echo "<div class='form-group'>";
-                                                            echo "<input type='number' name='cantidad' class='form-control' id='cantidad' maxlength='2' placeholder='Cantidad a llevar'>";
-                                                        echo "</div>";
-                                                        echo "</td>";
-                                                        echo "<td>";
                                                         echo "<div class='form-group py-1'>";
-                                                        echo "<button type='submit' name=" . $p->getIdProducto() .  " class='btn btn-info btn-fill pull-right btn-warning form-control'>";
-                                                            echo "añadir";
+                                                                echo "<button type='submit' data-nombre='". $tipo->getNombreProducto() . "' class='btn btn-fill btn-warning' data-toggle='modal' data-target='#detalles' data-idproducto='".$tipo->getIdProducto()."'>";
+                                                                echo "Añadir";
                                                             echo "</button>";
                                                         echo "</div>";
                                                     echo "</td>";
@@ -171,20 +149,10 @@
                                                   }
                                                 
                                                 ?>
-                                                   
-                                                    
-                                                    
                                             </tbody>
                                         </table>
                                     </div>                                    
                                 </div>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
                             </div>
                         </div>
                     </div>
@@ -212,44 +180,30 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">NOMBRE</th>
-                                        <th scope="col">CANT.</th>
-                                        <th scope="col">VALOR</th>
-                                        <th scope="col">TOTAL</th>
-                                        <th scope="col">ELIMINAR</th>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Variedad</th>
+                                        <th scope="col">Cantidad.</th>
+                                        <th scope="col">Valor unitario</th>
+                                        <th scope="col">Valor</th>
+                                        <!--<th scope="col">Eliminar</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>Torta</td>
-                                        <td>1</td>
-                                        <td>$3000</td>
-                                        <td>$3000</td>
-                                        <td>
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Torta</td>
-                                        <td>1</td>
-                                        <td>$3000</td>
-                                        <td>$3000</td>
-                                        <td>
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Torta</td>
-                                        <td>1</td>
-                                        <td>$3000</td>
-                                        <td>$3000</td>
-                                        <td>
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                        $num = 1;
+                                        foreach ($carrito as $item) {
+                                            
+                                            echo "<tr>";
+                                            echo "<td>" . $num++ . "</td>";
+                                            echo "<td>" . $item["idprod"] . "</td>";
+                                            echo "<td>" . $item["nombre"] . "</td>";
+                                            echo "<td>" . $item["cant"] . "</td>";
+                                            echo "<td>" . $item["precio"] . "</td>";
+                                            echo "</tr>";
+                                            $total += $item['precio'];
+                                        }
+                                    ?>
                                 </tbody>
                             </table>
                             <hr>
@@ -268,6 +222,41 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="detalles" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalnombre">Agregar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form method="POST" action="test.php">
+                    <input id="modalprodid" name="prodId" type="hidden">
+                    <div class="modal-body">                        
+                        <div class="form-group">
+                            <select class="form-control" id="modalselect" name="variedad">
+                                <!-- AJAX rellena aqui -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="cantidad" class="form-control" id="modalcantidad" maxlength="2" placeholder="Cantidad a llevar">
+                        </div>
+                                                
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="botonagregar">Agregar</input>
+                    </div>                    
+                </form>
+
+                </div>
+            </div>
+        </div>
+
         <footer class="footer">
             <div class="container">
                 <nav>
@@ -438,7 +427,29 @@
 <script src="../FrWork/datatables/script.js"></script>
 <script>
 $(document).ready(function() {
+        // carga plugin Datatable
     $('#example').DataTable();
+
+        // Modal seleccionar productos
+        $('#detalles').on('show.bs.modal', function (event) {
+            $('#modalselect').empty();
+            $('#modalnombre').empty();
+
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var idProd = button.data('idproducto');
+            var nombreProd = button.data('nombre') ;
+            $('#modalnombre').append(nombreProd);
+            $('#modalprodid').val(idProd);
+
+            $.post("http://www.test.cl/controladores/infoProducto.php",
+                    {opcion:'variedades',idproducto:idProd},
+                    function(data){
+                        //document.write(data);
+                        $('#modalselect').append(data);
+                    }
+            );
+        })
+
 } );
 </script>
 </html>
