@@ -35,6 +35,9 @@ if(isset($_SESSION['login'])){
             $productos = ProductoDAO::readAll();
             $listar=1;
         }
+        if(isset($_SESSION['mensaje'])){
+            $mensaje=$_SESSION['mensaje'];
+        }
     }else{
         header('Location: ../../ingresar.php');
     }
@@ -140,8 +143,10 @@ if(isset($_SESSION['login'])){
                     </div>
                 </div>
             </nav>
+            <form method="post" action="../../controladores/ControladorProducto.php">
+                       
             <div class="content">
-            <li class="btn btn-fill bg-light"><a href="../../administrador/administrar.php">&larr; Anterior</a></li>
+                 <li class="btn btn-fill bg-light"><a href="../../administrador/administrar.php">&larr; Anterior</a></li>
                        
                 
                 <div class="container-fluid">
@@ -153,6 +158,7 @@ if(isset($_SESSION['login'])){
                     <div class="col-md-2">
                     <button class="btn btn-fill btn-danger" name="opcion" value="Nueva">Nueva Categoria</button>
                     </div>
+                    
                         
                 </div>
                  
@@ -160,8 +166,7 @@ if(isset($_SESSION['login'])){
                     
                         <div class="col-md-6">
                         
-                        <form method="post" action="../../controladores/ControladorProducto.php">
-                            
+                           
                         <table class="table display" id="example" cellspacing="0" style="width:100%">
                             <thead>
                                 <tr>
@@ -188,12 +193,12 @@ if(isset($_SESSION['login'])){
                               
                             </tbody>       
                         </table>
-           
-                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+            <center> <h3 class="text-danger"><strong><?php echo $mensaje ?></strong></h3></center>
+           
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12"> 
@@ -235,14 +240,14 @@ if(isset($_SESSION['login'])){
                                                     </td>
                                                     <td>
                                                     <div class='form-group py-1'>
-                                                    <button type='submit' name="M<?php echo $p->getIdProducto() ?>" class='btn btn-info btn-fill pull-right btn-warning form-control'>
+                                                    <button type='submit' name="opcion" value="M<?php echo $p->getIdProducto() ?>" class='btn btn-info btn-fill pull-right btn-warning form-control'>
                                                         Editar
                                                         </button>
                                                     </div>
                                                     </td>
                                                     <td>
                                                     <div class='form-group py-1'>
-                                                    <button type='submit' name="E<?php echo $p->getIdProducto() ?>" class='btn btn-info btn-fill pull-right btn-danger form-control'>
+                                                    <button type='submit' name="opcion" value="E<?php echo $p->getIdProducto() ?>" class='btn btn-info btn-fill pull-right btn-danger form-control'>
                                                         Eliminar
                                                         </button>
                                                     </div>
@@ -263,6 +268,7 @@ if(isset($_SESSION['login'])){
                     <?php } ?>
                 </div>
             </div>
+            <form>
             <footer class="footer">
                 <div class="container">
                     <nav>

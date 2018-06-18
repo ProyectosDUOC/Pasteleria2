@@ -1,9 +1,11 @@
 <?php
     session_start();
-   
-    require_once('../DAO/ProductoDAO.php');    
-    require_once('../DAO/CategoriaDAO.php');    
-
+    if (!isset($rootDir)) $rootDir = $_SERVER['DOCUMENT_ROOT'];
+    
+    require_once($rootDir . '/DAO/ProductoDAO.php'); 
+    require_once($rootDir . '/DAO/CategoriaDAO.php');    
+    require_once($rootDir . '/DAO/ProductoPrecioDAO.php');
+    
     $opcion = $_POST['opcion'];
 
    // $op = "A12";
@@ -20,13 +22,29 @@
     if($op=="C"){
         $id = substr($opcion,1);
         
-        $_SESSION['idCate']=$id;    
+        $_SESSION['idCate']=$id;           
+        $_SESSION['mensaje']=null;    
         header('Location: ../administrador/admin/producto.php');    
     }
     if($op=="L"){
         $id = substr($opcion,1);
 
+        $_SESSION['listar']=$id;    
+        $_SESSION['mensaje']=null;   
+        header('Location: ../administrador/admin/producto.php');    
+    }
+    if($op=="E"){
+        $id = substr($opcion,1);
+        
         $_SESSION['listar']=$id;      
+        $_SESSION['mensaje']="Eliminado";      
+        header('Location: ../administrador/admin/producto.php');    
+    }
+    if($op=="M"){
+        $id = substr($opcion,1);
+        
+        $_SESSION['listar']=$id;      
+        $_SESSION['mensaje']="Modificar";      
         header('Location: ../administrador/admin/producto.php');    
     }
     if($opcion=="Agregar"){

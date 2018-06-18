@@ -25,6 +25,7 @@ if(isset($_SESSION['login'])){
         $_SESSION['estado']=null;
         $_SESSION['rut']=null;    
         
+        $_SESSION['mensaje']=null;   
         $_SESSION['listar']=null;
 
     }else{
