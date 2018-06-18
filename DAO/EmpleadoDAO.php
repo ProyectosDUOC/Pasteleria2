@@ -25,11 +25,11 @@ class EmpleadoDAO {
         return $nuevaEmpleado;
     }
 
-    public static function lastValue($id_empleado){
+    public static function lastValue(){
         $cc = BD::getInstancia();
         $stSql = "SELECT * FROM empleado order by id_empleado desc  limit 1";
         $rs = $cc->db->prepare($stSql);
-        $rs->execute(array('id_empleado' => $id_empleado));
+        $rs->execute();
         $ba = $rs->fetch();
         $nuevaEmpleado = new Empleado($ba['id_empleado'],
                                       $ba['rut_empleado'],
@@ -40,7 +40,7 @@ class EmpleadoDAO {
                                       $ba['id_comuna'],
                                       $ba['correo'],
                                       $ba['activo'] );
-        return $nuevaEmpleado;
+        return $nuevaEmpleado;        
     }
     //insert
     public static function sqlInsert($empleado) {

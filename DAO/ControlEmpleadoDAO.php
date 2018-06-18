@@ -17,7 +17,23 @@ class ControlEmpleadoDAO {
         $rs->execute(array('id_control_e',$id_control_e));
         $ba = $rs->fetch(PDO::FETCH_ASSOC);
         $nuevoControl = new ControlEmpleado($ba['id_control_e'],
-                                           $ba['usuairo'],
+                                           $ba['usuario'],
+                                           $ba['clave'],
+                                           $ba['id_tipo'],
+                                           $ba['id_empleado'],
+                                           $ba['activo']);
+        return $nuevoControl;
+    }
+
+    
+    public static function lastValue(){
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM control_empleado order by id_control_e desc  limit 1";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $ba = $rs->fetch(PDO::FETCH_ASSOC);
+        $nuevoControl = new ControlEmpleado($ba['id_control_e'],
+                                           $ba['usuario'],
                                            $ba['clave'],
                                            $ba['id_tipo'],
                                            $ba['id_empleado'],
@@ -29,8 +45,8 @@ class ControlEmpleadoDAO {
     public static function sqlInsert($ControlEmpleado) {
 
         $cc=BD::getInstancia();
-        $stSql = "INSERT INTO contorl_empleado VALUES ";
-        $stSql .= "(null,:usuario,:clave,:id_tipo,:id_empleado,:activo)";
+        $stSql = "INSERT INTO control_empleado VALUES ";
+        $stSql .= "(:id_control_e,:usuario,:clave,:id_tipo,:id_empleado,:activo)";
         $rs = $cc->db->prepare($stSql);
 
         $params = getParams($ControlEmpleado);
@@ -57,7 +73,7 @@ class ControlEmpleadoDAO {
 
     public static function getParams($Control){
         $params = array();
-       // $params['id_control_e'] = $Control->getIdControlE();
+        $params['id_control_e'] = $Control->getIdControlE();
         $params['usuario'] =  $Control->getUsuario();
         $params['clave'] = $Control->getClave();
         $params['id_tipo'] = $Control->getIdTipo();

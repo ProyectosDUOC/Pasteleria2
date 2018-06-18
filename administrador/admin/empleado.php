@@ -11,12 +11,12 @@ $nombres = "";
 $rut = "";
 $apellidos = "";
 $fechaNac = "";
-$tel = "";
+$telefono = "";
 $idComuna = "";
 $correo = "";
 $activo=1;
 $encontrado = "0"; // 0 inicio , 1 encontrado, 2 no encontrado
-$persona = new Empleado(0,$rut,$nombres,$apellidos,$fechaNac,$tel,$idComuna,$correo,$activo); 
+$persona = new Empleado(0,$rut,$nombres,$apellidos,$fechaNac,$telefono,$idComuna,$correo,$activo); 
 $controles = ControlEmpleadoDAO::readAll();
 $controlE = null;
 $mensaje ="";
@@ -39,7 +39,7 @@ if(isset($_SESSION['login'])){
                 $rut = "";
                 $apellidos = "";
                 $fechaNac = "";
-                $tel = "";
+                $telefono = "";
                 $idComuna = "";
                 $correo = "";
                 $activo=1;               
@@ -48,10 +48,10 @@ if(isset($_SESSION['login'])){
                 $controlE = null;   
                             
                 $nombres = "";
-                $rut = "";
+                $rut = $_SESSION['rut'];
                 $apellidos = "";
                 $fechaNac = "";
-                $tel = "";
+                $telefono = "";
                 $idComuna = "";
                 $correo = "";
                 $activo=1;        
@@ -80,11 +80,7 @@ if(isset($_SESSION['login'])){
                 $rut =$persona->getRutEmpleado();
                 $encontrado=1;
             }
-        }else{
-            $encontrado=0;
         }
-      
-
 
     }else{
         header('Location: ../../ingresar.php');
@@ -222,13 +218,17 @@ if(isset($_SESSION['login'])){
                                                 <?php 
                                                     $tipos = TipoUsuarioDAO::readAll();
                                                     foreach($tipos as $tipo){
-                                                        if($tipo->getIdTipo()==$controlE->getIdTipo()){
-                                                            echo "<option selected value=" . $tipo->getIdTipo() . " >" . $tipo->getNombreTipo() . "</option>";
-                                                   
-                                                        }else{
+                                                        if($encontrado==1){
+                                                            if($tipo->getIdTipo()==$controlE->getIdTipo() && $encontrado==1){
+                                                                echo "<option selected value=" . $tipo->getIdTipo() . " >" . $tipo->getNombreTipo() . "</option>";
+                                                       
+                                                            }else{
+                                                                echo "<option value=" . $tipo->getIdTipo() . " >" . $tipo->getNombreTipo() . "</option>";
+                                                       
+                                                            }
+                                                        } else{
                                                             echo "<option value=" . $tipo->getIdTipo() . " >" . $tipo->getNombreTipo() . "</option>";
-                                                   
-                                                        }
+                                                        }                                                       
                                                    }
                                                 ?>                                            
                                             </select>
@@ -245,11 +245,14 @@ if(isset($_SESSION['login'])){
                                                 <option  disabled selected>Seleccione una comuna...</option>
                                                    <?php $comunas = ComunaDAO::readAll();
                                                         foreach($comunas as $c){ 
-                                                            if($c->getIdComuna()==$idComuna){
-                                                              echo "<option selected value=". $c->getIdComuna() ."> " . $c->getNombreComuna() . " </option>";
+                                                            if($encontrado==1){
+                                                                if($c->getIdComuna()==$idComuna){
+                                                                    echo "<option selected value=". $c->getIdComuna() ."> " . $c->getNombreComuna() . " </option>";
+                                                                  }else{
+                                                                      echo "<option value=". $c->getIdComuna() ."> " . $c->getNombreComuna() . " </option>";
+                                                                  }
                                                             }else{
                                                                 echo "<option value=". $c->getIdComuna() ."> " . $c->getNombreComuna() . " </option>";
-                                                         
                                                             }
                                                         }
                                                    
