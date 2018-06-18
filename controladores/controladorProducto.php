@@ -38,14 +38,14 @@
         
         $_SESSION['listar']=$id;      
         $_SESSION['mensaje']="Eliminado";      
-        header('Location: ../administrador/admin/producto.php');    
+        header('Location: ../administrador/admin/listarProducto.php');    
     }
     if($op=="M"){
         $id = substr($opcion,1);
         
         $_SESSION['listar']=$id;      
         $_SESSION['mensaje']="Modificar";      
-        header('Location: ../administrador/admin/producto.php');    
+        header('Location: ../administrador/admin/listarProducto.php');    
     }
     if($opcion=="Agregar"){
         $_SESSION['agregar']="1";

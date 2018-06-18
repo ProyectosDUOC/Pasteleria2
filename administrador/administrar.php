@@ -62,12 +62,6 @@ if(isset($_SESSION['login'])){
                     </a>
                 </div>
                 <ul class="nav">
-                    <li>
-                        <a class="nav-link" href="venta.php">
-                            <i class="nc-icon nc-tap-01" aria-hidden="true"></i>
-                            <p>Nueva Venta</p>
-                        </a>
-                    </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="administrar.php">
                             <i class="nc-icon nc-circle-09"></i>
@@ -116,7 +110,7 @@ if(isset($_SESSION['login'])){
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="#">Cambio de contraseña</a>
                                     <div class="divider"></div>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="../index.php">
                                         <i class="nc-icon nc-simple-remove" aria-hidden="true"></i> Salir</a>
                                 </div>
                             </li>

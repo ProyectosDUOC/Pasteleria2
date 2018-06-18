@@ -30,7 +30,7 @@
                 case 3:
                    // echo "administrador";
                     $_SESSION['login']= serialize($control);
-                    header('Location: ../administrador/index.php');   
+                    header('Location: ../administrador/administrar.php');   
                     break;
             }            
         }

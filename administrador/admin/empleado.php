@@ -117,12 +117,6 @@ if(isset($_SESSION['login'])){
                     </a>
                 </div>
                 <ul class="nav">
-                    <li>
-                        <a class="nav-link" href="../venta.php">
-                            <i class="nc-icon nc-tap-01" aria-hidden="true"></i>
-                            <p>Nueva Venta</p>
-                        </a>
-                    </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="../administrar.php">
                             <i class="nc-icon nc-circle-09"></i>
@@ -171,12 +165,12 @@ if(isset($_SESSION['login'])){
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="#">Cambio de contraseña</a>
                                     <div class="divider"></div>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="../../index.php">
                                         <i class="nc-icon nc-simple-remove" aria-hidden="true"></i> Salir</a>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../index.php">
+                                <a class="nav-link" href="../../index.php">
                                     <span class="no-icon text-danger bg-">
                                         <strong>
                                             <i class="nc-icon nc-simple-remove" aria-hidden="true"></i>Salir</strong>
@@ -271,9 +265,28 @@ if(isset($_SESSION['login'])){
                                             <input type="email" name="txtCorreo" value="<?php echo $correo ?>" class="form-control" id="tel">
                                         </div>
                                     </div>
-                                    <?php if($encontrado==1){ ?>
-                                        <button class="btn btn-lg  btn-fill btn-danger" name="opcion" value="eliminar">Eliminar</button>
+                                    <?php if($encontrado==1){ ?>                                        
+                                        <button  type="button"  class="btn btn-lg  btn-fill btn-danger" data-toggle="modal" data-target="#exampleModal">Eliminar</button>
                                         <button class="btn btn-lg  btn-fill btn-warning" name="opcion" value="modificar">Modificar</button>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Desea Eliminar</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Eliminar Empleado <?php echo $nombres . " " . $apellidos ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button name="opcion" value="eliminar" class="btn btn-primary">Eliminar</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
                                     <?php } 
                                        if($encontrado==2){?>
                                              <button class="btn btn-lg  btn-fill btn-success" name="opcion" value="agregar">Agregar</button>
@@ -397,5 +410,7 @@ if(isset($_SESSION['login'])){
 <script src="../../FrWork/bootstrap/js/plugins/bootstrap-notify.js"></script>
 <script src="../../FrWork/bootstrap/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
 <script src="../../FrWork/bootstrap/js/demo.js"></script>
-
+<script> 
+$('#myModal').modal(options)
+</script>
 </html>

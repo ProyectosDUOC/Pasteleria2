@@ -1,18 +1,24 @@
 <?php  
 session_start();
-require_once('../../DAO/ControlEmpleadoDAO.php'); 
-require_once('../../Entities/ControlEmpleado.php');
-require_once('../../DAO/EmpleadoDAO.php'); 
-require_once('../../Entities/Empleado.php');
-require_once('../../Entities/Categoria.php');
-require_once('../../DAO/CategoriaDAO.php'); 
+if (!isset($rootDir)) $rootDir = $_SERVER['DOCUMENT_ROOT'];
+
+require_once($rootDir . '/DAO/ControlEmpleadoDAO.php'); 
+require_once($rootDir . '/Entities/ControlEmpleado.php');
+require_once($rootDir . '/DAO/EmpleadoDAO.php'); 
+require_once($rootDir . '/Entities/Empleado.php');
+require_once($rootDir . '/Entities/Categoria.php');
+require_once($rootDir . '/DAO/CategoriaDAO.php'); 
+
+require_once($rootDir . '/DAO/ProductoPrecioDAO.php'); 
+require_once($rootDir . '/DAO/ProductoDAO.php');  
 $encontrado = "0"; // 0 inicio , 1 encontrado, 2 no encontrado
 $persona = null;
 $mensaje ="";
 $Categorias=null;
 $idC="-1";
-$crearProdu="0";
-$productos=array();
+$productos;
+$listar=0;
+
 if(isset($_SESSION['login'])){
     $c = $_SESSION['login'];
     $c = unserialize($c);
@@ -22,7 +28,14 @@ if(isset($_SESSION['login'])){
         $nombres = $empleado->getNombres() . " " . $empleado->getApellidos();       
         
         $Categorias = CategoriaDAO::sqlSelectAll();        
-
+        if(isset($_SESSION['listar'])){
+            $idC=$_SESSION['listar'];
+            $productos = ProductoDAO::readAll();
+            $listar=1;
+        }
+        if(isset($_SESSION['mensaje'])){
+            $mensaje=$_SESSION['mensaje'];
+        }
     }else{
         header('Location: ../../ingresar.php');
     }
@@ -111,13 +124,13 @@ if(isset($_SESSION['login'])){
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="#">Cambio de contraseña</a>
-                                    <div class="divider"></div>
-                                    <a class="dropdown-item" href="#">
+                                    <div class="divider"></div> 
+                                    <a class="dropdown-item" href="../../index.php">
                                         <i class="nc-icon nc-simple-remove" aria-hidden="true"></i> Salir</a>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="../index.php">
+                                <a class="nav-link" href="../../index.php">
                                     <span class="no-icon text-danger bg-">
                                         <strong>
                                             <i class="nc-icon nc-simple-remove" aria-hidden="true"></i>Salir</strong>
@@ -128,31 +141,37 @@ if(isset($_SESSION['login'])){
                     </div>
                 </div>
             </nav>
+            <form method="post" action="../../controladores/ControladorProducto.php">
+                       
             <div class="content">
-            
+                 <li class="btn btn-fill bg-light"><a href="../../administrador/administrar.php">&larr; Anterior</a></li>
+                       
                 
                 <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2">
                         <h4>Categoria</h4>
                     </div>
+                   
                     <div class="col-md-2">
                     <button class="btn btn-fill btn-danger" name="opcion" value="Nueva">Nueva Categoria</button>
                     </div>
+                    
+                        
                 </div>
                  
                     <div class="row">
                     
                         <div class="col-md-6">
                         
-                        <form method="post" action="../../controladores/ControladorProducto.php">
-                            
+                           
                         <table class="table display" id="example" cellspacing="0" style="width:100%">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Categoria</th>
-                                    <th scope="col"></th>
+                                    <th >Categoria</th>
+                                    <th ></th>
+                                    <th ></th>
                                 </tr>
                             </thead>
                             <tbody class="text-center text-dark">
@@ -163,26 +182,91 @@ if(isset($_SESSION['login'])){
                                     <td><?php echo $c->getNombreCate() ?><td>
                                     <td>
                                         <button class="btn btn-fill btn-success" name="opcion" value="C<?php echo $c->getIdCate() ?>">Agregar Nuevo Producto</button>
+                                    </td>  
+                                    <td>
+                                        <button class="btn btn-fill btn-warning" name="opcion" value="L<?php echo $c->getIdCate() ?>">Listar</button>
                                     </td>
                                 </tr>
                            <?php } ?>
                               
                             </tbody>       
                         </table>
-           
-                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+            <center> <h3 class="text-danger"><strong><?php echo $mensaje ?></strong></h3></center>
+           
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12"> 
+                    <?php if($listar==1){ ?>
+                    <table class="table display "  cellspacing="0" style="width:100%">
+                                            <thead class="bg-dark">
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Categoria</th>
+                                                    <th scope="col"></th>
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col">Cantidad PP / Precio $</th>
+                                                    <th scope="col"></th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center text-dark">
+                                                <?php 
+                                                  foreach($productos as $tipo){
+                                                        if($tipo->getIdCate()==$idC){
+                                                      ?>
+                                                    <tr>
+                                                    <th scope='row'> <?php echo $tipo->getIdProducto(); ?> </th>
+                                                        
+                                                    <?php  $nom = CategoriaDAO::sqlSelect($tipo->getIdCate())->getNombreCate(); ?>
+
+                                                    <td> <?php echo $nom ?> </td>
+                                                    <td> <img src="../../img/productos/<?php echo $tipo->getImagen(); ?>" alt='' height='70' /></td>
+                                                    <td> <?php echo $tipo->getNombreProducto(); ?> </td>
+                                                    <td>
+                                                        <div class='form-group'>
+                                                            <select class='form-control' id='torta'>
+                                                            <?php $precios = ProductoPrecioDAO::idRealAll($tipo->getIdProducto());
+                                                                    foreach($precios as $p){ ?>
+                                                                        <option value="<?php echo $p->getIdProductoP(); ?>"> <?php echo $p->getDescripcion()?> </option>              
+                                                                        <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                    <div class='form-group py-1'>
+                                                    <button type='submit' name="opcion" value="M<?php echo $p->getIdProducto() ?>" class='btn btn-info btn-fill pull-right btn-warning form-control'>
+                                                        Editar
+                                                        </button>
+                                                    </div>
+                                                    </td>
+                                                    <td>
+                                                    <div class='form-group py-1'>
+                                                    <button type='submit' name="opcion" value="E<?php echo $p->getIdProducto() ?>" class='btn btn-info btn-fill pull-right btn-danger form-control'>
+                                                        Eliminar
+                                                        </button>
+                                                    </div>
+                                                    </td>
+                                                </tr>
+                                                  <?php }
+                                                   }
+                                                
+                                                ?>
+                                                   
+                                                    
+                                                    
+                                            </tbody>
+                                        </table>
                     </div>
                     <div class="col"></div>
                     <div class="col"></div>
+                    <?php } ?>
                 </div>
             </div>
+            <form>
             <footer class="footer">
                 <div class="container">
                     <nav>
