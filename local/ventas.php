@@ -9,13 +9,63 @@
     require_once('../DAO/DetalleBoletaDAO.php');
 
     $carrito = array();
+
     
     if(isset($_SESSION['carrito'])){
-
         $carrito = $_SESSION['carrito'];
+    }
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+        if(isset($_POST['opcion'])){
+            if($_POST['opcion']=='Agregar'){
+                $carrito[] = array("idprodp" => $_POST['variedad'], "cant" => $_POST['cantidad']);
+            }
+            if($_POST['opcion']=='Cancelar'){
+                $carrito = array();
+            }
+            if($_POST['opcion']=='Finalizar'){
+                // generar boleta
 
-        $carrito[] = array("idprodp" => $_POST['variedad'], "cant" => $_POST['cantidad']);
-    }  
+                $idVend = 1; // unserialize vendedor
+                $formPago = 1; // forma de pago
+                $idSucu = 1; // sucursal
+
+                $nuevoIdBoleta = BoletaDAO::lastId() + 1;
+
+                //se crea nueva boleta vacia
+                $nuevaBoleta = new Boleta($nuevoIdBoleta,0,$idVend,$formPago,$idSucu);
+                BoletaDAO::sqlInsert($nuevaBoleta);
+
+                $total_final = 0;
+
+                foreach ($carrito as $item) {
+                    $idprodp_i = $item['idprodp'];
+                    $cant_i = $item['cant'];
+
+                    $prodPrecio = ProductoPrecioDAO::sqlSelect($idprodp_i);
+
+                    $precio_i = $prodPrecio->getPrecio();
+                    $total_i = $precio_i * $cant_i;
+
+                    $nuevoIdDetalle = DetalleBoletaDAO::lastId() + 1;
+                    $nuevoDetalle = new DetalleBoleta($nuevoIdDetalle,$idprodp_i,$nuevoIdBoleta,$precio_i,$cant_i,$total_i);
+                    DetalleBoletaDAO::sqlInsert($nuevoDetalle);
+                    $total_final = $total_final + $total_i;
+                }
+
+                $nuevaBoleta->setTotal($total_final);
+                BoletaDAO::sqlUpdate($nuevaBoleta);                
+                unset($carrito);
+                unset($_SESSION['carrito']);
+                header('Location: ../local/index.php');
+            }
+        }
+        if(isset($_POST['eliminar'])){
+            $num = $_POST['eliminar'];
+            unset($carrito[$num-1]);
+        }
+    }
+
+    $_SESSION['carrito'] = $carrito;
 
 ?>
 <!DOCTYPE html>
@@ -26,7 +76,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../img/logo.png">
     <link rel="icon" type="image/png" href="../favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Pasteria Doña Rosa</title>
+    <title>Pasteleria Doña Rosa</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <script src="https://use.fontawesome.com/b48aa89852.js"></script>
@@ -157,65 +207,78 @@
                         </div>
                     </div>
                     <!--BOLETAS -->
-                    <div class="col-md-6">
+                    <div class="col-md-10">
                         <div class="card card-user">
                             <div class="card-image">
                                 <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="...">
                             </div>
                             <div class="card-body">
-                                <div class="author">
-                                    <a href="#">
-                                        <img class="avatar border-gray" src="../img/local/faces/face-0.jpg" alt="...">
-                                        <h5 class="title">Boleta</h5>
-                                    </a>
-                                    <p class="description">
-                                        Detalle de la boleta
+                                <form method="POST" action="ventas.php">
+                                    <div class="author">
+                                        <a href="#">
+                                            <img class="avatar border-gray" src="../img/local/faces/face-0.jpg" alt="...">
+                                            <h5 class="title">Boleta</h5>
+                                        </a>
+                                        <p class="description">
+                                            Detalle de la boleta
+                                        </p>
+                                    </div>
+                                    <p class="description text-center">
+                                        "Sonrie Siempre!"
                                     </p>
-                                </div>
-                                <p class="description text-center">
-                                    "Sonrie Siempre!"
-                                </p>
-                            </div>
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Producto</th>
-                                        <th scope="col">Variedad</th>
-                                        <th scope="col">Cantidad.</th>
-                                        <th scope="col">Valor unitario</th>
-                                        <th scope="col">Valor</th>
-                                        <!--<th scope="col">Eliminar</th> -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                    <?php
-                                        $num = 1;
-                                        foreach ($carrito as $item) {
-                                            
-                                            echo "<tr>";
-                                            echo "<td>" . $num++ . "</td>";
-                                            echo "<td>" . $item["idprod"] . "</td>";
-                                            echo "<td>" . $item["nombre"] . "</td>";
-                                            echo "<td>" . $item["cant"] . "</td>";
-                                            echo "<td>" . $item["precio"] . "</td>";
-                                            echo "</tr>";
-                                            $total += $item['precio'];
-                                        }
-                                    ?>
-                                </tbody>
-                            </table>
-                            <hr>
-                            <h5 class="text-center">Total:
-                                <strong>$9.000.-</strong>
-                            </h5>
-                            <hr>
-                            <div class="button-container mr-auto ml-auto">
-                                <button type="submit" class="btn btn-info btn-fill pull-right btn-warning">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
-                                    Imprimir Boleta
-                                </button>
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Producto</th>
+                                                <th scope="col">Variedad</th>
+                                                <th scope="col">Cantidad.</th>
+                                                <th scope="col">Valor unitario</th>
+                                                <th scope="col">Valor</th>
+                                                <<th scope="col">Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <?php
+                                                $num = 1;
+                                                $total=0;
+                                                foreach ($carrito as $item) {
+                                                    $prodPrecio = ProductoPrecioDAO::sqlSelect($item['idprodp']);
+                                                    $prod = ProductoDAO::sqlSelect($prodPrecio->getIdProducto());
+                                                    $precioUnit = $prodPrecio->getPrecio();
+                                                    echo "<tr>";
+                                                    echo "<td>" . $num . "</td>";
+                                                    echo "<td>" . $prod->getNombreProducto() . "</td>";
+                                                    echo "<td>" . $prodPrecio->getDescripcion() . "</td>";
+                                                    echo "<td>" . $item['cant'] . "</td>";
+                                                    echo "<td>" . $precioUnit . "</td>";
+                                                    echo "<td>" . $precioUnit * $item['cant'] . "</td>";
+                                                    echo "<td><button type='submit' name='eliminar' value='". $num ."' class='btn btn-light' >";
+                                                    echo "<i class='fa fa-trash' aria-hidden='true'></i></td>";
+                                                    echo "</tr>";
+                                                    $num++;
+                                                    $total += $precioUnit * $item['cant'];
+                                                }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                    <hr>
+                                    <h5 class="text-center">Total:
+                                        <strong>$<?php echo $total ?></strong>
+                                    </h5>
+                                    <hr>
+                                    <div class="button-container mr-auto ml-auto">
+                                        <button type="submit" name="opcion" value="Finalizar" class="btn btn-info btn-fill pull-left btn-success">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                            Finalizar Venta
+                                        </button>
+                                        <button type="submit" name="opcion" value="Cancelar" class="btn btn-danger btn-fill pull-right btn-warning">
+                                            <i class="fa fa-download" aria-hidden="true"></i>
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -233,7 +296,7 @@
                     </button>
                 </div>
 
-                <form method="POST" action="test.php">
+                <form method="POST" action="ventas.php">
                     <input id="modalprodid" name="prodId" type="hidden">
                     <div class="modal-body">                        
                         <div class="form-group">
@@ -242,14 +305,15 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="number" name="cantidad" class="form-control" id="modalcantidad" maxlength="2" placeholder="Cantidad a llevar">
+                            <label for="cantidad">Cantidad a llevar</label>
+                            <input type="number" min='1' name="cantidad" class="form-control" id="modalcantidad" maxlength="2" value="1">
                         </div>
                                                 
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="botonagregar">Agregar</input>
+                        <button type="submit" name="opcion" value="Agregar" class="btn btn-primary" id="botonagregar">Agregar</input>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
                     </div>                    
                 </form>
 
@@ -441,7 +505,7 @@ $(document).ready(function() {
             $('#modalnombre').append(nombreProd);
             $('#modalprodid').val(idProd);
 
-            $.post("http://www.test.cl/controladores/infoProducto.php",
+            $.post("http://<?php echo $_SERVER['SERVER_NAME'] ?>/controladores/infoProducto.php",
                     {opcion:'variedades',idproducto:idProd},
                     function(data){
                         //document.write(data);

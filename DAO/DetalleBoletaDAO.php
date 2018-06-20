@@ -7,7 +7,7 @@ if (!isset($rootDir))
 //Agregamos desde BD.PHPy la Entitie Boleta
 // desde el Path raiz ==> $rootDir
 require_once($rootDir . "/BD/bd.php");
-require_once($rootDir . "/Entities/Boleta.php");
+require_once($rootDir . "/Entities/DetalleBoleta.php");
 
 class DetalleBoletaDAO {
 
@@ -35,6 +35,15 @@ class DetalleBoletaDAO {
                                             $dbarr['cant'],
                                             $dbarr['total']);
         return $nuevoDetalle;
+    }
+
+    public static function lastId(){
+        $cc = BD::getInstancia();
+        $stSql = "SELECT id_detalle FROM detalle_boleta order by id_detalle desc limit 1";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $dba = $rs->fetch(PDO::FETCH_ASSOC);
+        return $dba['id_detalle'];
     }
 
     public static function sqlSelectAll()
