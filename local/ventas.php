@@ -53,7 +53,8 @@
                 }
 
                 $nuevaBoleta->setTotal($total_final);
-                BoletaDAO::sqlUpdate($nuevaBoleta);
+                BoletaDAO::sqlUpdate($nuevaBoleta);                
+                unset($carrito);
                 unset($_SESSION['carrito']);
                 header('Location: ../local/index.php');
             }
@@ -311,8 +312,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" name="opcion" value="Agregar" class="btn btn-primary" id="botonagregar">Agregar</input>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
                     </div>                    
                 </form>
 
