@@ -41,19 +41,19 @@
                     $idprodp_i = $item['idprodp'];
                     $cant_i = $item['cant'];
 
-                    $prodPrecio = ProductoPrecioDAO::sqlSelect();
+                    $prodPrecio = ProductoPrecioDAO::sqlSelect($idprodp_i);
 
                     $precio_i = $prodPrecio->getPrecio();
                     $total_i = $precio_i * $cant_i;
 
                     $nuevoIdDetalle = DetalleBoletaDAO::lastId() + 1;
-                    $nuevoDetalle = new DetalleBoleta($nuevoIdDetalle,$idprod_p,$nuevoIdBoleta,$precio_i,$cant_i,$total_i);
+                    $nuevoDetalle = new DetalleBoleta($nuevoIdDetalle,$idprodp_i,$nuevoIdBoleta,$precio_i,$cant_i,$total_i);
                     DetalleBoletaDAO::sqlInsert($nuevoDetalle);
-                    $total_final += $total_i;
+                    $total_final = $total_final + $total_i;
                 }
 
                 $nuevaBoleta->setTotal($total_final);
-                BoletaDAO::sqlUpdate($nuevaBoleta);
+                unset($_SESSION['carrito']);
                 header('Location: ../local/index.php');
             }
         }
