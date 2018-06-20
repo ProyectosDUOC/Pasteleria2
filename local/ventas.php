@@ -53,6 +53,7 @@
                 }
 
                 $nuevaBoleta->setTotal($total_final);
+                BoletaDAO::sqlUpdate($nuevaBoleta);
                 unset($_SESSION['carrito']);
                 header('Location: ../local/index.php');
             }
