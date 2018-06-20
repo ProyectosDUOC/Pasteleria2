@@ -80,12 +80,6 @@ if(isset($_SESSION['login'])){
                             <p>Administrar</p>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="../pedidos.php">
-                            <i class="nc-icon nc-notes"></i>
-                            <p>Ver Pedidos</p>
-                        </a>
-                    </li>
                     <li class="nav-item active active-pro">
                         <a class="nav-link active" href="../../index.php" target="_blank">
                             <i class="nc-icon nc-satisfied"></i>

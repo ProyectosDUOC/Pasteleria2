@@ -46,11 +46,20 @@
             echo $idn;
             $productoPrecio = new ProductoPrecio($idn,$idP,$desc,$precio);
             $x = ProductoPrecioDAO::sqlInsert($productoPrecio);
+            $_SESSION['mensaje']="Se ha creado";        
+            header('Location: ../administrador/admin/editarProducto.php');   
             
-             echo "nombre " .  $x  ." ---   precio = $" . $precio;
         }
-       
+    }
 
+    
+    $op = substr($opcion,0,1); 
+    if($op=="X"){        
+        $id = substr($opcion,1);
+        $producto = new ProductoPrecio($id,"","","");
+        $x = ProductoPrecioDAO::sqlDelete($producto);
+        $_SESSION['mensaje']="Eliminado";        
+        header('Location: ../administrador/admin/editarProducto.php');   
     }
 
 ?>

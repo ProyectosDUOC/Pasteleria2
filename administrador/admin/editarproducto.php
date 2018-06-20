@@ -106,12 +106,6 @@ if(isset($_SESSION['login'])){
                             <p>Administrar</p>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="../pedidos.php">
-                            <i class="nc-icon nc-notes"></i>
-                            <p>Ver Pedidos</p>
-                        </a>
-                    </li>
                     <li class="nav-item active active-pro">
                         <a class="nav-link active" href="../../index.php" target="_blank">
                             <i class="nc-icon nc-satisfied"></i>
@@ -265,7 +259,28 @@ if(isset($_SESSION['login'])){
                                                         <td><?php echo $p->getIdProductoP() ?></td>
                                                         <td> <?php echo $p->getDescripcion()?> </td>              
                                                         <td> <?php echo $p->getPrecio()?> </td>              
-                                                        <td><button name="opcion" value="X<?php echo $p->getIdProducto() ?>"  class="btn btn-fill btn-danger">Eliminar</button>
+                                                        <td>
+                                                            <button  type="button"  class="btn btn-fill pull-right btn-danger form-control" data-toggle="modal" data-target="#Modal<?php echo $p->getIdProductoP() ?>">Eliminar</button>
+
+                                                            <div class="modal fade" id="Modal<?php echo $p->getIdProductoP() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Desea Eliminar Precio</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Eliminar Precio <strong class="text-danger"> <?php echo $p->getDescripcion() ?></strong>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                            <button name="opcion" value="X<?php echo $p->getIdProductoP() ?>"  class="btn btn-fill btn-danger">Eliminar</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                                                              
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 <?php 
