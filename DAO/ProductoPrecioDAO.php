@@ -36,6 +36,20 @@ class ProductoPrecioDAO {
         return $nuevoProductoP;
     }
 
+    public static function lastValue(){
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM producto_precio order by id_producto_p desc  limit 1";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $ba = $rs->fetch();
+        $precio = new ProductoPrecio($ba['id_producto_p'],
+                                      $ba['id_producto'],
+                                      $ba['descripcion'],
+                                      $ba['precio']);
+        return $precio;        
+    }
+
+
     public static function sqlSelectAll()
     {
         $cc = BD::getInstancia();
@@ -49,7 +63,7 @@ class ProductoPrecioDAO {
     public static function idRealAll($id)
     {
         $cc = BD::getInstancia();
-        $stSql = "SELECT * FROM producto_precio where id_producto=".$id;
+        $stSql = "SELECT * FROM producto_precio where id_producto_p=".$id;
         $rs = $cc->db->prepare($stSql);
         $rs->execute();
         $ProductoPArray = $rs->fetchAll();
@@ -58,7 +72,7 @@ class ProductoPrecioDAO {
             $actorAux = new ProductoPrecio($c['id_producto_p'],
                                             $c['id_producto'],
                                             $c['descripcion'],
-                                            $c['precioproducto_precio']);
+                                            $c['precio']);
             array_push($pila, $actorAux);
         }
         return $pila;
@@ -76,7 +90,7 @@ class ProductoPrecioDAO {
             $actorAux = new ProductoPrecio($c['id_producto_p'],
                                             $c['id_producto'],
                                             $c['descripcion'],
-                                            $c['precioproducto_precio']);
+                                            $c['precio']);
             array_push($pila, $actorAux);
         }
         return $pila;
@@ -107,10 +121,10 @@ class ProductoPrecioDAO {
     public static function getParams($productoPrecio)
     {
         $params = array();
-        $params['id_producto_p'] = $productoPrecio->setIdProductoP();
-        $params['id_producto'] = $productoPrecio->setIdProducto();
-        $params['descripcion'] = $productoPrecio->setDescripcion();
-        $params['precio'] = $productoPrecio->setPrecio();
+        $params['id_producto_p'] = $productoPrecio->getIdProductoP();
+        $params['id_producto'] = $productoPrecio->getIdProducto();
+        $params['descripcion'] = $productoPrecio->getDescripcion();
+        $params['precio'] = $productoPrecio->getPrecio();
         return $params;
     }
 }

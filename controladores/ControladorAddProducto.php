@@ -9,10 +9,18 @@
     
     $opcion = $_POST['opcion'];
 
-    if($opcion="Agregar"){
-        $nombreProducto = $_POST['txtNombreP'];
-        $img = $_POST['txtImg'];
-        $tipoUsuario = $_POST['txtTipoUsuario'];
+    if($opcion=="Agregar"){
+        
+        $nombreProducto = "";
+        $img = "";
+        $tipoUsuario = "";
+        if(isset($_POST['txtNombreP']) && isset($_POST['txtImg']) && isset($_POST['txtTipoUsuario'])){
+
+            $nombreProducto = $_POST['txtNombreP'];
+            $img = $_POST['txtImg'];
+            $tipoUsuario = $_POST['txtTipoUsuario'];
+
+        }
 
         if(strlen($nombreProducto)>0 && strlen($img)>0 && strlen($tipoUsuario)>0 ){
             $productoA = ProductoDAO::lastValue();
@@ -21,10 +29,28 @@
             $producto = new Producto($idNuevo, $codPro, $nombreProducto, $img,"", 1, $tipoUsuario);
             $x = ProductoDAO::sqlInsert($producto);    
             
-        echo "Agregado " . $codPro;
+            $_SESSION['mensaje']="Se ha agregado Producto";
+            header('Location: ../administrador/admin/producto.php');    
         }      
-        
-        echo "error  ";
+    }
+
+    if($opcion=="AgregarPrecio"){
+
+        if(isset($_POST['txtDescripcionP']) && isset($_POST['txtPrecio'])){
+            $desc = $_POST['txtDescripcionP'];
+            $precio = $_POST['txtPrecio'];
+            $idP = $_SESSION['idP'];
+
+            $productoPrecioAnterior = ProductoPrecioDAO::lastValue();
+            $idn = $productoPrecioAnterior->getIdProductoP() + 1;
+            echo $idn;
+            $productoPrecio = new ProductoPrecio($idn,$idP,$desc,$precio);
+            $x = ProductoPrecioDAO::sqlInsert($productoPrecio);
+            
+             echo "nombre " .  $x  ." ---   precio = $" . $precio;
+        }
+       
+
     }
 
 ?>

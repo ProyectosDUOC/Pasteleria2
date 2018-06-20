@@ -7,7 +7,7 @@
     require_once($rootDir . '/DAO/ProductoPrecioDAO.php');
     
     $opcion = $_POST['opcion'];
-
+    $_SESSION['idP']=null;
    // $op = "A12";
    // echo "Ingresa"  . $op;                                
    // echo"<br>";
@@ -57,17 +57,14 @@
     }
     if($op=="Z"){
         $id = substr($opcion,1);
-
-        $producto = ProductoDAO::sqlSelect($id);
-        $producto->setNombreProducto($nombre);
-        $x = ProductoDAO::sqlUpdate($producto);
-        $_SESSION['mensaje']="Modificado  numero " . $nombre .   " - " . $x;      
-        header('Location: ../administrador/admin/producto.php');    
+        $_SESSION['idP']=$id;
+        $_SESSION['estado']=3;         
+        header('Location: ../administrador/admin/editarProducto.php');   
     }
     if($opcion=="AgregarCategoria"){
         $nombre = $_POST['txtNombreCategoria'];
         $econtrado = 0;
-        $categoria = CategoriaDAO::readAll();
+        $categoria = CategoriaDAO::sqlSelectAll();
 
         foreach($categoria as $c){
             if($c->getNombreCate()==$nombre){                

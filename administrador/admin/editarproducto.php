@@ -32,24 +32,31 @@ if(isset($_SESSION['login'])){
         $empleado = EmpleadoDAO::sqlSelect($c->getIdEmpleado());
         $nombres = $empleado->getNombres() . " " . $empleado->getApellidos();       
         
-        if(isset($_SESSION['idC'])){
-            $idC = $_SESSION['idC'];
-           
-
-        }
         if(isset($_SESSION['estado'])){
             $idEstado = $_SESSION['estado'];
             if($idEstado==1){
                 //Crear Un producto
                 $class=" required";
-
+                $nombreCate="";
             }
             if($idEstado==2){
                 //Modificar Un producto
             }
             if($idEstado==3){
                 //Agregar Precio Un producto
-                $onlyRead="onlyRead";
+                $onlyRead="readonly";
+                $class="";
+                if(isset($_SESSION['idP'])){
+                    $id = $_SESSION['idP'];
+                    $producto = ProductoDAO::sqlSelect($id);
+                    $nombreP=$producto->getNombreProducto();
+                    $imgP=$producto->getImagen();
+                    $idC =$producto->getIdCate();
+                    $idP=$id;
+                    $categ=  CategoriaDAO::sqlSelect($idC);
+                    $nombreCate=$categ->getNombreCate();
+                }
+                
             }
 
         }
@@ -118,7 +125,7 @@ if(isset($_SESSION['login'])){
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"> Administrar Productos
+                    <a class="navbar-brand" href="#"> Administrar Productos <?php  echo  $nombreCate ?>
                     </a>
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -174,62 +181,106 @@ if(isset($_SESSION['login'])){
                                     <div class="form-group">
                                         <label for="app">Imagen</label>
                                         <input type="text" class="form-control" id="app" name="txtImg" value='Producto/<?php echo $imgP ?>' placeholder="nombre_producto.jpg" <?php echo $onlyRead . " " . $class ?> >
+                                        <div class="form-group">
+                                            <img src="../../img/productos/<?php echo $imgP ?>" alt='' height='70' />     
+                                        </div>
                                     </div>
                                     <div class="form-group px-2">
-                                        <label for="app">Categoria de Producto</label>
+                                        <label for="app">Categoria del Producto</label>
+                                        <?php if($idEstado==3){ 
+                                            
+                                            ?>    
+
+                                            <input type="text" name="txtTipoUsuario" class="form-control" id="app" value='<?php  echo $nombreCate ?>' readonly  >
+                                            
+                                           
+                                        <?php
+                                        }else{ ?>
                                         <select class="custom-select d-block w-100" id="tipoUsuario" name="txtTipoUsuario" required="">
                                             <?php 
                                                 $cate = CategoriaDAO::sqlSelectAll();
-                                                foreach($cate as $c){
-                                                    echo "<option value=" . $c->getIdCate() . " >" . $c->getNombreCate() . "</option>";                                                      
+                                                foreach($cate as $c){                                                   
+                                                        echo "<option value=" . $c->getIdCate() . " >" . $c->getNombreCate() . "</option>";                                                      
+                                                                                             
                                                 }
                                             ?>                                            
                                         </select>
+                                       <?php } ?>
+                                        
                                     </div>
+                                    <?php  if($idEstado!=3){  ?>
                                     <div class='form-group col-md-12'>
                                         <button type="submit" name="opcion" value="Agregar" class="btn btn-fill btn-success">Agregar Producto</button>
                                     </div>
+                                    <?php } ?>
                                 </div>
                                 <br><br>
                                 <?php if($idEstado!=1) {?>
                                 <div class='form-group'>
-                                    <button name="opcion" value="agregar"  class="btn btn-fill btn-success">Agregar Precio</button>
-                                    <br><br>                
-                                        <table>
-                                            <thead class="">
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Nombre</th>                                                                                 
-                                                    <th scope="col">Precio</th>                                                                               
-                                                    <th scope="col"></th>            
-                                                </tr>
-                                            </thead>
-                                            <tbody class="text-center ">
-                                                <?php $precios = ProductoPrecioDAO::idRealAll($idP);
-                                                    if($precios!=null){
-                                                        foreach($precios as $p){ ?>
-                                                            <tr>
-                                                                <td><?php echo $p->getIdProductoP() ?></td>
-                                                                <td> <?php echo $p->getDescripcion()?> </td>              
-                                                                <td> <?php echo $p->getPrecio()?> </td>              
-                                                                <td><button name="opcion" value="X<?php echo $p->getIdProducto() ?>"  class="btn btn-fill btn-danger">Eliminar</button>
-                                                                </td>
-                                                            </tr>
-                                                    <?php 
-                                                    }
-                                                    }else{ ?>
-                                                        <tr>
-                                                                <td></td>
-                                                                <td>No tiene precio</td>              
-                                                                <td></td>              
-                                                                <td></td>
-                                                            </tr>
-                                                <?php    } ?> 
-                                            </tbody>                                                                                     
-                                        </table>
+                                    <button  type="button"  class="btn btn-fill btn-danger form-control" data-toggle="modal" data-target="#ModalC">Agregar Precio</button>
+                                    <div class="modal fade" id="ModalC" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel"><strong class="text-success">Agregar Precio</strong></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="name">Descripción</label>
+                                                        <input type="text" class="form-control" id="name" name="txtDescripcionP" value='' placeholder="Nombre Producto" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="name">Precio</label>
+                                                        <input type="number" min="1" class="form-control" id="name" name="txtPrecio" value='' placeholder="Precio $" >
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button name="opcion" value="AgregarPrecio"  class="btn btn-fill btn-success">Agregar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>            
                                     </div>
                                 </div>
                                 
+                                <div class="col-md-10">
+                                    <table class="table display" id="example" cellspacing="0" style="width:100%">
+                                        <thead class="text-center ">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th>Nombre</th>                                                                                 
+                                                <th>Precio</th>                                                                               
+                                                <th></th>            
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center ">
+                                            <?php $precios = ProductoPrecioDAO::idRealAll($idP);
+                                                if($precios!=null){
+                                                    foreach($precios as $p){ ?>
+                                                    <tr>
+                                                        <td><?php echo $p->getIdProductoP() ?></td>
+                                                        <td> <?php echo $p->getDescripcion()?> </td>              
+                                                        <td> <?php echo $p->getPrecio()?> </td>              
+                                                        <td><button name="opcion" value="X<?php echo $p->getIdProducto() ?>"  class="btn btn-fill btn-danger">Eliminar</button>
+                                                        </td>
+                                                    </tr>
+                                                <?php 
+                                                    }
+                                                }else{ ?>
+                                                    <tr>
+                                                        <td scope=></td>
+                                                        <td>No tiene precio</td>              
+                                                        <td></td>              
+                                                        <td></td>
+                                                    </tr>
+                                                <?php    } ?> 
+                                        </tbody>                                                                                     
+                                    </table>
+                                </div>
                                 <?php } ?>
                             </form>
                         </div>

@@ -142,7 +142,8 @@ if(isset($_SESSION['login'])){
                        
             <div class="content">
                  <a class="btn btn-fill  bg-dark" href="../../administrador/administrar.php">&larr; Anterior</a>
-                       
+                   
+                 <center> <h3 class="text-danger"><strong><?php echo $mensaje ?></strong></h3></center>    
                 
                 <div class="container-fluid">
                 <div class="row">
@@ -166,7 +167,7 @@ if(isset($_SESSION['login'])){
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="name">Nombre Categoria</label>
-                                            <input type="text" class="form-control" id="name" name="txtNombreP" value='' placeholder="Nombre Categoria" >
+                                            <input type="text" class="form-control" id="name" name="txtNombreCategoria" value='' placeholder="Nombre Categoria" >
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -215,7 +216,7 @@ if(isset($_SESSION['login'])){
                     </div>
                 </div>
             </div>
-            <center> <h3 class="text-danger"><strong><?php echo $mensaje ?></strong></h3></center>
+            
            
             <div class="container-fluid">
                 <div class="row">
@@ -262,7 +263,7 @@ if(isset($_SESSION['login'])){
                                                     </td>
                                                     <td>
                                                     <div class='form-group py-1'>
-                                                        <button  type="button"  class="btn btn-fill pull-right btn-warning form-control" name="opcion" value="Z<?php echo $tipo->getIdProducto(); ?>">Editar</button>
+                                                        <button class="btn btn-fill pull-right btn-warning form-control" name="opcion" value="Z<?php echo $tipo->getIdProducto(); ?>">Editar / Añadir $</button>
 
                                                     </div>
                                                     </td>

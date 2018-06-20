@@ -188,7 +188,7 @@ CREATE TABLE producto_precio (
     id_producto_p   INTEGER NOT NULL PRIMARY KEY,
     id_producto     INTEGER NOT NULL,
     descripcion     VARCHAR(40) NOT NULL,
-    precioproducto_precio          INTEGER NOT NULL
+    precio          INTEGER NOT NULL
 );
 
 -- ALTER TABLE producto_precio ADD CONSTRAINT producto_precio_pk PRIMARY KEY ( id_producto_p );
