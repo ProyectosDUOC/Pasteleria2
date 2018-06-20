@@ -37,6 +37,10 @@ class DetalleBoletaDAO {
         return $nuevoDetalle;
     }
 
+    public static function lastId(){
+        //obtener last id
+    }
+
     public static function sqlSelectAll()
     {
         $cc = BD::getInstancia();

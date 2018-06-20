@@ -15,11 +15,51 @@
         $carrito = $_SESSION['carrito'];
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
-        if($_POST['opcion']=='Agregar'){
-            $carrito[] = array("idprodp" => $_POST['variedad'], "cant" => $_POST['cantidad']);
+        if(isset($_POST['opcion'])){
+            if($_POST['opcion']=='Agregar'){
+                $carrito[] = array("idprodp" => $_POST['variedad'], "cant" => $_POST['cantidad']);
+            }
+            if($_POST['opcion']=='Cancelar'){
+                $carrito = array();
+            }
+            if($_POST['opcion']=='Finalizar'){
+                // generar boleta
+
+                $idVend = 1; // unserialize vendedor
+                $formPago = 1; // forma de pago
+                $idSucu = 1; // sucursal
+
+                $nuevoIdBoleta = BoletaDAO::lastId() + 1;
+
+                //se crea nueva boleta vacia
+                $nuevaBoleta = new Boleta($nuevoIdBoleta,0,$idVend,$formPago,$idSucu);
+                BoletaDAO::sqlInsert($nuevaBoleta);
+
+                $total_final = 0;
+
+                foreach ($carrito as $item) {
+                    $idprodp_i = $item['idprodp'];
+                    $cant_i = $item['cant'];
+
+                    $prodPrecio = ProductoPrecioDAO::sqlSelect();
+
+                    $precio_i = $prodPrecio->getPrecio();
+                    $total_i = $precio_i * $cant_i;
+
+                    $nuevoIdDetalle = DetalleBoletaDAO::lastId() + 1;
+                    $nuevoDetalle = new DetalleBoleta($nuevoIdDetalle,$idprod_p,$nuevoIdBoleta,$precio_i,$cant_i,$total_i);
+                    DetalleBoletaDAO::sqlInsert($nuevoDetalle);
+                    $total_final += $total_i;
+                }
+
+                $nuevaBoleta->setTotal($total_final);
+                BoletaDAO::sqlUpdate($nuevaBoleta);
+                header('Location: ../local/index.php');
+            }
         }
-        if($_POST['opcion']=='Cancelar'){
-            $carrito = array();
+        if(isset($_POST['eliminar'])){
+            $num = $_POST['eliminar'];
+            unset($carrito[$num-1]);
         }
     }
 
@@ -193,7 +233,7 @@
                                                 <th scope="col">Cantidad.</th>
                                                 <th scope="col">Valor unitario</th>
                                                 <th scope="col">Valor</th>
-                                                <!--<th scope="col">Eliminar</th> -->
+                                                <<th scope="col">Eliminar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -206,14 +246,16 @@
                                                     $prod = ProductoDAO::sqlSelect($prodPrecio->getIdProducto());
                                                     $precioUnit = $prodPrecio->getPrecio();
                                                     echo "<tr>";
-                                                    echo "<td>" . $num++ . "</td>";
+                                                    echo "<td>" . $num . "</td>";
                                                     echo "<td>" . $prod->getNombreProducto() . "</td>";
                                                     echo "<td>" . $prodPrecio->getDescripcion() . "</td>";
                                                     echo "<td>" . $item['cant'] . "</td>";
                                                     echo "<td>" . $precioUnit . "</td>";
                                                     echo "<td>" . $precioUnit * $item['cant'] . "</td>";
+                                                    echo "<td><button type='submit' name='eliminar' value='". $num ."' class='btn btn-light' >";
+                                                    echo "<i class='fa fa-trash' aria-hidden='true'></i></td>";
                                                     echo "</tr>";
-
+                                                    $num++;
                                                     $total += $precioUnit * $item['cant'];
                                                 }
                                             ?>
@@ -225,9 +267,9 @@
                                     </h5>
                                     <hr>
                                     <div class="button-container mr-auto ml-auto">
-                                        <button type="submit" class="btn btn-info btn-fill pull-left btn-warning">
-                                            <i class="fa fa-download" aria-hidden="true"></i>
-                                            Imprimir Boleta
+                                        <button type="submit" name="opcion" value="Finalizar" class="btn btn-info btn-fill pull-left btn-success">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                            Finalizar Venta
                                         </button>
                                         <button type="submit" name="opcion" value="Cancelar" class="btn btn-danger btn-fill pull-right btn-warning">
                                             <i class="fa fa-download" aria-hidden="true"></i>
@@ -261,7 +303,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="number" min='1' name="cantidad" class="form-control" id="modalcantidad" maxlength="2" placeholder="Cantidad a llevar">
+                            <label for="cantidad">Cantidad a llevar</label>
+                            <input type="number" min='1' name="cantidad" class="form-control" id="modalcantidad" maxlength="2" value="1">
                         </div>
                                                 
                     </div>

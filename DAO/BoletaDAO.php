@@ -17,6 +17,10 @@ class BoletaDAO {
         return $nuevaBoleta;
     }
 
+    public static function lastId(){
+        //obtener last id
+    }
+
     //insert
     public static function sqlInsert($boleta) {
 
