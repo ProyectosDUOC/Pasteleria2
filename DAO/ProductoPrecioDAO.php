@@ -63,7 +63,7 @@ class ProductoPrecioDAO {
     public static function idRealAll($id)
     {
         $cc = BD::getInstancia();
-        $stSql = "SELECT * FROM producto_precio where id_producto_p=".$id;
+        $stSql = "SELECT * FROM producto_precio where id_producto=".$id;
         $rs = $cc->db->prepare($stSql);
         $rs->execute();
         $ProductoPArray = $rs->fetchAll();

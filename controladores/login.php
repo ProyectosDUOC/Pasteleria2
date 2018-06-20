@@ -19,7 +19,7 @@
             switch ($tipoUsuario) {
                 case 1:
                    // echo "Vendedor";
-                    $_SESSION['login']= serialize($control);
+                    $_SESSION['login']= serialize($control);      
                     header('Location: ../local/index.php');                        
                     break;
                 case 2:
