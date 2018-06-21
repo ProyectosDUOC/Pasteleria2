@@ -164,65 +164,60 @@
                     </div>
                 </div>
             </nav>
-            <div class="content container">
-                <div class="row">
-                    <div class="col-md-12">
+            
+            <div class="content" id="producto">
+                 <div class="container-fluid">
+                      <div class="row">
+                      <div class="col-md-12">
                         <div class="text-center">
                             <h4 class="colorC text-center">
                                 <strong>PRODUCTOS</strong>
                             </h4>
                             <br>
-                            <div class="card-deck text-center  card colorC">
-                               
-                                <div>                                    
-                                    <div>
-                                        <table class="table table-dark display" id="example" cellspacing="0" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Categoria</th>
-                                                    <th scope="col"></th>
-                                                    <th scope="col">Nombre</th>
-                                                    <th scope="col">Agregar</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="text-center text-dark">
-                                                <?php 
-                                                  $productos = ProductoDAO::readAll();
-                                                  foreach($productos as $tipo){
-                                                    echo "<tr>";
-                                                        echo "<th scope='row'>" . $tipo->getIdProducto() . "</th>";
-                                                        
-                                                        $nom = CategoriaDAO::sqlSelect($tipo->getIdCate())->getNombreCate();
+                            <div class="card-deck text-center  card colorC">                                 
+                                <table class="table table-dark display" id="example" cellspacing="0" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Categoria</th>
+                                            <th scope="col"></th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Agregar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center text-dark">
+                                        <?php 
+                                        $productos = ProductoDAO::readAll();
+                                        foreach($productos as $tipo){
+                                        echo "<tr>";
+                                        echo "<th scope='row'>" . $tipo->getIdProducto() . "</th>";
+                                        
+                                        $nom = CategoriaDAO::sqlSelect($tipo->getIdCate())->getNombreCate();
 
-                                                        echo "<td>" . $nom . "</td>";
-                                                        echo "<td> <img src='../img/productos/" . $tipo->getImagen() . "' alt='' height='70' /></td>";
-                                                        echo "<td>" . $tipo->getNombreProducto() . "</td>";
-                                                        echo "<td>";
-                                                        echo "<div class='form-group py-1'>";
-                                                                echo "<button type='submit' data-nombre='". $tipo->getNombreProducto() . "' class='btn btn-fill btn-warning' data-toggle='modal' data-target='#detalles' data-idproducto='".$tipo->getIdProducto()."'>";
-                                                                echo "Añadir";
-                                                            echo "</button>";
-                                                        echo "</div>";
-                                                    echo "</td>";
-                                                    echo "</tr>";
-                                                  }
-                                                
-                                                ?>
-                                            </tbody>
-                                        </table>
-                                    </div>                                    
-                                </div>
+                                        echo "<td>" . $nom . "</td>";
+                                        echo "<td> <img src='../img/productos/" . $tipo->getImagen() . "' alt='' height='70' /></td>";
+                                        echo "<td>" . $tipo->getNombreProducto() . "</td>";
+                                        echo "<td>";
+                                        echo "<div class='form-group py-1'>";
+                                        echo "<button type='submit' data-nombre='". $tipo->getNombreProducto() . "' class='btn btn-fill btn-warning' data-toggle='modal' data-target='#detalles' data-idproducto='".$tipo->getIdProducto()."'>";
+                                        echo "Añadir";
+                                        echo "</button>";
+                                        echo "</div>";
+                                        echo "</td>";
+                                        echo "</tr>";
+                                        }?>
+                                    </tbody>
+                                </table>                                  
                             </div>
                         </div>
-                    </div>
+                      </div>
                     <!--BOLETAS -->
-                    <div class="col-md-10">
+                       <div class="col-md-12">
                         <div class="card card-user">
                             <div class="card-image">
                                 <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="...">
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" id="boleta">
                                 <form method="POST" action="ventas.php">
                                     <div class="author">
                                         <a href="#">
@@ -291,16 +286,17 @@
                                 </form>
                             </div>
                         </div>
+                       </div>
                     </div>
                 </div>
             </div>
         </div>
-
+      
         <div class="modal fade" id="detalles" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalnombre">Agregar</h5>
+                    <h5 class="modal-title" class="text-danger" id="modalnombre">Agregar</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -322,7 +318,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" name="opcion" value="Agregar" class="btn btn-primary" id="botonagregar">Agregar</input>
+                        <button type="submit" name="opcion" value="Agregar" class="btn btn-fill btn-primary" id="botonagregar">Agregar</input>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
                     </div>                    
                 </form>
@@ -330,7 +326,17 @@
                 </div>
             </div>
         </div>
-
+        <div class="row py-4">
+            <div class="col-md-3 py-4" >
+                <div style="position:fixed;left:90%;" class="py-4"> 
+                
+                <a  href="#producto" class="btn btn-fill btn-secondary"><i class="nc-icon nc-stre-up icon-bold"></i> Productos</a> 
+                <br><br>
+                <a  href="#boleta" class="btn btn-fill btn-success"> <i class="nc-icon nc-cart-simple"></i> Carrito</a> 
+                                           
+                </div>  
+            </div>
+        </div>
         <footer class="footer">
             <div class="container">
                 <nav>
@@ -364,129 +370,8 @@
             </div>
         </footer>
     </div>
-    <div class="fixed-plugin">
-        <div class="dropdown show-dropdown">
-            <a href="#" data-toggle="dropdown">
-                <i class="fa fa-cog fa-2x"> </i>
-            </a>
-            <ul class="dropdown-menu">
-                <li class="header-title">Barra Personalizada</li>
-                <li class="adjustments-line">
-                    <a href="javascript:void(0)" class="switch-trigger">
-                        <p>Imagen de fondo</p>
-                        <label class="switch">
-                            <input type="checkbox" data-toggle="switch" checked="" data-on-color="primary" data-off-color="primary">
-                            <span class="toggle"></span>
-                        </label>
-                        <div class="clearfix"></div>
-                    </a>
-                </li>
-                <li class="adjustments-line">
-                    <a href="javascript:void(0)" class="switch-trigger background-color">
-                        <p>Colores</p>
-                        <div class="pull-right">
-                            <span class="badge filter badge-black" data-color="black"></span>
-                            <span class="badge filter badge-azure" data-color="azure"></span>
-                            <span class="badge filter badge-green" data-color="green"></span>
-                            <span class="badge filter badge-orange" data-color="orange"></span>
-                            <span class="badge filter badge-red" data-color="red"></span>
-                            <span class="badge filter badge-purple active" data-color="purple"></span>
-                        </div>
-                        <div class="clearfix"></div>
-                    </a>
-                </li>
-                <li class="header-title">Barra de imagenes</li>
 
-                <li class="active">
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Cocteleria/empanaditas_12_unidades.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Dulceria/donuts.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Galletas/galletas_finas.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Tortas/tor_mazapan_chocolate.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/logo.png" alt="" />
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="fixed-plugin">
-        <div class="dropdown show-dropdown">
-            <a href="#" data-toggle="dropdown">
-                <i class="fa fa-cog fa-2x"> </i>
-            </a>
-            <ul class="dropdown-menu">
-                <li class="header-title">Barra Personalizada</li>
-                <li class="adjustments-line">
-                    <a href="javascript:void(0)" class="switch-trigger">
-                        <p>Imagen de fondo</p>
-                        <label class="switch">
-                            <input type="checkbox" data-toggle="switch" checked="" data-on-color="primary" data-off-color="primary">
-                            <span class="toggle"></span>
-                        </label>
-                        <div class="clearfix"></div>
-                    </a>
-                </li>
-                <li class="adjustments-line">
-                    <a href="javascript:void(0)" class="switch-trigger background-color">
-                        <p>Colores</p>
-                        <div class="pull-right">
-                            <span class="badge filter badge-black" data-color="black"></span>
-                            <span class="badge filter badge-azure" data-color="azure"></span>
-                            <span class="badge filter badge-green" data-color="green"></span>
-                            <span class="badge filter badge-orange" data-color="orange"></span>
-                            <span class="badge filter badge-red" data-color="red"></span>
-                            <span class="badge filter badge-purple active" data-color="purple"></span>
-                        </div>
-                        <div class="clearfix"></div>
-                    </a>
-                </li>
-                <li class="header-title">Sidebar Images</li>
-
-                <li class="active">
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Cocteleria/empanaditas_12_unidades.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Dulceria/donuts.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Galletas/galletas_finas.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/productos/Tortas/tor_mazapan_chocolate.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="../img/logo.png" alt="" />
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    
 </body>
 <script src="../FrWork/bootstrap/js/jquery.3.2.1.min.js" type="text/javascript"></script>
 <script src="../FrWork/bootstrap/js/popper.min.js" type="text/javascript"></script>

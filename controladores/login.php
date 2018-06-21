@@ -1,5 +1,4 @@
 <?php
-    session_destroy();
     session_start();
    
 
@@ -32,7 +31,7 @@
                     $_SESSION['login']= serialize($control);
                     header('Location: ../administrador/administrar.php');   
                     break;
-                case 3:
+                case 4:
                     // echo "administrador";
                      $_SESSION['login']= serialize($control);
                      header('Location: ../despacho/administrar.php');   

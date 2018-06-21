@@ -13,7 +13,7 @@ class ProductoPrecio {
     private $descripcion;
     private $precio;
     
-    public function __construct($idProductoP, $idProducto, $descripcion, $precio) {
+    public function __construct($idProductoP=0, $idProducto=0, $descripcion=null, $precio=0) {
         $this->idProductoP = $idProductoP;
         $this->idProducto = $idProducto;
         $this->descripcion = $descripcion;

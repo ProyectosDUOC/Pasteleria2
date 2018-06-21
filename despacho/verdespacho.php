@@ -1,9 +1,11 @@
 <?php  
 session_start();
 
-
+require_once('../DAO/ProductoDAO.php');  
+require_once('../DAO/ProductoPrecioDAO.php');
 require_once('../DAO/ControlEmpleadoDAO.php'); 
 require_once('../Entities/ControlEmpleado.php');
+require_once('../DAO/CategoriaDAO.php');
 
 require_once('../DAO/EmpleadoDAO.php'); 
 require_once('../Entities/Empleado.php');
@@ -50,6 +52,9 @@ if(isset($_SESSION['login'])){
     <link href="../FrWork/bootstrap/css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
     <link href="../FrWork/bootstrap/css/demo.css" rel="stylesheet" />
     <link href="../FrWork/bootstrap/css/style.css" rel="stylesheet" />
+    
+    <link href="../FrWork/datatables/jquery.dataTables.min.css" rel="stylesheet" />
+    
 </head>
 
 <body>
@@ -123,47 +128,44 @@ if(isset($_SESSION['login'])){
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-8">
-                            <a href="verdespacho.php" class="btn btn-lg btn-block btn-fill btn-info">Ver Estados Despachos</a>
-                            
-                            </div>
-                        <div class="col-md-4">
-                            <div class="card card-user">
-                                <div class="card-image">
-                                    <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="...">
-                                </div>
-                                <div class="card-body">
-                                    <div class="author">
-                                        <a href="#">
-                                            <img class="avatar border-gray" src="../img/local/faces/face-0.jpg" alt="...">
-                                            <h5 class="title"><?php echo $nombres ?></h5>
-                                        </a>
-                                        <p class="description">
-                                           Administrador
-                                        </p>
-                                    </div>
-                                    <p class="description text-center">
-                                        "NO DEJES LO QUE PUEDES HOY PARA MAÑANA ;)"
-                                    </p>
-                                </div>
-                                <hr>
-                                <div class="button-container mr-auto ml-auto">
-                                    <button type="submit" class="btn btn-info btn-fill pull-right btn-danger">
-                                        <i class="fa fa-download" aria-hidden="true"></i>
-                                        Cerrar Sesión
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="col-md-12">
+                        <table class="table table-dark display" id="example" cellspacing="0" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Categoria</th>
+                                                    <th scope="col"></th>
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col">Agregar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center text-dark">
+                                                <?php 
+                                                  $productos = ProductoDAO::readAll();
+                                                  foreach($productos as $tipo){
+                                                    echo "<tr>";
+                                                        echo "<th scope='row'>" . $tipo->getIdProducto() . "</th>";
+                                                        
+                                                        $nom = CategoriaDAO::sqlSelect($tipo->getIdCate())->getNombreCate();
+
+                                                        echo "<td>" . $nom . "</td>";
+                                                        echo "<td> <img src='../img/productos/" . $tipo->getImagen() . "' alt='' height='70' /></td>";
+                                                        echo "<td>" . $tipo->getNombreProducto() . "</td>";
+                                                        echo "<td>";
+                                                        echo "<div class='form-group py-1'>";
+                                                                echo "<button type='submit' data-nombre='". $tipo->getNombreProducto() . "' class='btn btn-fill btn-warning' data-toggle='modal' data-target='#detalles' data-idproducto='".$tipo->getIdProducto()."'>";
+                                                                echo "Añadir";
+                                                            echo "</button>";
+                                                        echo "</div>";
+                                                    echo "</td>";
+                                                    echo "</tr>";
+                                                  }
+                                                
+                                                ?>
+                                            </tbody>
+                                        </table>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                    </div>
-                    <div class="col"></div>
-                    <div class="col"></div>
                 </div>
             </div>
             <footer class="footer">
@@ -270,4 +272,15 @@ if(isset($_SESSION['login'])){
 <script src="../FrWork/bootstrap/js/plugins/bootstrap-notify.js"></script>
 <script src="../FrWork/bootstrap/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
 <script src="../FrWork/bootstrap/js/demo.js"></script>
+
+
+<script src="../FrWork/datatables/jquery.dataTables.js"></script>
+<script src="../FrWork/datatables/script.js"></script>
+<script>
+    $(document).ready(function() {
+        // carga plugin Datatable
+    $('#example').DataTable();
+    });
+
+</script>
 </html>
