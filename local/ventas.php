@@ -505,24 +505,24 @@ $(document).ready(function() {
     $('#example').DataTable();
 
         // Modal seleccionar productos
-        $('#detalles').on('show.bs.modal', function (event) {
-            $('#modalselect').empty();
-            $('#modalnombre').empty();
+    $('#detalles').on('show.bs.modal', function (event) {
+        $('#modalselect').empty();
+        $('#modalnombre').empty();
 
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var idProd = button.data('idproducto');
-            var nombreProd = button.data('nombre') ;
-            $('#modalnombre').append(nombreProd);
-            $('#modalprodid').val(idProd);
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var idProd = button.data('idproducto');
+        var nombreProd = button.data('nombre') ;
+        $('#modalnombre').append(nombreProd);
+        $('#modalprodid').val(idProd);
 
-            $.post("http://<?php echo $_SERVER['SERVER_NAME'] ?>/controladores/infoProducto.php",
-                    {opcion:'variedades',idproducto:idProd},
-                    function(data){
-                        //document.write(data);
-                        $('#modalselect').append(data);
-                    }
-            );
-        })
+        $.post("http://<?php echo $_SERVER['SERVER_NAME'] ?>/controladores/infoProducto.php",
+                {opcion:'variedades',idproducto:idProd},
+                function(data){
+                    //document.write(data);
+                    $('#modalselect').append(data);
+                }
+        );
+    })
 
 } );
 </script>
