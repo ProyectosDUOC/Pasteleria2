@@ -10,7 +10,9 @@ require_once('../Entities/Empleado.php');
 
 $nombres = "";
 
-
+if(isset($_SESSION['carrito'])){
+    unset($_SESSION['carrito']);
+}
 
 if(isset($_SESSION['login'])){
     $c = $_SESSION['login'];
