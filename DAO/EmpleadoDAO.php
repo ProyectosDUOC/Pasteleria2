@@ -46,7 +46,7 @@ class EmpleadoDAO {
     public static function sqlInsert($empleado) {
         $cc=BD::getInstancia();
         $stSql = "INSERT INTO empleado VALUES ";
-        $stSql .= "(:id_empleado,:rut_empleado,:nombres,:apellidos,:fecha_nacimiento,:id_comuna,:telefono,:correo,:activo)";
+        $stSql .= "(:id_empleado,:rut_empleado,:nombres,:apellidos,:fecha_nacimiento,:telefono,:id_comuna,:correo,:activo)";
         $rs = $cc->db->prepare($stSql);
         $params = self::getParams($empleado);
         return $rs->execute($params);
@@ -104,9 +104,9 @@ class EmpleadoDAO {
                                             $c['rut_empleado'],
                                             $c['nombres'],
                                             $c['apellidos'],
-                                            $c['fecha_nacimiento'],
-                                            $c['id_comuna'],
+                                            $c['fecha_nacimiento'],                                            
                                             $c['telefono'],
+                                            $c['id_comuna'],
                                             $c['correo'],
                                             $c['activo']);
             array_push($pila, $actorAux);

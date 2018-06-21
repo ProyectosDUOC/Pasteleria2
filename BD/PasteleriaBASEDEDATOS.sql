@@ -188,7 +188,7 @@ CREATE TABLE producto_precio (
     id_producto_p   INTEGER NOT NULL PRIMARY KEY,
     id_producto     INTEGER NOT NULL,
     descripcion     VARCHAR(40) NOT NULL,
-    precioproducto_precio          INTEGER NOT NULL
+    precio          INTEGER NOT NULL
 );
 
 -- ALTER TABLE producto_precio ADD CONSTRAINT producto_precio_pk PRIMARY KEY ( id_producto_p );
@@ -310,6 +310,7 @@ ALTER TABLE producto
 INSERT INTO tipo_usuario VALUES(1,'VENDEDOR');
 INSERT INTO tipo_usuario VALUES(2,'CAJERO');
 INSERT INTO tipo_usuario VALUES(3,'ADMINISTRADOR');
+INSERT INTO tipo_usuario VALUES(4,'DESPACHO');
 
 INSERT INTO forma_pago VALUES(1,'EFECTIVO');
 INSERT INTO forma_pago VALUES(2,'BOLETA');
@@ -377,12 +378,13 @@ INSERT INTO empleado VALUES(1,'11','Benjamin','Mora','2018-06-30',9999,1,'benja@
 INSERT INTO control_empleado VALUES(1,'benjamin','benjamin',1,1,1);
 
 INSERT INTO empleado VALUES(2,'12','Sebastian','orrego','2018-06-30',9999,3,'Seba@gmail.com',1);
-INSERT INTO control_empleado VALUES(2,'sebastian','sebastian',3,2,1);
+INSERT INTO control_empleado VALUES(2,'sebastian','sebastian',2,2,1);
 
 INSERT INTO empleado VALUES(3,'13','Patricia','Campos','2018-06-30',9999,3,'pati@gmail.com',1);
 INSERT INTO control_empleado VALUES(3,'patricia','patricia',3,3,1);
 
-
+INSERT INTO empleado VALUES(4,'14','Rodrigito','Aranguiz','2018-06-30',9999,3,'rori_69@brazzers.cl',1);
+INSERT INTO control_empleado VALUES(4,'rodrigo','rodrigo',4,4,1);
 
 INSERT INTO categoria VALUES(1,'Tortas',1);
 INSERT INTO categoria VALUES(2,'Masas',1);
@@ -492,7 +494,7 @@ INSERT INTO producto VALUES(40,'603','Pepsi Lata','Bebestibles/pepsi.jpg','',1,6
 INSERT INTO producto VALUES(41,'604','Sprite','Bebestibles/sprite.jpg','',1,6);
 INSERT INTO producto VALUES(42,'605','RedBull','Bebestibles/redbull.jpg','',1,6);
 INSERT INTO producto VALUES(43,'606','Monster','Bebestibles/m1.jpg','',1,6);
-INSERT INTO producto VALUES(44,'607','Monster Normal','Dulceria/delicia.jpg','',1,6);
+INSERT INTO producto VALUES(44,'607','Monster Normal','Bebestible/m1.jpg','',1,6);
 
 INSERT INTO producto_precio VALUES (46,38,'1 unidad / $1.500',1500);
 INSERT INTO producto_precio VALUES (47,39,'1 unidad / $1.000',1000);

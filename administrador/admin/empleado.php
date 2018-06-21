@@ -105,6 +105,20 @@ if(isset($_SESSION['login'])){
     <link href="../../FrWork/bootstrap/css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
     <link href="../../FrWork/bootstrap/css/demo.css" rel="stylesheet" />
     <link href="../../FrWork/bootstrap/css/style.css" rel="stylesheet" />
+        
+    <script>
+            function validarRut(string) {//solo letras y numeros
+                var out = '';
+                //Se añaden las letras validas
+                var filtro = '1234567890kK';//Caracteres validos
+
+                for (var i = 0; i < string.length; i++)
+                    if (filtro.indexOf(string.charAt(i)) != -1)
+                        out += string.charAt(i);
+                return out;
+            }
+        </script>
+
 </head>
 
 <body>
@@ -121,12 +135,6 @@ if(isset($_SESSION['login'])){
                         <a class="nav-link" href="../administrar.php">
                             <i class="nc-icon nc-circle-09"></i>
                             <p>Administrar</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="../pedidos.php">
-                            <i class="nc-icon nc-notes"></i>
-                            <p>Ver Pedidos</p>
                         </a>
                     </li>
                     <li class="nav-item active active-pro">
@@ -191,7 +199,7 @@ if(isset($_SESSION['login'])){
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="txtRut">Rut</label>
-                                        <input type="text" class="form-control" name="txtRut" id="txtRut" value="<?php echo $rut ?>" placeholder="Rut">
+                                        <input type="text" class="form-control" name="txtRut" id="txtRut" value="<?php echo $rut ?>" maxlength="10" placeholder="19000222 (Sin digito verificador y puntos)" onkeyup="this.value = validarRut(this.value)" >
                                     </div>
                                     <div class="form-group col-md-6 py-4">
                                         <button type="submit" class="btn btn-fill btn-danger" name="opcion" value="buscar">Buscar</button>
@@ -258,11 +266,11 @@ if(isset($_SESSION['login'])){
                                         </div>
                                         <div class="form-group col-md-2">
                                             <label for="tel">Telefono</label>
-                                            <input type="number" name="txtTelefono" value="<?php echo $telefono ?>" class="form-control" id="tel">
+                                            <input type="number" name="txtTelefono" value="<?php echo $telefono ?>" class="form-control" id="telefono">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="tel">Correo</label>
-                                            <input type="email" name="txtCorreo" value="<?php echo $correo ?>" class="form-control" id="tel">
+                                            <input type="email" name="txtCorreo" value="<?php echo $correo ?>" class="form-control" id="comuna">
                                         </div>
                                     </div>
                                     <?php if($encontrado==1){ ?>                                        

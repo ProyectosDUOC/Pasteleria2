@@ -7,7 +7,7 @@
     require_once($rootDir . '/DAO/ProductoPrecioDAO.php');
     
     $opcion = $_POST['opcion'];
-
+    $_SESSION['idP']=null;
    // $op = "A12";
    // echo "Ingresa"  . $op;                                
    // echo"<br>";
@@ -57,11 +57,31 @@
     }
     if($op=="Z"){
         $id = substr($opcion,1);
+        $_SESSION['idP']=$id;
+        $_SESSION['estado']=3;         
+        header('Location: ../administrador/admin/editarProducto.php');   
+    }
+    if($opcion=="AgregarCategoria"){
+        $nombre = $_POST['txtNombreCategoria'];
+        $econtrado = 0;
+        $categoria = CategoriaDAO::sqlSelectAll();
 
-        $producto = ProductoDAO::sqlSelect($id);
-        $producto->setNombreProducto($nombre);
-        $x = ProductoDAO::sqlUpdate($producto);
-        $_SESSION['mensaje']="Modificado  numero " . $nombre .   " - " . $x;      
-        header('Location: ../administrador/admin/producto.php');    
+        foreach($categoria as $c){
+            if($c->getNombreCate()==$nombre){                
+                $_SESSION['mensaje']="Nombre ya en uso"; 
+                $econtrado = 1;  
+                break;
+            }
+        }
+        if($econtrado==0){            
+            $_SESSION['mensaje']="Categoria Agregada";
+
+            $categoria= CategoriaDAO::lastValue();
+            $idNueva = $categoria->getIdCate() + 1;
+            $categoria= new Categoria($idNueva, $nombre, 1);
+            $x = CategoriaDAO::sqlInsert($categoria);
+        }
+        header('Location: ../administrador/admin/producto.php');   
+
     }
 ?>

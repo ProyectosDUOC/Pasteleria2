@@ -11,7 +11,7 @@ class Empleado {
     private $correo;     
     private $activo;
     
-    function __construct($idEmpleado, $rutEmpleado, $nombres, $apellidos, $fechaNacimiento, $idComuna, $telefono, $correo, $activo) {
+    function __construct($idEmpleado, $rutEmpleado, $nombres, $apellidos, $fechaNacimiento, $telefono, $idComuna, $correo, $activo) {
         $this->idEmpleado = $idEmpleado;
         $this->rutEmpleado = $rutEmpleado;
         $this->nombres = $nombres;

@@ -29,8 +29,20 @@ class CategoriaDAO
         $cc=BD::getInstancia();
         $stSql = "INSERT INTO categoria VALUES (:id_cate, :nombre_cate, :activo)";
         $rs = $cc->db->prepare($stSql);
-        $params = getParams($categoria);
-        return $rs->sqlEjecutar($stSql);
+        $params = self::getParams($categoria);
+        return $rs->execute($params);
+    }
+
+    public static function lastValue(){
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM categoria order by id_cate desc  limit 1";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $ba = $rs->fetch();
+        $cate = new Categoria($ba['id_cate'],
+                                      $ba['nombre_cate'],
+                                      $ba['activo'] );
+        return $cate;        
     }
     
     public static function sqlUpdate($categoria)

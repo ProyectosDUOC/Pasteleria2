@@ -43,7 +43,7 @@
         foreach($empleados as $e){
             if($e->getRutEmpleado()==$rut){               
                 
-                $persona = new Empleado($e->getIdEmpleado(),$rut,$nombres,$apellidos,$fechaNac,$idComuna,$telefono,$correo,$activo); 
+                $persona = new Empleado($e->getIdEmpleado(),$rut,$nombres,$apellidos,$fechaNac,$telefono,$idComuna,$correo,$activo); 
                 $x = EmpleadoDAO::sqlUpdate($persona);  
                 $controles = ControlEmpleadoDAO::readAll();
                 foreach($controles as $c){
@@ -106,15 +106,14 @@
             //no se encontro
             $pAnterior = EmpleadoDAO::lastValue();
             $idNueva= $pAnterior->getIdEmpleado() + 1;
-            $persona = new Empleado($idNueva,$rut,$nombres,$apellidos,$fechaNac,$idComuna,$telefono,$correo,$activo); 
+            $persona = new Empleado($idNueva,$rut,$nombres,$apellidos,$fechaNac,$telefono,$idComuna,$correo,1); 
           
-            echo $idNueva;
             $x = EmpleadoDAO::sqlInsert($persona);
             $cAnterior = ControlEmpleadoDAO::lastValue();
             $idNuevaC= $cAnterior->getIdControlE() + 1;
             
             echo "  -  " . $idNuevaC;
-            $controlE = new ControlEmpleado($idNuevaC,$idNueva,$rut,$rut,$idTipoU,1 );
+            $controlE = new ControlEmpleado($idNuevaC,$idNueva,$rut,$rut,$idTipoU,1);
             $x = ControlEmpleadoDAO::sqlInsert($controlE);
             
           

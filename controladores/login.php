@@ -19,7 +19,7 @@
             switch ($tipoUsuario) {
                 case 1:
                    // echo "Vendedor";
-                    $_SESSION['login']= serialize($control);
+                    $_SESSION['login']= serialize($control);      
                     header('Location: ../local/index.php');                        
                     break;
                 case 2:
@@ -32,6 +32,11 @@
                     $_SESSION['login']= serialize($control);
                     header('Location: ../administrador/administrar.php');   
                     break;
+                case 3:
+                    // echo "administrador";
+                     $_SESSION['login']= serialize($control);
+                     header('Location: ../despacho/administrar.php');   
+                     break;
             }            
         }
     }
