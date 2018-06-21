@@ -270,7 +270,7 @@
                                     </table>
                                     <hr>
                                     <h5 class="text-center">Total:
-                                        <strong>$<?php echo $total ?></strong>
+                                        <strong>$<?php echo $total  ?></strong>
                                     </h5>
                                     <hr>
                                     <div class="button-container mr-auto ml-auto">
