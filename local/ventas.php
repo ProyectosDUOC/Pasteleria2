@@ -9,18 +9,19 @@
     require_once('../DAO/DetalleBoletaDAO.php');
 
     $carrito = array();
-
     
     if(isset($_SESSION['carrito'])){
+        // carga carrito desde Session
         $carrito = $_SESSION['carrito'];
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST['opcion'])){
             if($_POST['opcion']=='Agregar'){
+                // agrega ultimo producto
                 $carrito[] = array("idprodp" => $_POST['variedad'], "cant" => $_POST['cantidad']);
             }
             if($_POST['opcion']=='Cancelar'){
-                $carrito = array();
+                $carrito = array(); //limpia carrito
             }
             if($_POST['opcion']=='Finalizar'){
                 // generar boleta
@@ -31,29 +32,38 @@
 
                 $nuevoIdBoleta = BoletaDAO::lastId() + 1;
 
-                //se crea nueva boleta vacia
+                //se crea nueva boleta con total 0
                 $nuevaBoleta = new Boleta($nuevoIdBoleta,0,$idVend,$formPago,$idSucu);
                 BoletaDAO::sqlInsert($nuevaBoleta);
 
                 $total_final = 0;
 
+                // recorre el carrito
                 foreach ($carrito as $item) {
                     $idprodp_i = $item['idprodp'];
                     $cant_i = $item['cant'];
 
+                    // obtiene informacion del producto
                     $prodPrecio = ProductoPrecioDAO::sqlSelect($idprodp_i);
 
+                    //calcula precio y total
                     $precio_i = $prodPrecio->getPrecio();
                     $total_i = $precio_i * $cant_i;
 
+                    // agrega nuevo detalle
                     $nuevoIdDetalle = DetalleBoletaDAO::lastId() + 1;
                     $nuevoDetalle = new DetalleBoleta($nuevoIdDetalle,$idprodp_i,$nuevoIdBoleta,$precio_i,$cant_i,$total_i);
                     DetalleBoletaDAO::sqlInsert($nuevoDetalle);
+
+                    //suma al subtotal
                     $total_final = $total_final + $total_i;
                 }
 
+                //actualiza total de la boleta creada
                 $nuevaBoleta->setTotal($total_final);
-                BoletaDAO::sqlUpdate($nuevaBoleta);                
+                BoletaDAO::sqlUpdate($nuevaBoleta);  
+                
+                //limpia carrito y redirecciona
                 unset($carrito);
                 unset($_SESSION['carrito']);
                 header('Location: ../local/index.php');
