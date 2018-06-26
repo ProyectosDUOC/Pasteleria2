@@ -25,6 +25,7 @@ $nombres = "";
 $mensaje = "";
 $boleta="";
 $id="";
+
 if(isset($_SESSION['login'])){
     $c = $_SESSION['login'];
     $c = unserialize($c);
@@ -210,8 +211,11 @@ if(isset($_SESSION['login'])){
                                                     <?php } ?>          
                                             </select>
                                         </div>
+                                        <input type="password" style="visibility: hidden;" name="letra" value="<?php echo $letra?>">
+                                        <input type="password" style="visibility: hidden;" name="id" value="<?php echo $id?>">
+          
                                         <div class="button-container mr-auto ml-auto col-md-6">
-                                            <button type="submit" name="opcion" value="Finalizar" class="btn btn-info btn-fill pull-left btn-success">
+                                            <button type="submit" name="opcion" value="Pagar" class="btn btn-info btn-fill pull-left btn-success">
                                                 <i class="fa fa-check" aria-hidden="true"></i>
                                                 Pagar
                                             </button>
