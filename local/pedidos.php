@@ -98,7 +98,6 @@
                                             <img class="avatar border-gray" src="../img/local/default-avatar.png" alt="...">
 
                                         </a>
-                                        <div class="">
                                             <form class="">
                                                 <h4>Información de Usuario</h4>
                                                 <div class="">
@@ -282,8 +281,37 @@
                                                 <p>
                                                     <sup>*</sup> Requerido</p>
                                             </form>
-                                        </div>
+                                            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName">First name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName">Last name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+            </div>
+                                <div class="mb-3">
+              <label for="username">Username</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">@</span>
+                </div>
+                <input type="text" class="form-control" id="username" placeholder="Username" required>
+                <div class="invalid-feedback" style="width: 100%;">
+                  Your username is required.
+                </div>
+              </div>
+            </div>
                                 </div>
+                             
+
                                 <hr>
                                 <div class="button-container mr-auto ml-auto">
                                     <button type="submit" class="btn btn-info btn-fill pull-right btn-danger">
