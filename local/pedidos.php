@@ -94,15 +94,14 @@
                                     <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="...">
                                 </div>
                                 <div class="card-body">
-                                    <div class="author">
                                         <a href="#">
                                             <img class="avatar border-gray" src="../img/local/default-avatar.png" alt="...">
 
                                         </a>
-                                        <div class="form-group">
-                                            <form class="form-horizontal">
+                                        <div class="">
+                                            <form class="">
                                                 <h4>Información de Usuario</h4>
-                                                <div class="control-group">
+                                                <div class="">
                                                     <label class="control-label" for="inputFname1">Usuario
                                                         <sup>*</sup>
                                                     </label>
@@ -111,7 +110,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="control-group">
-                                                    <label class="control-label" for="inputFname1">Contraseña
+                                                    <label class="" for="inputFname1">Contraseña
                                                         <sup>*</sup>
                                                     </label>
                                                     <div class="controls">
@@ -284,11 +283,6 @@
                                                     <sup>*</sup> Requerido</p>
                                             </form>
                                         </div>
-
-                                    </div>
-                                    <p class="description text-center">
-                                        "Sonrie Siempre!"
-                                    </p>
                                 </div>
                                 <hr>
                                 <div class="button-container mr-auto ml-auto">
