@@ -22,14 +22,16 @@ if($opcion=="Buscar"){
         $boleta = BoletaDAO::sqlSelect($id);
         if($boleta->getIdEmpleado()>0){ //boleta existe
            // $_SESSION['id']=$id;    
-           echo $boleta->getTotal();
-           $_SESSION['mensaje']=null;
-           $_SESSION['id']="b" . $id;
-           header('Location: ../cajero/boucher.php');   
-       
-          
+
+           if($boleta->getIdFormaPago()!=0){
+                $_SESSION['mensaje']="Boleta Ya Cobrada";   
+                header('Location: ../cajero/index.php');   
+           }else{
+                $_SESSION['mensaje']=null;
+                $_SESSION['id']="b" . $id;
+                header('Location: ../cajero/boucher.php');   
+           }
         }else{ //No existe  
-            echo "no se encontro";
             $_SESSION['mensaje']="No se econtro Boleta";   
             header('Location: ../cajero/index.php');   
         }         

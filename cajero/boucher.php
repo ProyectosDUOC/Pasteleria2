@@ -156,7 +156,7 @@ if(isset($_SESSION['login'])){
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-8">
-                            <form method="post" action="">
+                            <form method="post" action="../controladores/controladorPago.php">
                                 <div class="row">
                                     <table class="table">
                                         <thead class="thead-dark">
@@ -202,13 +202,16 @@ if(isset($_SESSION['login'])){
                                     <div class="col-md-12">
                                         <div class="form-group col-md-6">
                                             <label for="inputState">Tipo de Pago</label>
-                                            <select id="inputState" class="form-control" name="txtTipoPago">
+                                            <select required id="inputState" class="form-control" name="txtTipoPago">
                                                 <option  disabled selected>Seleccione una Tipo de pago...</option>
                                                 <?php $formaPago = FormaPagoDAO::sqlSelectAll();
                                                     foreach($formaPago as $f){ 
+                                                        if($f->getIdFormaPago()!=0){ ?>
+                                                                <option value="<?php echo $f->getIdFormaPago() ?>"><?php echo $f->getNombrePago() ?></option>
+                                            
+                                                  <?php      }
                                                         ?>
-                                                        <option value="<?php echo $f->getIdFormaPago() ?>"><?php echo $f->getNombrePago() ?></option>
-                                                    <?php } ?>          
+                                                               <?php } ?>          
                                             </select>
                                         </div>
                                         <input type="password" style="visibility: hidden;" name="letra" value="<?php echo $letra?>">
