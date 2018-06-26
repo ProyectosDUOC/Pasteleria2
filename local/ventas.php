@@ -27,7 +27,7 @@
                 // generar boleta
 
                 $idVend = 1; // unserialize vendedor
-                $formPago = 1; // forma de pago
+                $formPago = 0; // forma de pago
                 $idSucu = 1; // sucursal
 
                 $nuevoIdBoleta = BoletaDAO::lastId() + 1;
