@@ -46,6 +46,27 @@ class DetalleBoletaDAO {
         return $dba['id_detalle'];
     }
 
+    public static function realAllId($id)
+    {
+        $cc = BD::getInstancia();
+        $stSql = "SELECT * FROM detalle_boleta where id_boleta=:id_boleta";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute(array('id_boleta' => $id));
+        $detallesArray = $rs->fetchAll();
+
+        $pila = array();
+        foreach ($detallesArray as $c) {
+            $actorAux = new DetalleBoleta($c['id_detalle'],
+                                            $c['id_producto_p'],
+                                            $c['id_boleta'],
+                                            $c['precio'],
+                                            $c['cant'],
+                                            $c['total']);
+            array_push($pila, $actorAux);
+        }
+        return $pila;
+    }
+
     public static function sqlSelectAll()
     {
         $cc = BD::getInstancia();
@@ -53,7 +74,18 @@ class DetalleBoletaDAO {
         $rs = $cc->db->prepare($stSql);
         $rs->execute();
         $detallesArray = $rs->fetchAll();
-        return $detallesArray;
+
+        $pila = array();
+        foreach ($comunasArray as $c) {
+            $actorAux = new DetalleBoleta($c['id_detalle'],
+                                            $c['id_producto_p'],
+                                            $c['id_boleta'],
+                                            $c['precio'],
+                                            $c['cant'],
+                                            $c['total']);
+            array_push($pila, $actorAux);
+        }
+        return $pila;
     }
 
     public static function sqlUpdate($detalleBoleta) {

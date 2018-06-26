@@ -22,7 +22,7 @@ class PedidoLocal {
     private $idFormaEnvio;
     private $idSucursal;
     
-    public function __construct($idPedidoLocal, $idCliente, $glosa, $descuento, $total, $fechaTermino, $fechaInscrita, $idFormaEnvio, $idSucursal) {
+    public function __construct($idPedidoLocal=0, $idCliente=0, $glosa="", $descuento=0, $total=0, $fechaTermino=null, $fechaInscrita=null, $idFormaEnvio=0, $idSucursal=1) {
         $this->idPedidoLocal = $idPedidoLocal;
         $this->idCliente = $idCliente;
         $this->glosa = $glosa;
