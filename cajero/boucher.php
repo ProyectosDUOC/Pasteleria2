@@ -1,5 +1,10 @@
 <?php  
+if (!isset($rootDir)) {
+    $rootDir = $_SERVER['DOCUMENT_ROOT'];
+}
+
 session_start();
+
 
 require_once('../DAO/ProductoDAO.php');  
 require_once('../DAO/ProductoPrecioDAO.php');
@@ -10,11 +15,16 @@ require_once('../DAO/CategoriaDAO.php');
 require_once('../DAO/EmpleadoDAO.php'); 
 require_once('../Entities/Empleado.php');
 
+require_once ($rootDir . "/DAO/BoletaDAO.php");
+require_once ($rootDir . "/DAO/PedidoLocalDAO.php");
+require_once ($rootDir . "/DAO/DetalleBoletaDAO.php");
+require_once ($rootDir . "/DAO/FormaPagoDAO.php");
+
 $nombres = "";
 
 $mensaje = "";
-
-
+$boleta="";
+$id="";
 if(isset($_SESSION['login'])){
     $c = $_SESSION['login'];
     $c = unserialize($c);
@@ -25,6 +35,23 @@ if(isset($_SESSION['login'])){
 
         if(isset($_SESSION['mensaje'])){
             $mensaje= $_SESSION['mensaje'];
+        }
+
+        if(isset($_SESSION['id'])){
+            $id = $_SESSION['id'];
+            $letra = substr($id,0,1);  //tipos b o p
+            $id = substr($id,1); //id de la boleta
+
+            if($letra=="p"){
+
+            }
+            if($letra=="b"){
+                $boleta = BoletaDAO::sqlSelect($id);
+                $detalleBoleta=  DetalleBoletaDAO::realAllId($id);
+            }
+
+        }else{
+            header('Location: ../ingresar.php');
         }
        
 
@@ -125,25 +152,81 @@ if(isset($_SESSION['login'])){
             </nav>
 
             <div class="content">
-             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <form method="post" action="../controladores/ControladorCajero.php">
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for="id">Codigo de Boucher</label>
-                                    <input type="text" class="form-control" name="id" id="id" value="" maxlength="10" placeholder="Codigo Boucher" >
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <form method="post" action="">
+                                <div class="row">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Producto</th>
+                                                <th scope="col">Variedad</th>
+                                                <th scope="col">Cantidad.</th>
+                                                <th scope="col">Valor unitario</th>
+                                                <th scope="col">Valor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <?php
+                                            $num = 1;
+                                            $total=0;
+                                            foreach ($detalleBoleta as $d) {
+                                            $precio = $d->getPrecio();
+                                            $productoP = ProductoPrecioDAO::sqlSelect($d->getIdProductoP());
+                                            $prod = ProductoDAO::sqlSelect($productoP->getIdProducto());
+                                            $valor = $precio * $d->getCant();
+                                            echo "<tr>";
+                                                echo "<td>" . $num . "</td>";
+                                                echo "<td>" . $prod->getNombreProducto() . "</td>";
+                                                echo "<td>" . $productoP->getDescripcion() . "</td>";
+                                                echo "<td>" . $d->getCant() . "</td>";
+                                                echo "<td> $" . $precio . "</td>";
+                                                echo "<td> $" . $valor . "</td>";
+                                            echo "</tr>";
+                                            $num++;
+                                            $total += $valor;
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                    <hr>
+                                    <h5 class="text-center">Total:
+                                        <strong>$<?php echo $total  ?></strong>
+                                    </h5>
+                                    <hr>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">Tipo de Pago</label>
+                                            <select id="inputState" class="form-control" name="txtTipoPago">
+                                                <option  disabled selected>Seleccione una Tipo de pago...</option>
+                                                <?php $formaPago = FormaPagoDAO::sqlSelectAll();
+                                                    foreach($formaPago as $f){ 
+                                                        ?>
+                                                        <option value="<?php echo $f->getIdFormaPago() ?>"><?php echo $f->getNombrePago() ?></option>
+                                                    <?php } ?>          
+                                            </select>
+                                        </div>
+                                        <div class="button-container mr-auto ml-auto col-md-6">
+                                            <button type="submit" name="opcion" value="Finalizar" class="btn btn-info btn-fill pull-left btn-success">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                                Pagar
+                                            </button>
+                                            <a  href="index.php" class="btn btn-danger btn-fill pull-right btn-warning">
+                                                <i class="fa fa-download" aria-hidden="true"></i>
+                                                Cancelar
+                                            </a>
+                                        </div>            
+                                    </div>
+                                   
                                 </div>
-                                <div class="form-group col-md-6 py-4">
-                                    <button type="submit" class="btn btn-fill btn-danger" name="opcion" value="Buscar">Buscar</button>
-                                </div>
-                                <p class="text-danger"><strong><?php echo $mensaje ?></strong></p>
-                             
-                            </div>   
-                        </form>
+                            </form>
+                        </div>  
                     </div>
-                </div>
-            </div>            
+                </div>            
             </div>  
             <footer class="footer">
                 <div class="container">

@@ -37,7 +37,7 @@ class PedidoLocalDAO
 
         return $nuevopLocal;
     }
-
+    
     public static function sqlSelectAll()
     {
         $cc = BD::getInstancia();

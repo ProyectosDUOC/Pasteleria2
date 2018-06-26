@@ -15,7 +15,13 @@ class FormaPagoDAO {
         $rs = $cc->db->prepare($stSql);
         $rs->execute();
         $formasPago = $rs->fetchAll();
-        return $formasPago;
+        $pila = array();
+        foreach ($formasPago as $c) {
+            $actorAux = new FormaPago($c['id_forma_pago'],
+                                            $c['nombre_pago']);
+            array_push($pila, $actorAux);
+        }
+        return $pila;
     }
 
 }
