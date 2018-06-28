@@ -5,23 +5,26 @@
     require_once('../DAO/ProductoPrecioDAO.php');
     require_once('../DAO/CategoriaDAO.php');
 
-    require_once('../DAO/BoletaDAO.php');
-    require_once('../DAO/DetalleBoletaDAO.php');
+    require_once('../DAO/DetallePedidoLocalDAO.php');
+    require_once('../DAO/PedidoLocalDAO.php');
 
-    $carrito = array();
+    require_once('../Entities/DetallePedidoLocal.php');
+    require_once('../Entities/PedidoLocal.php');
+
+    $canasto = array();
     
-    if(isset($_SESSION['carrito'])){
-        // carga carrito desde Session
-        $carrito = $_SESSION['carrito'];
+    if(isset($_SESSION['canasto'])){
+        // carga canasto desde Session
+        $canasto = $_SESSION['canasto'];
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST['opcion'])){
             if($_POST['opcion']=='Agregar'){
                 // agrega ultimo producto
-                $carrito[] = array("idprodp" => $_POST['variedad'], "cant" => $_POST['cantidad']);
+                $canasto[] = array("idprodp" => $_POST['variedad'], "cant" => $_POST['cantidad']);
             }
             if($_POST['opcion']=='Cancelar'){
-                $carrito = array(); //limpia carrito
+                $canasto = array(); //limpia canasto
             }
             if($_POST['opcion']=='Finalizar'){
                 // generar boleta
@@ -29,17 +32,18 @@
                 $idVend = 1; // unserialize vendedor
                 $formPago = 0; // forma de pago
                 $idSucu = 1; // sucursal
+                $idCliente = 0;
 
-                $nuevoIdBoleta = BoletaDAO::lastId() + 1;
+                $nuevoIdPedido = PedidoLocalDAO::lastId() + 1;
 
-                //se crea nueva boleta con total 0
-                $nuevaBoleta = new Boleta($nuevoIdBoleta,0,$idVend,$formPago,$idSucu);
-                BoletaDAO::sqlInsert($nuevaBoleta);
+                //se crea nueva pedido solo con id
+                $nuevoPedido = new PedidoLocal($nuevoIdPedido);
+                PedidoLocalDAO::sqlInsert($nuevoPedido);
 
                 $total_final = 0;
 
-                // recorre el carrito
-                foreach ($carrito as $item) {
+                // recorre el canasto
+                foreach ($canasto as $item) {
                     $idprodp_i = $item['idprodp'];
                     $cant_i = $item['cant'];
 
@@ -51,31 +55,31 @@
                     $total_i = $precio_i * $cant_i;
 
                     // agrega nuevo detalle
-                    $nuevoIdDetalle = DetalleBoletaDAO::lastId() + 1;
-                    $nuevoDetalle = new DetalleBoleta($nuevoIdDetalle,$idprodp_i,$nuevoIdBoleta,$precio_i,$cant_i,$total_i);
-                    DetalleBoletaDAO::sqlInsert($nuevoDetalle);
+                    $nuevoIdDetalle = DetallePedidoDAO::lastId() + 1;
+                    $nuevoDetalle = new DetallePedido($nuevoIdDetalle,$idprodp_i,$nuevoIdPedido,$precio_i,$cant_i,$total_i);
+                    DetallePedidoDAO::sqlInsert($nuevoDetalle);
 
                     //suma al subtotal
                     $total_final = $total_final + $total_i;
                 }
 
-                //actualiza total de la boleta creada
-                $nuevaBoleta->setTotal($total_final);
-                BoletaDAO::sqlUpdate($nuevaBoleta);  
+                //actualiza total del pedido creada
+                $nuevoPedido->setTotal($total_final);
+                PedidoLocalDAO::sqlUpdate($nuevoPedido);  
                 
-                //limpia carrito y redirecciona
-                unset($carrito);
-                unset($_SESSION['carrito']);
+                //limpia canasto y redirecciona
+                unset($canasto);
+                unset($_SESSION['canasto']);
                 header('Location: ../local/index.php');
             }
         }
         if(isset($_POST['eliminar'])){
             $num = $_POST['eliminar'];
-            unset($carrito[$num-1]);
+            unset($canasto[$num-1]);
         }
     }
 
-    $_SESSION['carrito'] = $carrito;
+    $_SESSION['canasto'] = $canasto;
 
 ?>
 <!DOCTYPE html>
@@ -248,7 +252,7 @@
                                             <?php
                                                 $num = 1;
                                                 $total=0;
-                                                foreach ($carrito as $item) {
+                                                foreach ($canasto as $item) {
                                                     $prodPrecio = ProductoPrecioDAO::sqlSelect($item['idprodp']);
                                                     $prod = ProductoDAO::sqlSelect($prodPrecio->getIdProducto());
                                                     $precioUnit = $prodPrecio->getPrecio();
@@ -276,7 +280,7 @@
                                     <div class="button-container mr-auto ml-auto">
                                         <button type="submit" name="opcion" value="Finalizar" class="btn btn-info btn-fill pull-left btn-success">
                                             <i class="fa fa-check" aria-hidden="true"></i>
-                                            Finalizar Venta
+                                            Finalizar Pedido
                                         </button>
                                         <button type="submit" name="opcion" value="Cancelar" class="btn btn-danger btn-fill pull-right btn-warning">
                                             <i class="fa fa-download" aria-hidden="true"></i>

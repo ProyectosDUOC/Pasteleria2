@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="es-cl">
+<?php
+    session_start();
+    require_once('../DAO/ComunaDAO.php');
+?>
 
 <head>
     <meta charset="utf-8" />
@@ -35,7 +39,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="pedidos.php">
+                        <a class="nav-link" href="iniciarPedido.php">
                             <i class="nc-icon nc-notes"></i>
                             <p>Crear Pedido</p>
                         </a>
@@ -88,75 +92,77 @@
 
             <div class="content">
                 <div class="container-fluid">
-                    <form action>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card card-user">
-                                    <div class="card-image">
-                                        <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="...">
-                                    </div>
-                                    <div class="card-body">
-                                        <a href="#">
-                                            <img class="avatar border-gray" src="../img/local/default-avatar.png" alt="...">
-                                        </a>
-                                        <h4>Información de Usuario</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-user">
+                                <div class="card-image">
+                                    <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <a href="#">
+                                        <img class="avatar border-gray" src="../img/local/default-avatar.png" alt="...">
+                                    </a>
+                                    <h4>Información de Pedido</h4>
 
-                                        <form>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                                    <form method="POST" action="../Controladores/ControladorPedido.php">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputNombre">Nombre</label>
+                                                    <input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Nombre">
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Password</label>
-                                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputApellido">Apellidos</label>
+                                                    <input type="text" name="apellidos" class="form-control" id="inputApellido" placeholder="Apellidos">
+                                                </div>
                                             </div>
-                                            <button type="submit" class="btn btn-default">Submit</button>
-                                        </form>
+                                        </div>
 
-                                    </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputComuna">Comuna</label>
+                                                    <select class="form-control" id="inputComuna" name="comuna">
+                                                        <?php
+                                                        $comunas = ComunaDAO::readAll();
+                                                        foreach ($comunas as $comuna) {
+                                                            echo "<option value='" . $comuna->getIdComuna() ."'>";
+                                                            echo $comuna->getNombreComuna();
+                                                            echo "</option>";
+                                                        } ?>
+                                                    </select>
+                                                </div>
+                                            </div>                                                
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputTelefono">Telefono</label>
+                                                    <input type="text" name="telefono" class="form-control" id="inputTelefono" placeholder="Telefono">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputCorreo">Correo</label>
+                                                    <input type="mail" name="correo" class="form-control" id="inputCorreo" placeholder="Correo">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-default">Confirmar</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="modal fade" id="detalles" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" class="text-danger" id="modalnombre">Agregar</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
                     </div>
-
-                    <form method="POST" action="ventas.php">
-                        <input id="modalprodid" name="prodId" type="hidden">
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <select class="form-control" id="modalselect" name="variedad">
-                                    <!-- AJAX rellena aqui -->
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="cantidad">Cantidad a llevar</label>
-                                <input type="number" min='1' name="cantidad" class="form-control" id="modalcantidad" maxlength="2" value="1">
-                            </div>
-
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" name="opcion" value="Agregar" class="btn btn-fill btn-primary" id="botonagregar">Agregar</input>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-
                 </div>
             </div>
+
         </div>
+
         <footer class="footer">
             <div class="container">
                 <nav>
@@ -201,37 +207,4 @@
 <script src="../FrWork/bootstrap/js/plugins/bootstrap-notify.js"></script>
 <script src="../FrWork/bootstrap/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
 <script src="../FrWork/bootstrap/js/demo.js"></script>
-
-<script src="../FrWork/datatables/jquery.dataTables.js"></script>
-<script src="../FrWork/datatables/script.js"></script>
-<script>
-    $(document).ready(function () {
-        // carga plugin Datatable
-        $('#example').DataTable();
-
-        // Modal seleccionar productos
-        $('#detalles').on('show.bs.modal', function (event) {
-            $('#modalselect').empty();
-            $('#modalnombre').empty();
-
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var idProd = button.data('idproducto');
-            var nombreProd = button.data('nombre');
-            $('#modalnombre').append(nombreProd);
-            $('#modalprodid').val(idProd);
-
-            $.post("http://<?php echo $_SERVER['SERVER_NAME'] ?>/controladores/infoProducto.php", {
-                    opcion: 'variedades',
-                    idproducto: idProd
-                },
-                function (data) {
-                    //document.write(data);
-                    $('#modalselect').append(data);
-                }
-            );
-        })
-
-    });
-</script>
-
 </html>
