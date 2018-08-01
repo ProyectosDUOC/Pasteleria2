@@ -32,7 +32,7 @@
                     header('Location: ../administrador/administrar.php');   
                     break;
                 case 4:
-                    // echo "administrador";
+                    // echo "despacho"; 
                      $_SESSION['login']= serialize($control);
                      header('Location: ../despacho/administrar.php');   
                      break;

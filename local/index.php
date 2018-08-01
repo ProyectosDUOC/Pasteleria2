@@ -17,7 +17,7 @@ if(isset($_SESSION['carrito'])){
 if(isset($_SESSION['login'])){
     $c = $_SESSION['login'];
     $c = unserialize($c);
-
+    
     if($c->getIdTipo()==1){
         $empleado = EmpleadoDAO::sqlSelect($c->getIdEmpleado());
         $nombres = $empleado->getNombres() . " " . $empleado->getApellidos();

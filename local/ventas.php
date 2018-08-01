@@ -66,7 +66,10 @@
                 //limpia carrito y redirecciona
                 unset($carrito);
                 unset($_SESSION['carrito']);
-                header('Location: ../local/index.php');
+                
+                $idBoleta = BoletaDAO::lastId();
+                $_SESSION["BOLETAID"]=$idBoleta;
+                header('Location: ../local/barra.php');
             }
         }
         if(isset($_POST['eliminar'])){

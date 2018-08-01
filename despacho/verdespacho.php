@@ -133,35 +133,21 @@ if(isset($_SESSION['login'])){
                                             <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
-                                                    <th scope="col">Categoria</th>
-                                                    <th scope="col"></th>
-                                                    <th scope="col">Nombre</th>
-                                                    <th scope="col">Agregar</th>
+                                                    <th scope="col">Descripcion</th>
+                                                    <th scope="col">Fecha Realizada</th>
+                                                    <th scope="col">Fecha Entrega</th>
+                                                    <th scope="col">Estado</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center text-dark">
-                                                <?php 
-                                                  $productos = ProductoDAO::readAll();
-                                                  foreach($productos as $tipo){
-                                                    echo "<tr>";
-                                                        echo "<th scope='row'>" . $tipo->getIdProducto() . "</th>";
-                                                        
-                                                        $nom = CategoriaDAO::sqlSelect($tipo->getIdCate())->getNombreCate();
-
-                                                        echo "<td>" . $nom . "</td>";
-                                                        echo "<td> <img src='../img/productos/" . $tipo->getImagen() . "' alt='' height='70' /></td>";
-                                                        echo "<td>" . $tipo->getNombreProducto() . "</td>";
-                                                        echo "<td>";
-                                                        echo "<div class='form-group py-1'>";
-                                                                echo "<button type='submit' data-nombre='". $tipo->getNombreProducto() . "' class='btn btn-fill btn-warning' data-toggle='modal' data-target='#detalles' data-idproducto='".$tipo->getIdProducto()."'>";
-                                                                echo "Añadir";
-                                                            echo "</button>";
-                                                        echo "</div>";
-                                                    echo "</td>";
-                                                    echo "</tr>";
-                                                  }
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td>No se ha encontrado</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
                                                 
-                                                ?>
                                             </tbody>
                                         </table>
                         </div>
