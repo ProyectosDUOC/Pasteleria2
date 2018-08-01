@@ -89,4 +89,13 @@ class PedidoLocalDAO
         return $params;
     }
 
+    public static function lastId(){
+        $cc = BD::getInstancia();
+        $stSql = "SELECT id_pedido_local FROM pedido_local order by id_pedido_local desc limit 1";
+        $rs = $cc->db->prepare($stSql);
+        $rs->execute();
+        $dba = $rs->fetch(PDO::FETCH_ASSOC);
+        return $dba['id_pedido_local'];
+    }
+
 }

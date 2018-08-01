@@ -64,7 +64,7 @@ if(isset($_SESSION['login'])){
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="pedidos.php">
+                        <a class="nav-link" href="iniciarPedido.php">
                             <i class="nc-icon nc-notes"></i>
                             <p>Crear Pedido</p>
                         </a>

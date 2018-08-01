@@ -70,7 +70,7 @@ CREATE TABLE control_cliente (
 -- ALTER TABLE control_cliente ADD CONSTRAINT control_cliente_pk PRIMARY KEY ( id_control_c );
 
 CREATE TABLE control_empleado (
-    id_control_e   INTEGER NOT NULL PRIMARY KEY,
+w    id_control_e   INTEGER NOT NULL PRIMARY KEY,
     usuario        VARCHAR(30) NOT NULL,
     clave          VARCHAR(30) NOT NULL,
     id_tipo        INTEGER NOT NULL,

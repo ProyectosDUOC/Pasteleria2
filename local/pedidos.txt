@@ -1,0 +1,21 @@
+nuevopedido.php
+- nombre
+- apellidos
+- comuna
+- telefono
+- correo
+
+- glosa
+- total
+- fecha entrega
+* Se crea pedido_local
+* Se crea cliente
+
+
+pedido.php = ventas.php
+* pedido_local = boleta
+* detalle_pedido_local = detalle_boleta
+
+
+
+
